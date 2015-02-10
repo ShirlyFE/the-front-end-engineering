@@ -8,7 +8,7 @@
 
 [browserify](./browserify.md)
 
-
+[http缓存机制](./httpCache.md)
 
 ### 工具
 [roots：a fast, simple, and customizable static site compiler.](http://roots.cx/articles/getting-started)
