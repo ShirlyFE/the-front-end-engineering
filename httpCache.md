@@ -185,8 +185,10 @@ Etag是服务器自动生成或者由开发者生成的对应资源在服务器�
 
 通过上表我们可以看到，当用户在按F5进行刷新的时候，会忽略Expires/Cache-Control的设置，会再次发送请求去服务器请求，而Last-Modified/Etag还是有效的，服务器会根据情况判断返回304还是200；而当用户使用Ctrl+F5进行强制刷新的时候，只是所有的缓存机制都将失效，重新从服务器拉去资源。
 
-更详细的信息可以参考
+更详细的信息可以参考:
+
 [What requests do browsers' “F5” and “Ctrl + F5” refreshes generate?](http://stackoverflow.com/questions/385367/what-requests-do-browsers-f5-and-ctrl-f5-refreshes-generate)
+
 [Behind Refresh Button](http://podlipensky.com/2012/03/behind-refresh-button/)
 
 ### 如何有效控制缓存？
@@ -262,3 +264,5 @@ URL是浏览器缓存机制的基础，所以如果一个资源需要在多个�
 [Increasing Application Performance with HTTP Cache Headers](https://devcenter.heroku.com/articles/increasing-application-performance-with-http-cache-headers)
 
 [web缓存机制系列](http://www.alloyteam.com/2013/12/web-cache-6-hybrid-app-tailored-cache/)
+
+[html5离线应用无法更新的定位与解决](http://www.alloyteam.com/2012/01/html5-offline-app-update-problem/)
