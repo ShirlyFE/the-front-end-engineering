@@ -10,6 +10,8 @@
 
 [http缓存机制](./httpCache.md)
 
+[js知识点](./jsknowledge.md)
+
 ### 工具
 [roots：a fast, simple, and customizable static site compiler.](http://roots.cx/articles/getting-started)
 
