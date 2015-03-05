@@ -45,7 +45,7 @@ This prevents any callbacks from being fired on any nodes further along the even
 5. **ondragover**事件：拖拽元素在目标元素上移动时触发，此事件作用在目标元素上
 6. **ondrop** 事件：拖拽元素在目标元素上同时鼠标放开时触发，此事件作用在目标元素上
 7. **ondragend**事件：拖拽完成后触发，此事件作用在被拖曳元素上
-8. **Event.preventDefault() **方法：阻止默认的些事件方法等执行。在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。另外，如果是从其他应用软件或是文件中拖东西进来，尤其是图片的时候，默认的动作是显示这个图片或是相关信息，并不是真的执行drop。此时需要用用document的ondragover事件把它直接干掉。
+8. **Event.preventDefault()**方法：阻止默认的些事件方法等执行。在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。另外，如果是从其他应用软件或是文件中拖东西进来，尤其是图片的时候，默认的动作是显示这个图片或是相关信息，并不是真的执行drop。此时需要用用document的ondragover事件把它直接干掉。
 9. **Event.effectAllowed**属性：拖拽效果
 
 [简单拖曳demo]()
