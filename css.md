@@ -24,7 +24,7 @@ Different depth of nodes will use different colour allowing you to see the size 
 
 Enter this in the address bar(won't work in IE): 
 
-> data:text/html,<h1>Hello, world!</h1>
+> <pre>data:text/html,<h1>Hello, world!</h1></pre>
 
 You can **make a page's CSS editable in the browser without using JS**(which also won't work in IE):
 
