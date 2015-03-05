@@ -1,4 +1,4 @@
-### the most interesting HTML/JS/DOM/CSS hacks that most web developers don't know about
+### 1. the most interesting HTML/JS/DOM/CSS hacks that most web developers don't know about
 
 #### see the layout
 
