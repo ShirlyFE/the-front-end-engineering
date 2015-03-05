@@ -1,6 +1,6 @@
 ### the most interesting HTML/JS/DOM/CSS hacks that most web developers don't know about
 
-1. see the layout
+#### see the layout
 
 ```css
     * { background-color: rgba(255,0,0,.2); }
@@ -20,5 +20,5 @@ With the above CSS, you will see something along the lines of:
 
 Different depth of nodes will use different colour allowing you to see the size of each element on the page, their margin and their padding. Now you can easily identify inconsistencies. Cool!
 
-2. 
+#### ddd 
 
