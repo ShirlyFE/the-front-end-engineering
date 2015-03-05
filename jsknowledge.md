@@ -48,7 +48,7 @@ This prevents any callbacks from being fired on any nodes further along the even
 8. **Event.preventDefault()**方法：阻止默认的些事件方法等执行。在ondragover中一定要执行preventDefault()，否则ondrop事件不会被触发。另外，如果是从其他应用软件或是文件中拖东西进来，尤其是图片的时候，默认的动作是显示这个图片或是相关信息，并不是真的执行drop。此时需要用用document的ondragover事件把它直接干掉。
 9. **Event.effectAllowed**属性：拖拽效果
 
-[简单拖曳demo]()
+[简单拖曳demo](http://shirlyloveu.github.io/shirlyDemo/dragAnddrop.html)
 
 [生成图片base64编码demo](http://shirlyloveu.github.io/shirlyDemo/getBase64EncodeOfImage.html)
 
