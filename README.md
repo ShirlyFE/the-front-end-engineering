@@ -12,6 +12,8 @@
 
 [js知识点](./jsknowledge.md)
 
+[svg学习笔记](./svg.md)
+
 ### 工具
 [roots：a fast, simple, and customizable static site compiler.](http://roots.cx/articles/getting-started)
 
