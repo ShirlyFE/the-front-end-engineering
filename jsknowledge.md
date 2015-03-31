@@ -193,3 +193,29 @@ This prevents any callbacks from being fired on any nodes further along the even
 
 [命名函数表达式](http://www.cnblogs.com/tomxu/archive/2011/12/29/2290308.html)
 
+### 基本概念的理解 
+
+#### Array sort方法sort(compareFunction)工作原理：
+
+compareFunction是一个比较函数，处理数组相邻的两个元素
+
+sort的排序条件是：
+    * 参数大于0，arr的相邻两个元素交换位置
+    * 参数小于0，arr的相邻两个元素不交换位置
+    * 参数等于0，arr的相邻两个元素大小相等
+
+***可见sort内部用的是冒泡排序***
+
+### 面试题
+
+#### 相应的参考资料
+
+[这10道javascript笔试题你都会么](http://web.jobbole.com/82251/)
+
+[40个重要的HTML5面试题及答案](http://blog.jobbole.com/78346/)
+
+[.apply()、.call() 和arguments对象](http://web.jobbole.com/77496/)
+
+[有趣的JavaScript原生数组函数](http://web.jobbole.com/56712/)
+
+[移动端H5知识普及[系列] - 谈谈相对单位](http://blog.163.com/hongshaoguoguo@126/blog/static/1804698120152300167505/)
