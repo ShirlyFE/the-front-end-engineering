@@ -8,3 +8,5 @@
 [jade简介](http://xfhnever.com/blog/2014/08/06/jade-introduction/)
 
 [jade模板引擎](http://anjia.github.io/2014/09/13/jade_what/)
+
+[jade方法api](http://jade-lang.com/reference/mixins/)

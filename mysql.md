@@ -101,13 +101,40 @@
 
 select version(),current_date; 显示当前mysql版本和当前日期      
 
-修改mysql中root的密码： 
+#### 修改mysql中root的密码 
 
+方法一：
 ```javascript
     shell> mysql -h localhost -u root -p //登录 
     mysql> use mysql;  // 进入mysql数据库，user表中存放着所有的MYSQL用户信息
     mysql> update user set password=password("xueok654123") where user='root';   
-    mysql> describe user; 显示表mysql数据库中user表的列信息);   
+    mysql> FLUSH PRIVILEGES; //新设置用户或更改密码后需要用flush privileges刷新MySQL的系统权限相关表，否则会出现拒绝访问，或者也可以重新启动mysql来使新设置生效
+    mysql> describe user; //显示表mysql数据库中user表的列信息);  
+    mysql> SELECT USER(); //显示当前user
+```
+
+方法二：
+```javascript
+    shell> mysqladmin -u root -p oldPass password newPass
+```
+
+方法三：
+```javascript
+    shell> mysql -u root
+
+　　mysql> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('newpass');
+```
+
+丢失root密码的时候，可以这样
+
+```javascript
+    shell> mysqld_safe --skip-grant-tables&
+
+　　shell> mysql -u root mysql
+
+　　mysql> UPDATE user SET password=PASSWORD("new password") WHERE user='root';
+
+　　mysql> FLUSH PRIVILEGES;
 ```
 
 增加新用户并授予一定权限（格式：grant select on 数据库.* to 用户名@登陆主机 identified by '密码'）：
@@ -243,6 +270,12 @@ MySQL可以方便的从查询结果中生成XML，只需要在调用mysql工具�
 ```php
     shell> mysql -u root -p --xml tablename
 ```
+
+### node mysql遇到的坑
+
+MySQL中有一个名叫wait_timeout的变量，表示操作超时时间，当连接超过一定时间没有活动后，会自动关闭该连接，这个值默认为28800（即8小时）
+
+[做好自动重连](https://cnodejs.org/topic/516b77e86d382773064266df)
 
 ### 参考资料
 
