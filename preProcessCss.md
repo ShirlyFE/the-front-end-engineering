@@ -574,7 +574,7 @@ $z-indexes: (
 
 #### 分析下编译结果
 
-#admin .overview .fakelink 选择器要与 #admin .tabbar a 共用一段 CSS 代码，而且共用的是 a 标签的代码。由于 #admin 是相同的，所以统一放在最前面，只需要组合后面选择器即可。
+'#admin .overview .fakelink' 选择器要与 '#admin .tabbar a' 共用一段 CSS 代码，而且共用的是 a 标签的代码。由于 #admin 是相同的，所以统一放在最前面，只需要组合后面选择器即可。
 
 既然扩展 a 标签，就先用 .overview .fakelink 替换掉 a 组合成了 #admin .tabbar .overview .fakelink 选择器，由于不知道 .tabbar 与 .overview 类结构的包裹情况，所以又颠倒位置生成了 #admin .overview .tabbar .fakelink 这样一个选择器。这样就足够了，因为已知 .overview .fakelink 是为了替换 .tabbar 选择器的下层结构 a，所以可以确定 .fakelink 结构一定在 .overview 结构的下一级,这样所有情况就遍历完成了。
 
