@@ -277,6 +277,8 @@ MySQL中有一个名叫wait_timeout的变量，表示操作超时时间，当连
 
 [做好自动重连](https://cnodejs.org/topic/516b77e86d382773064266df)
 
+mysql中文数据乱码时的解决方式，设置为[utf8](http://stackoverflow.com/questions/3513773/change-mysql-default-character-set-to-utf-8-in-my-cnf)
+
 ### 参考资料
 
 * [mysql的安装配置使用教程](http://www.cnblogs.com/mr-wid/archive/2013/05/09/3068229.html)
