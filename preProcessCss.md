@@ -38,16 +38,16 @@ LESS在服务器端的使用主要是借助于LESS的编译器，将LESS源文�
 
 ```css
     sass style.scss style.css   
-    sass --watch style.scss:style.css //单文件的监听
-    sass --watch sassFileDirectory:cssFileDirectory //多文件的监听
+    sass --watch style.scss:style.css /*单文件的监听*/
+    sass --watch sassFileDirectory:cssFileDirectory /*多文件的监听*/
 
-    lessc style.less //将编译的CSS传递给stdout
-    lessc style.less > style.css //将编译的css保存到一个文件中
+    lessc style.less /*将编译的CSS传递给stdout*/
+    lessc style.less > style.css /*将编译的css保存到一个文件中*/
 
     stylus –compress  <some.styl> some.css
-    stylus css //将css目录下的stylus编译并输出为对应的“.css”文件
-    stylus css –out public/stylesheets  //输出到“./public/stylesheets”
-    stylus one.styl two.styl //同时编译多个文件
+    stylus css /*将css目录下的stylus编译并输出为对应的“.css”文件*/
+    stylus css –out public/stylesheets  /*输出到“./public/stylesheets”*/
+    stylus one.styl two.styl /*同时编译多个文件*/
 ```
 
 ## 语法
@@ -202,12 +202,12 @@ p:before {
 sass中 ***/*** 运算符使用注意点
 ```css
 p {
-  font: 10px/8px;             // 纯 CSS 不会运算
+  font: 10px/8px;             /* 纯 CSS 不会运算 */
   $width: 1000px;
-  width: $width/2;            // 使用变量，执行运算
-  width: round(1.5)/2;        // 使用函数返回值，执行运算
-  height: (500px/2);          // 使用括号包裹，执行运算
-  margin-left: 5px + 8px/2px; // 用了加法，作为表达式的一部分，执行运算
+  width: $width/2;            /* 使用变量，执行运算 */
+  width: round(1.5)/2;        /* 使用函数返回值，执行运算 */
+  height: (500px/2);          /* 使用括号包裹，执行运算 */
+  margin-left: 5px + 8px/2px; /* 用了加法，作为表达式的一部分，执行运算 */
 }
 ```
 编译为：
@@ -518,11 +518,11 @@ $i: 6;
 另一个支持使用map的原因，是它可以创建 **map-get()** 函数以提供友好API的功能
 
 ```css
-/// Z-indexes map, gathering all Z layers of the application
-/// @access private
-/// @type Map
-/// @prop {String} key - Layer's name
-/// @prop {Number} value - Z value mapped to the key
+/* Z-indexes map, gathering all Z layers of the application*/
+/* @access private*/
+/* @type Map*/
+/* @prop {String} key - Layer's name*/
+/* @prop {Number} value - Z value mapped to the key*/
 $z-indexes: (
   modal: 5000,
   dropdown: 4000,
@@ -530,11 +530,11 @@ $z-indexes: (
   below: -1,
 );
 
-/// Get a z-index value from a layer name
-/// @access public
-/// @param {String} $layer - Layer's name
-/// @return {Number}
-/// @require $z-indexes
+/* Get a z-index value from a layer name*/
+/* @access public*/
+/* @param {String} $layer - Layer's name*/
+/* @return {Number}*/
+/* @require $z-indexes*/
 @function z($layer) {
   @return map-get($z-indexes, $layer);
 }
@@ -779,13 +779,13 @@ LESS的条件表达式同样支持AND和OR以及NOT来组合条件表达式，�
   .myclass {
     z-index: @index;
   }
-  // 递归
+  /* 递归 */
   .loopingClass(@index - 1);
 }
-// 停止循环
+/* 停止循环 */
 .loopingClass (0) {}
 
-// 输出
+/* 输出 */
 .loopingClass (3);
 ```
 
