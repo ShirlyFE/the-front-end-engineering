@@ -201,3 +201,5 @@ expr - 判断一个表达式，可以是变量
 
 ## 参考资源：
 [nginx ssi api](http://nginx.org/ru/docs/http/ngx_http_ssi_module.html)
+
+[ssi in one page](http://www.ssi.su/)
