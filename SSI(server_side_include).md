@@ -2,6 +2,27 @@
 
 SSI被称为“服务器端包含”或“服务器端嵌入”技术。是一种基于服务器端的网页制作技术。
 
+从技术角度上说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针。只要使用一条简单的SSI命令就可以实现整个网站的内容更新，时间和日期的动态显示，以及执行shell和CGI脚本程序等复杂的功能。
+
+## nginx的ssi模块
+
+nginx默认是不开启ssi支持的，要让nginx可以解析ssi需要在nginx.conf中修改配置文件，在http或者location或者server作用域中添加下面几句话：
+
+```shell
+ssi on;  //开启ssi支持，默认off
+ssi_silent_errors on; //默认值是off，开启后在处理SSI文件出错时不输出错误提示:"[an error occurred while processing the directive] " 
+ssi_types text/shtml; //默认是ssi_types text/html，所以如果需要htm和html支持，则不需要设置这句，如果需要shtml支持，则需要设置：ssi_types text/shtml
+```
+
+![ssi demo](./images/ssi.png)
+
+
+
+
+
+
+
+
 ## SSI语法
 
 > <!--# command parameter1=value parameter2=value... -->
@@ -200,6 +221,6 @@ expr - 判断一个表达式，可以是变量
 ```
 
 ## 参考资源：
-[nginx ssi api](http://nginx.org/ru/docs/http/ngx_http_ssi_module.html)
+[nginx ssi api](http://nginx.org/en/docs/http/ngx_http_ssi_module.html)
 
 [ssi in one page](http://www.ssi.su/)
