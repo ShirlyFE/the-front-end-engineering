@@ -30,6 +30,8 @@
 
 [服务端包含文件SSI](./SSI(server_side_include).md)
 
+[nginx understanding](./nginx.md)
+
 ### 工具
 [roots：a fast, simple, and customizable static site compiler.](http://roots.cx/articles/getting-started)
 

@@ -121,7 +121,7 @@ Nginx会按需同时运行多个进程：一个主进程(master)和几个工作�
 
 ## nginx配置详解
 
-```shell
+```php
 #定义Nginx运行的用户和用户组
 user nobody;
 
@@ -284,12 +284,12 @@ Kqueue：使用于FreeBSD 4.1+, OpenBSD 2.9+, NetBSD 2.0 和 MacOS X.使用双�
 ### 请求头部的缓冲区大小client_header_buffer_size
 客户端请求头部的缓冲区大小，这个可以根据你的系统分页大小来设置，一般一个请求头的大小不会超过1k，不过由于一般系统分页都要大于1k，所以这里设置为分页大小。
 分页大小可以用命令getconf PAGESIZE 取得。
-```shell
+```php
 [root@web001 ~]# getconf PAGESIZE
 4096
 ```
 但也有client_header_buffer_size超过4k的情况，但是client_header_buffer_size该值必须设置为“系统分页大小”的整倍数。
-```shell
+```php
 client_header_buffer_size 4k;
 ```
 
@@ -298,7 +298,7 @@ client_header_buffer_size 4k;
 
 ### upstream 负载均衡模块说明
 
-```shell
+```php
 upstream test.net {
 ip_hash;
 server www.example.com weight=4;
@@ -339,7 +339,7 @@ Nginx的负载均衡模块目前支持4种调度算法，下面进行分别介�
 ![负载均衡demo的实验拓扑](./images/labTopology.png)
 
 ### 配置nginx负载均衡
-```shell
+```php
 [root@nginx ~]# vim /etc/nginx/nginx.conf
 upstream webservers {
   server 192.168.18.201 weight=1;
@@ -361,7 +361,7 @@ server {
 
 ### 配置nginx进行健康状态检查
 max_fails可以和fail_timeout一起使用，进行健康状态检查。
-```shell
+```php
 upstream webservers {
     server 192.168.18.201 weight=1 max_fails=2 fail_timeout=2;
     server 192.168.18.202 weight=1 max_fails=2 fail_timeout=2;
@@ -371,7 +371,7 @@ upstream webservers {
 配置完后重启nginx，然后先停止Web1，进行测试。会看到，现在只能访问Web2，再重新启动Web1，再次访问一下。大家就会看到web1又可以重新访问，说明nginx的健康状态检查配置成功。但大家想一下，如果不幸的是所有服务器都不能提供服务了怎么办，用户打开页面就会出现出错页面，那么会带来用户体验的降低，所以我们能不能像配置LVS一样配置sorry_server呢，答案是可以的，但这里不是配置sorry_server而是配置backup。
 
 ### 配置backup服务器
-```shell
+```php
 [root@nginx ~]# vim /etc/nginx/nginx.conf
 server {
     listen 8080;
@@ -390,7 +390,7 @@ upstream webservers {
 ```
 关闭Web服务器并进行测试：
 
-```shell
+```php
 [root@web1 ~]# service httpd stop
 停止 httpd：                                               [确定]
 [root@web2 ~]# service httpd stop
@@ -400,7 +400,7 @@ upstream webservers {
 我们会发现当所有服务器都不能工作时，就会启动备份服务器。好了，backup服务器就配置到这里，下面我们来配置ip_hash负载均衡。
 
 ### 配置ip_hash负载均衡
-```shell
+```php
 [root@nginx ~]# vim /etc/nginx/nginx.conf
 upstream webservers {
     ip_hash;
@@ -415,7 +415,7 @@ upstream webservers {
 重启nginx服务，然后不断的刷新页面一直会显示Web2，说明ip_hash负载均衡配置成功。
 
 ### 统计Web2的访问连接数
-```shell
+```php
 [root@web2 ~]# netstat -an | grep :80 | wc -l
 304
 ```
@@ -425,7 +425,7 @@ upstream webservers {
 
 
 ## nginx正向代理配置文件
-```shell
+```php
 server {
     resolver 8.8.8.8;
     resolver_timeout 5s;
@@ -454,23 +454,23 @@ server {
 以上Nginx正向代理配置说明：
 
 * 配置 DNS 解析 IP 地址，比如 Google Public DNS，以及超时时间（5秒）。
-```shell
+```php
 resolver 8.8.8.8;
 resolver_timeout 5s;
 ```
 * 配置正向代理参数，均是由 Nginx 变量组成。其中 proxy_set_header 部分的配置，是为了解决如果 URL 中带 "."（点）后 Nginx 503 错误。
-```shell
+```php
 proxy_pass $scheme://$host$request_uri;
 proxy_set_header Host $http_host;
 ```
 * 配置缓存大小，关闭磁盘缓存读写减少I/O，以及代理连接超时时间。
-```shell
+```php
 proxy_buffers 256 4k;
 proxy_max_temp_file_size 0;
 proxy_connect_timeout 30;
 ```
 * 配置代理服务器 Http 状态缓存时间。
-```shell
+```php
 proxy_cache_valid 200 302 10m;
 proxy_cache_valid 301 1h;
 proxy_cache_valid any 1m;
