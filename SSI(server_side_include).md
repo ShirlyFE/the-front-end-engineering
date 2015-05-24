@@ -8,20 +8,13 @@ SSI被称为“服务器端包含”或“服务器端嵌入”技术。是一�
 
 nginx默认是不开启ssi支持的，要让nginx可以解析ssi需要在nginx.conf中修改配置文件，在http或者location或者server作用域中添加下面几句话：
 
-```shell
+```php
 ssi on;  //开启ssi支持，默认off
 ssi_silent_errors on; //默认值是off，开启后在处理SSI文件出错时不输出错误提示:"[an error occurred while processing the directive] " 
 ssi_types text/shtml; //默认是ssi_types text/html，所以如果需要htm和html支持，则不需要设置这句，如果需要shtml支持，则需要设置：ssi_types text/shtml
 ```
 
 ![ssi demo](./images/ssi.png)
-
-
-
-
-
-
-
 
 ## SSI语法
 
