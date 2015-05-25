@@ -8,7 +8,7 @@ $curl www.baidu.com
 ```
 
 ### 用-o/--output参数进行下载保存，相当于wget命令
-```
+```php
 $curl http://bpsky.net > index.html
 
 $curl -o index.html http://bpsky.net
@@ -24,7 +24,7 @@ curl -L www.sina.com
 ```
 
 ### -i参数显示http response头信息
-```
+```php
 # -I参数只显示http response的头信息
 curl -i www.sina.com
 ```
@@ -63,7 +63,7 @@ eft intact
 ```
 
 ### 也可以通过下面查看更详细的通信过程
-```
+```php
 curl --trace output.txt www.sina.com
 curl --trace-ascii output.txt www.sina.com
 # 运行后打开output.txt文件查看
@@ -92,7 +92,7 @@ curl --cookie "name=xxx" www.example.com
 ```
 
 ### -D cookies保存cookie在本地
-```
+```php
 # baidu.txt是保存cookie的文件，baidu.html保存请求的百度主页数据
 curl www.baidu.com -o baidu.html -D baidu.txt
 ```
@@ -113,7 +113,7 @@ curl --referer http://www.example.com http://www.example.com
 ```
 
 ### 批量下载
-```
+```php
 $curl -O http://cgi2.tky.3web.ne.jp/~zzh/screen[1-10].JPG
 
 $curl -O http://cgi2.tky.3web.ne.jp/~{zzh,nick}/[001-201].JPG  
@@ -121,7 +121,7 @@ $curl -O http://cgi2.tky.3web.ne.jp/~{zzh,nick}/[001-201].JPG
 ```
 
 ### 自定义文件名的下载
-```
+```php
 $curl -o #2_#1.jpg http://cgi2.tky.3web.ne.jp/~{zzh,nick}/[001-201].JPG 
 #上面的命令下载后就是这样的： 001_zzh.jpg
 ```
@@ -144,7 +144,7 @@ range的表示方式有多种，如:
 
 * 另外还可以同时指定多个字节块，中间用","分开
 
-```
+```php
 $curl -r 0-10240 -o "zhao.part1" http://vfile.home.news.cn/music/public/vd05/200905/31/a8/MUfs052009053117155750a8be70.mp3  &\  
 
 $curl -r 10241-20480 -o "zhao.part2" http://vfile.home.news.cn/music/public/vd05/200905/31/a8/MUfs052009053117155750a8be70.mp3  &\  
