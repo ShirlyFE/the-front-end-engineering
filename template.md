@@ -12,3 +12,6 @@
 [jade方法api](http://jade-lang.com/reference/mixins/)
 
 [Jade - 模板引擎](http://expressjs.jser.us/jade.html)
+
+[一步步教你开发node+express+jade+mongo应用程序](http://cwbuecheler.com/web/tutorials/2013/node-express-mongo/)
+

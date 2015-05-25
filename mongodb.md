@@ -74,6 +74,8 @@ monk的写法如下：
 
 [MongoDB学习 (六)：查询](http://www.cnblogs.com/egger/p/3135847.html)
 
+[MongoDB学习之路 (五)：更新操作符](http://www.cnblogs.com/egger/archive/2013/05/15/3053617.html)
+
 [MongoDB 查询上](http://www.cnblogs.com/refactor/archive/2012/07/30/2591344.html)
 
 [MongoDB基本使用](http://www.cnblogs.com/zhwl/p/3421084.html)
@@ -81,3 +83,9 @@ monk的写法如下：
 [the dead-simple step-by-step guide for front-end developers to getting up and running with node.js, express, jade, and mongodb](http://cwbuecheler.com/web/tutorials/2013/node-express-mongo/)
 
 [w3c mongo教程](http://www.w3cschool.cc/mongodb/mongodb-query.html)
+
+[mongodb 3 创建，更新及删除文档](http://zhan.renren.com/itbegin?gid=3602888498028470739&checked=true)
+
+[MongoDB初识](http://www.cnblogs.com/elegance/p/4281736.html)
+
+[Mongodb数据更新命令、操作符](http://chenzhou123520.iteye.com/blog/1637629)
