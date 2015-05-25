@@ -535,8 +535,9 @@ Nginx在很多模块中都有内置的变量，常用的内置变量在HTTP核�
 
 **要使用正则表达式必须指定前缀: ~*、 ~**
 
-^~ 标记禁止在字符串匹配后检查正则表达式
-=  标记可以在URI和location之间定义精确的匹配，在精确匹配完成后并不进行额外的搜索
+* ^~ 标记禁止在字符串匹配后检查正则表达式
+
+* =  标记可以在URI和location之间定义精确的匹配，在精确匹配完成后并不进行额外的搜索
 
 所以^~、=、@这3个标识符后面不能跟正则表达式，虽然配置文件检查会通过，而且没有任何警告，但是他们并不会进行匹配
 
@@ -591,7 +592,7 @@ location ~ ^.+.php {
 gzip_disable     "msie6";
 ```
 
-####　rewrite
+#### rewrite
 Rewrite主要的功能就是实现URL的重写,Nginx的Rewrite规则采用PCRE(Perl Compatible Regular Expressions)Perl兼容正则表达式的语法进行规则匹配,如果您需要Nginx的Rewrite功能,在编译Nginx之前,须要编译安装PCRE库.通过Rewrite规则,可以实现规范的URL,根据变量来做URL转向和选择不同的配置.从一个location跳转到另一个location，不过这样的循环最多可以执行10次，超过后nginx将返回500错误。同时，重写模块包含set指令，来创建新的变量并设其值，这在有些情景下非常有用的，如记录条件标识、传递参数到其他location、记录做了什么等等。
 
 Nginx的rewrite语法其实很简单.用到的指令无非是这几个：
@@ -618,11 +619,8 @@ if主要用来判断一些在rewrite语句中无法直接匹配的条件,比如�
 
 * 使用正则表达式匹配时,可以使用 **~、 ~*、 !~、 !~*、 -f、 !-f、 -d、 !-d、 -e、 !-e、 -x、 !-x **
 
-* 因为nginx使用花括号{}判断区块,所以当正则中包含花括号时,则必须用双引号将正则包起来.rewrite语句中的正则亦是如此.比如:
+* 因为nginx使用花括号{}判断区块,所以当正则中包含花括号时,则必须用双引号将正则包起来.rewrite语句中的正则亦是如此.
 
-```php
-\d{4}\d{2}\.+
-```
 举例：
 ```php
 
@@ -660,7 +658,9 @@ if ($args ~ post=140){
 立即停止rewrite检测,跟下面讲到的rewrite的break flag功能是一样的,区别在于前者是一个语句,后者是rewrite语句的flag
 
 ##### rewrite
+```
 用法: rewrite 正则 替换URI 标志位(flag)
+```
 
 其中标志位有四种：
 * break – 停止rewrite检测,也就是说当含有break flag的rewrite语句被执行时,该语句就是rewrite的最终结果 
@@ -764,7 +764,11 @@ http {
 ### Nginx中的正则如何匹配中文
 
 首先确定在编译pcre时加了enable-utf8参数，如果没有，请重新编译pcre，然后就可以在Nginx的配置文件中使用这
-样的正则：“(*UTF8)^/[x{4e00}-x{9fbf}]+)$”注意引号和前面的(*UTF8)，(*UTF8)将告诉这个正则切换为UTF8模式。
+样的正则:
+```
+(*UTF8)^/[x{4e00}-x{9fbf}]+)$
+# (*UTF8)将告诉这个正则切换为UTF8模式。
+```
 
 ```php
 [root@backup conf]# pcretest
