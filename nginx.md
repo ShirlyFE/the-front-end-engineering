@@ -480,6 +480,298 @@ proxy_cache_valid any 1m;
 "CONNECT www.google.com:443 HTTP/1.1" 400
 ```
 
+## nginx 正则
+### 正则表达式匹配
+
+~   区分大小写匹配
+~*  不区分大小写匹配
+!~  区分大小写不匹配
+!~* 不区分大小写不匹配
+^   以什么开头的匹配
+$   以什么结尾的匹配
+\   转义字符可以转. * ?等
+*   代表任意字符
+^~
+=   精确的查找地址
+@   为一个location进行命名，即自定义一个location，这个location不能被外界所访问，只能用于Nginx产生的子请求，主要为error_page和try_files。
+
+
+### 文件及目录匹配
+
+-f和!-f 用来判断是否存在文件
+-d和!-d 用来判断是否存在目录
+-e和!-e 用来判断是否存在文件或目录
+-x和!-x 用来判断文件是否可执行
+
+先看个demo
+
+```php
+#　只匹配 / 的查询
+location = /
+
+# 匹配任何以 / 开始的查询，但是正则表达式与一些较长的字符串将被首先匹配。
+location  /
+
+# 匹配任何以 /images/ 开始的查询并且停止搜索，不检查正则表达式。  
+location ^~ /images/ 
+
+# 匹配任何以.gif、.jpg 或 .jpeg 结尾的请求，但是所有 /images/ 目录的请求将在上面 ^~ /images/ 中处理
+location ~* .(gif|jpg|jpeg)$ {
+```
+
+### 可以通过正则表达式匹配的指令
+Nginx在很多模块中都有内置的变量，常用的内置变量在HTTP核心模块中，这些变量都可以使用正则表达式进行匹配。
+
+#### location: http核心模块
+**语法**：location [=|~|~*|^~|@] /uri/ { ... } 
+**默认值**：no 
+**使用字段**：server 
+
+要使用正则表达式必须指定前缀: **~*、 ~ **
+
+^~ 标记禁止在字符串匹配后检查正则表达式
+=  标记可以在URI和location之间定义精确的匹配，在精确匹配完成后并不进行额外的搜索
+
+所以^~、=、@这3个标识符后面不能跟正则表达式，虽然配置文件检查会通过，而且没有任何警告，但是他们并不会进行匹配
+
+**location指令对于后面值的匹配顺序为**:
+
+1. 标识符 **=** 的location会最先进行匹配，如果请求uri匹配这个location，将对请求使用这个location的配置，立即停止查询。
+2. 进行字符串匹配，如果匹配到的location有^~这个标识符，匹配停止,返回这个location的配置。
+3. 按照配置文件中定义的顺序进行正则表达式匹配。最早匹配的location将返回里面的配置。
+4.如果正则表达式能够匹配到请求的uri，将使用这个正则对应的location，如果没有，则使用第二条匹配的结果。
+
+##### proxy_pass说明
+```php
+location ^~ /outer/ {
+    #case A： url最后以/结尾
+    proxy_pass http://tomcat:8080/
+    #case B： url最后没有/
+    #proxy_pass http://tomcat:8080  
+}
+```
+上述的转发代码关键在于最后的/，访问localhost/outer/in.html，其中case A 会转发到tomcat:8080/in.html， 而case B 会转发到 tomcat:8080/outer/in.html，所以务必注意了。
+
+#### server_name
+server_name用于配置基于域名或IP的虚拟主机，这个指令也是可以使用正则表达式的，但是注意，这个指令中的正则表达式不用带任何的标识符，但是必须以~开头：
+
+```php
+server {
+  server_name   www.example.com   ~^wwwd+.example.com$;
+}
+```
+
+#### fastcgi_split_path_info
+
+这个指令按照CGI标准来设置SCRIPT_FILENAME (SCRIPT_NAME)和PATH_INFO变量，它是一个被分割成两部分（两个引用）的正则表达式。如下：
+```php
+location ~ ^.+.php {
+  (...)
+  fastcgi_split_path_info ^(.+.php)(.*)$;
+  fastcgi_param SCRIPT_FILENAME /path/to/php$fastcgi_script_name;
+  fastcgi_param PATH_INFO $fastcgi_path_info;
+  fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+  (...)
+}
+```
+
+第一个引用（.+.php）加上/path/to/php将作为SCRIPT_FILENAME，第二个引用(.*)为PATH_INFO，例如请求的完整URI为show.php/article/0001，则上例中SCRIPT_FILENAME的值为/path/to/php/show.php，PATH_INFO则
+为/article/0001。
+
+#### gzip_disable
+通过正则表达式来指定在哪些浏览器中禁用gzip压缩。
+
+```php
+gzip_disable     "msie6";
+```
+
+####　rewrite
+Rewrite主要的功能就是实现URL的重写,Nginx的Rewrite规则采用PCRE(Perl Compatible Regular Expressions)Perl兼容正则表达式的语法进行规则匹配,如果您需要Nginx的Rewrite功能,在编译Nginx之前,须要编译安装PCRE库.通过Rewrite规则,可以实现规范的URL,根据变量来做URL转向和选择不同的配置.从一个location跳转到另一个location，不过这样的循环最多可以执行10次，超过后nginx将返回500错误。同时，重写模块包含set指令，来创建新的变量并设其值，这在有些情景下非常有用的，如记录条件标识、传递参数到其他location、记录做了什么等等。
+
+Nginx的rewrite语法其实很简单.用到的指令无非是这几个：
+* set
+* if
+* return
+* break
+* rewrite
+
+##### set
+set主要用来设置变量
+
+##### if
+if主要用来判断一些在rewrite语句中无法直接匹配的条件,比如检测文件存在与否,http header,cookie等
+
+> 用法: if(条件) {…}
+
+解释说明：
+* if指令不支持嵌套,不支持多个条件&&和||处理.
+
+* 当表达式只是一个变量时,如果值为空或者任何以0开头的字符串都会当作false
+
+* 直接比较内容时,使用 = 和 !=
+
+* 使用正则表达式匹配时,可以使用 **~、 ~*、 !~、 !~*、 -f、 !-f、 -d、 !-d、 -e、 !-e、 -x、 !-x **
+
+* 因为nginx使用花括号{}判断区块,所以当正则中包含花括号时,则必须用双引号将正则包起来.rewrite语句中的正则亦是如此.比如:
+
+```php
+\d{4}\d{2}\.+
+```
+举例：
+```php
+
+if ($http_user_agent ~ MSIE) {
+  rewrite  ^(.*)$  /msie/$1  break;
+}
+//如果UA包含”MSIE”,rewrite 请求到/msie目录下
+
+if ($http_cookie ~* "id=([^;] +)(?:;|$)" ) {
+  set  $id  $1;
+}
+//如果cookie匹配正则,设置变量$id等于正则引用部分
+
+if ($request_method = POST ) {
+  return 405;
+}
+//如果提交方法为POST,则返回状态405 (Method not allowed)
+
+if (!-f $request_filename) {
+  break;
+  proxy_pass  http://127.0.0.1;
+}
+//如果请求文件名不存在,则反向代理localhost
+
+if ($args ~ post=140){
+  rewrite ^ http://example.com/ permanent;
+}
+//如果query string中包含”post=140″,永久重定向到example.com
+```
+
+##### return
+结束规则的执行并返回状态码给客户端，比如 400  411  413这些错误代码
+
+##### break
+立即停止rewrite检测,跟下面讲到的rewrite的break flag功能是一样的,区别在于前者是一个语句,后者是rewrite语句的flag
+
+##### rewrite
+用法: rewrite 正则 替换URI 标志位(flag)
+
+其中标志位有四种：
+* break – 停止rewrite检测,也就是说当含有break flag的rewrite语句被执行时,该语句就是rewrite的最终结果 
+
+* last – 停止rewrite检测,但是跟break有本质的不同,break是终止当前location的rewrite检测,而且不再进行location匹配；last是终止当前location的rewrite检测,但会继续重试location匹配并处理区块中的rewrite规则
+
+* redirect – 返回302临时重定向,一般用于重定向到完整的URL(包含http:部分) 
+
+* permanent – 返回301永久重定向,一般用于重定向到完整的URL(包含http:部分)
+
+因为301和302不能简单的只单纯返回状态码,还必须有重定向的URL,这就是return指令无法返回301,302的原因了. 作为替换,rewrite可以更灵活的使用redirect和permanent标志实现301和302. 比如Blog搬家要做的域名重定向,在nginx中就会这么写
+
+```php
+rewrite ^(.*)$ http://newdomain.com/ permanent;
+```
+举例来说
+```php
+# 如果请求为 /download/eva/media/op1.mp3 则请求被rewrite到 /download/eva/mp3/op1.mp3
+rewrite  ^(/download/.*)/media/(.*)\..*$  $1/mp3/$2.mp3  last;
+```
+
+###### rewrite有很多潜规则需要注意
+* rewrite的生效区块为sever, location, if
+
+* rewrite只对相对路径进行匹配,不包含hostname,如果非要做域名匹配的话就要使用if语句了,比如进行去www跳转
+
+```php
+if ($host ~* ^www\.(cafeneko\.info)) {
+  set $host_without_www $1;
+  rewrite ^(.*)$ http://$host_without_www$1 permanent;
+}
+```
+
+* 使用相对路径rewrite时,会根据HTTP header中的HOST跟nginx的server_name匹配后进行rewrite,如果HOST不匹配或者没有HOST信息的话则rewrite到server_name设置的第一个域名,如果没有设置server_name的话,会使用本机的localhost进行rewrite
+
+* rewrite的正则是不匹配query string的,所以默认情况下,query string是自动追加到rewrite后的地址上的,如果不想自动追加query string,则在rewrite地址的末尾添加?
+
+```php
+rewrite  ^/users/(.*)$  /show?user=$1?  last;
+```
+
+* nginx的rewrite有个很奇特的特性 — rewrite后的url会再次进行rewrite检查,最多重试10次,10次后还没有终止的话就会返回HTTP 500
+
+sever区块中如果有包含rewrite规则,则会最先执行,而且只会执行一次, 然后再判断命中哪个location的配置,再去执行该location中的rewrite, 当该location中的rewrite执行完毕时,rewrite并不会停止,而是根据rewrite过的URL再次判断location并执行其中的配置. 那么,这里就存在一个问题,如果rewrite写的不正确的话,是会在location区块间造成无限循环的.所以nginx才会加一个最多重试10次的上限. 比如
+
+```php
+location /download/ {
+  rewrite  ^(/download/.*)/media/(.*)\..*$  $1/mp3/$2.mp3  last;
+}
+```
+
+如果请求为 /download/eva/media/op1.mp3 则请求被rewrite到 /download/eva/mp3/op1.mp3结果rewrite的结果重新命中了location /download/ 虽然这次并没有命中rewrite规则的正则表达式,但因为缺少终止rewrite的标志,其仍会不停重试download中rewrite规则直到达到10次上限返回HTTP 500，用break就没事
+
+```php
+location /download/ {
+  rewrite  ^(/download/.*)/media/(.*)\..*$  $1/mp3/$2.mp3  break;
+}
+```
+所以建议是,如果是全局性质的rewrite,最好放在server区块中并减少不必要的location区块.location区块中的rewrite要想清楚是用last还是break.
+
+当然不能由此认为全部用break就万无一失了，有些情况是要用last的. 典型的例子就是wordpress的permalink rewrite
+
+常见的情况下, wordpress的rewrite是放在location /下面,并将请求rewrite到/index.php这时如果这里使用break乃就挂了,因为nginx返回的是没有解释的index.php的源码，这里一定要使用last才可以在结束location / 的rewrite, 并再次命中location ~ \.php$,将其交给fastcgi进行解释.其后返回给浏览器的才是解释过的html代码.
+
+一个完整的例子
+```php
+http {
+  # 定义image日志格式
+  log_format imagelog '[$time_local] ' $image_file ' ' $image_type ' ' $body_bytes_sent ' ' $status;
+  # 开启重写日志
+  rewrite_log on;
+ 
+  server {
+    root /home/www;
+
+    location / {
+      # 重写规则信息
+      error_log logs/rewrite.log notice; 
+      # 注意这里要用‘’单引号引起来，避免{}
+      rewrite '^/images/([a-z]{2})/([a-z0-9]{5})/(.*)\.(png|jpg|gif)$' /data?file=$3.$4;
+      # 注意不能在上面这条规则后面加上“last”参数，否则下面的set指令不会执行
+      set $image_file $3;
+      set $image_type $4;
+    }
+
+    location /data {
+      # 指定针对图片的日志格式，来分析图片类型和大小
+      access_log logs/images.log mian;
+      root /data/images;
+      # 应用前面定义的变量。判断首先文件在不在，不在再判断目录在不在，如果还不在就跳转到最后一个url里
+      try_files /$arg_file /image404.html;
+    }
+    location = /image404.html {
+      # 图片不存在返回特定的信息
+      return 404 "image not found\n";
+    }
+  }
+}
+```
+
+### Nginx中的正则如何匹配中文
+
+首先确定在编译pcre时加了enable-utf8参数，如果没有，请重新编译pcre，然后就可以在Nginx的配置文件中使用这
+样的正则：“(*UTF8)^/[x{4e00}-x{9fbf}]+)$”注意引号和前面的(*UTF8)，(*UTF8)将告诉这个正则切换为UTF8模式。
+
+```php
+[root@backup conf]# pcretest
+PCRE version 8.10 2010-06-25
+  re> /^[x{4e00}-x{9fbf}]+/8
+data> 测试
+ 0: x{6d4b}x{8bd5}
+data> Nginx模块参考手册中文版
+No match
+data> 参考手册中文版
+ 0: x{53c2}x{8003}x{624b}x{518c}x{4e2d}x{6587}x{7248}
+```
+
 ## nginx常用命令
 
 **tasklist /fi "imagename eq nginx.exe"**: windows查看nginx进程 
@@ -513,3 +805,5 @@ proxy_cache_valid any 1m;
 [Using nginx as a forward proxy server for fun and glory](https://ef.gy/using-nginx-as-a-proxy-server)
 
 [Understanding Nginx HTTP Proxying, Load Balancing, Buffering, and Caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
+
+[Nginx学习笔记五Nginx的Rewrite规则](http://blog.sina.com.cn/s/blog_664553710100zkqf.html)
