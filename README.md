@@ -34,6 +34,14 @@
 
 [nginx understanding](./nginx.md)
 
+[pm2 note](./pm2.md)
+
+[node note](./node.md)
+
+[iptables note](./iptables.md)
+
+[CentOS note](./CentOS.md)
+
 ### 工具
 [roots：a fast, simple, and customizable static site compiler.](http://roots.cx/articles/getting-started)
 
