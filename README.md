@@ -14,6 +14,8 @@
 
 [svg学习笔记](./svg.md)
 
+[curl](./curl.md)
+
 [模板引擎](./template.md)
 
 [session cookie](./cookie.md)
