@@ -71,6 +71,7 @@ reading/writing.
 # node app.js &
 ```
 结果是：
+
 ![node cluster](./images/cluster1.png)
 
 因为我的测试机是4核CPU所以会fork四个进程，每个进程都会执行app.js
