@@ -1,3 +1,230 @@
+# http
+
+## 服务器推送技术
+传统模式的 Web 系统以客户端发出请求、服务器端响应的方式工作。这种方式并不能满足很多现实应用的需求，譬如：
+
+* 监控系统：后台硬件热插拔、LED、温度、电压发生变化；
+* 即时通信系统：其它用户登录、发送信息；
+* 即时报价系统：后台数据库内容发生变化；
+
+### comet
+一般将基于 HTTP 长连接、无须在浏览器端安装插件的“服务器推送”技术为“Comet”。所以Comet 方式通俗的说就是一种长连接机制 (long lived http) 。同样是由 Browser 端主动发起请求，但是 Server 端以一种似乎非常慢的响应方式给出回答。这样在这个期间内，服务器端可以使用同一个 connection 把要更新的数据主动发送给 Browser 。因此请求可能等待较长的时间，期间没有任何数据返回，但是一旦有了新的数据，它将立即被发送到客户机。Comet 又有很多种实现方式，但是总的来说对 Server 端的负载都会有增加 . 虽然对于单位操作来说，每次只需要建议一次 connection, 但是由于 connection 是保持较长时间的 , 对于 server 端的资源的占用要有所增加。
+
+优点：实时性好（消息延时小）；性能好（能支持大量用户）
+
+缺点：长期占用连接，丧失了无状态高并发的特点。
+
+应用：股票系统。实时通讯。
+
+#### comet通常包含以下四个过程：
+
+**1. 轮询的建立**
+建立轮询的过程很简单，浏览器发起请求后进入循环等待状态，此时由于服务器还未做出应答，所以HTTP也一直处于连接状态中。 
+**2. 数据的推送**
+在循环过程中，服务器程序对数据变动进行监控，如发现更新，将该信息输出给浏览器，随即断开连接，完成应答过程，实现“服务器推”。 
+**3. 轮询的终止**
+轮询可能在以下3种情况时终止： 
+**3.1. 有新数据推送**
+当循环过程中服务器向浏览器推送信息后，应该主动结束程序运行从而让连接断开，这样浏览器才能及时收到数据。 
+**3.2. 没有新数据推送** 
+循环不能一直持续下去，应该设定一个最长时限，避免WEB服务器超时（Timeout），若一直没有新信息，服务器应主动向浏览器发送本次轮询无新信息的正常响应，并断开连接，这也被称为“心跳”信息。 
+**3.3. 网络故障或异常** 
+由于网络故障等因素造成的请求超时或出错也可能导致轮询的意外中断，此时浏览器将收到错误信息。 
+**4. 轮询的重建**
+浏览器收到回复并进行相应处理后，应马上重新发起请求，开始一个新的轮询周期。
+
+#### Comet实现模型
+
+##### 传统轮询
+在 Web 早期，这一点常使用 meta 刷新实现。这将自动指示浏览器在指定秒数之后重新装载页面，从而支持简陋的轮询（ polling ）。例如在 HTML 文件中加入 <META HTTP-RQUIV="Refresh" CONTENT=12> ，实际上就是 HTTP 头标告知浏览器每 12 秒更新一次文档。
+
+优点：不需要服务器端配置
+
+缺点：用户体验度差对服务器的压力很大，带宽流失严重
+
+##### ajax轮询
+异步响应机制，即通过不间断的客户端 Ajax 请求，去发现服务端的变化。这种方式由于是客户端主动连接的，所以会有一定程度的延时，并且服务器的压力也不小。
+
+使用AJAX实现服务器推送与传统AJAX应用的不同之处在于：
+
+* 服务器端会阻塞请求直到有数据返回或者超时；
+* 客户端JS响应函数在处理完服务端返回的信息后会再次发出请求，重新建立连接；
+
+代码片段:
+```javascript
+window.setInterval(function () {
+    $.get(url, 
+        {"timed": new Date().getTime()}, 
+        function (data) {
+            $("#logs").append("[data: " + data + " ]<br/>");
+    });
+}, 3000);
+```
+
+##### 长轮询
+原理是客户端发出一个http长连接请求，然后等待服务器的响应，服务器接到请求之后，并不立即发送出数据，而是hold住这个Connecton。这个处理是非阻塞的，所以服务器可以继续处理其他请求。在某个时刻，比如服务器有新数据了，服务器再主动把这个消息推送出去，即通过之前建立好的连接将数据推送给客户端。客户端收到返回。这个时候就可以处理数据，然后再次发起新的长连接。服务器压力一般，实时性很高。Servlet 3.0开始已经支持该技术。sina微博就是使用的原生Servlet 3实现的消息推送。
+
+##### 基于iframe
+通过在 HTML 页面里嵌入一个隐蔵帧，然后将这个隐蔵帧的 SRC 属性设为对一个长连接的请求，服务器端就能源源不断地往客户端输入数据。这种方式的难点在于如何判断连接中断并重新尝试连接。
+
+普通轮询iframe代码片段：
+```javascript
+window.setInterval(function () {
+    $("#logs").append("[data: " + $($("#frame").get(0).contentDocument).find("body").text() + " ]<br/>");
+    $("#frame").attr("src", {url} + new Date().getTime());
+    // 延迟1秒再重新请求
+    window.setTimeout(function () {
+        window.frames["polling"].location.reload();
+    }, 1000);
+}, 5000);
+```
+
+长连接iframe代码片段
+```javascript
+window.setInterval(function () {
+    var url = {url} + new Date().getTime();
+    var $iframe = $('<iframe id="frame" name="polling" style="display: none;" src="' + url + '"></iframe>');
+    $("body").append($iframe);
+
+    $iframe.load(function () {
+        $("#logs").append("[data: " + $($iframe.get(0).contentDocument).find("body").text() + " ]<br/>");
+        $iframe.remove();
+    });
+}, 5000);
+```
+
+**套接字：** 可以利用 Flash 的 XMLSocket 类或者 Java 的 Applet 来建立 Socket 连接，实现全双工的服务器推送，然后通过 Flash 或者Applet 与 JavaScript 通信的接口来实现最终的数据推送。但是这种方式需要 Flash 或者 JVM 的支持，同样不太合适于终端用户。
+
+
+**HTML5的WebSocket：** 这种方式其实与套接字一样，但是这里需要单独强调一下：它是不需要用户额外安装任何插件的。HTML5 提供了一个 WebSocket 的 JavaScript 接口，可以直接与服务端建立Socket 连接，实现全双工通信，这种方式的服务器推送就是完全意义上的服务器推送了，没有半点模拟的成分，只是现阶段支持 HTML5 的浏览器并不多，而且一般老版本的各种浏览器基本都不支持。
+
+##### 实际开发中应注意问题
+对于一个实际的应用而言，系统的稳定性和性能是非常重要的。将 HTTP 长连接用于实际应用，很多细节需要考虑。
+
+###### 不要在同一客户端同时使用超过两个的 HTTP 长连接
+这个是由于HTTP 1.1 规范中规定：客户端不应该与服务器端建立超过两个的 HTTP 连接，新的连接会被阻塞。
+
+
+###### 服务器端的性能和可扩展性
+一般的WEB服务器是为每个连接创建一个线程，所以在使用Comet时，服务器要维护大量并发，长期存在的长连接。在这种背景下，就需要服务器负载均衡和集群技术，或者在服务端做一些优化。之前有个测试显示200万个Http长连接占用19G服务器内存，一个大约9kb；所以,你可以算一下你的服务器最多可以维护多少个长连接。
+
+###### 控制信息与数据信息使用不同的 HTTP 连接
+用长连接时，存在一个很常见的场景：客户端网页需要关闭，而服务器端还处在读取数据的堵塞状态，客户端需要及时通知服务器端关闭数据连接。服务器在收到关闭请求后首先要从读取数据的阻塞状态唤醒，然后释放为这个客户端分配的资源，再关闭连接。
+
+###### 在客户和服务器之间保持“心跳”信息
+客户端不知道何时服务器才有数据传送。服务器端需要确保当客户端不在状态（工作）时，释放为这个客户端分配的资源，防止内存泄漏。因此需要一种机制使双方知道大家都在正常运行。
+
+#### websocket、webworker、server sent events
+
+##### Web Workers
+在HTML5的规范引入了Web Workers概念，解决了javascript无法多线程工作的问题。
+一个worker可以理解为一个线程，那么workers自然是多线程了。
+web worker处于一个自包含的环境中，无法访问主线程的window对象和document对象，和主线程通信只能通过异步消息传递机制。
+
+将期望单独异步执行的javascript代码放在一个单独的js文件中，然后在页面中通过构造函数Worker()来创建一个线程。
+Worker()构造函数的参数的是js文件的路径，可以是相对路径也可以是绝对路径（必须是同源的）。worker.js文件就会被异步加载，并在后台执行
+
+[web worker](http://javascript.ruanyifeng.com/htmlapi/webworker.html)
+
+##### 跨文档消息机制 Cross-document messaging
+HTML5 提供了在网页文档之间相互接收和发送消息的功能。只需要获取到网页所在的窗口对象实例，两个 Web 页面就可以相互通信了，甚至是跨域的。postMessage 允许页面中多个 iframe/window 间的通信。
+
+要想接收从其他窗口发送来的信息，只需要监听窗口对象的 onmessage 事件即可。
+一个窗口想要发送消息，则通过 postMessage(message, “”) 来传递数据。两个参数代表的含义分别是：
+
+* 第一个参数表示所要发送的消息文本，可以是任何 js对象（一般都通过 JSON 把对象转化成文本）；
+* 第二个参数表示接收消息的对象窗口的url地址，通配符星号 指定全部地址。
+
+不用通配符也可以指定具体的 url，那么在 onmessage 中加个来源判断
+```javascript
+if( event.origin !== ‘xxxx’ ) return;
+```
+
+示例: 模拟不同域间的通信，比如父页面中嵌了个 iframe 子页面，且父子是不同源的。
+父页面给子页面发送消息，子页面接收
+```javascript
+// 父页面中：父向子发
+document.getElementById('iframeId').contentWindow.postMessage('父向子发送的数据');
+// 子页面中：子对消息监听，随时接收数据
+window.addEventListener('message', function(event){
+    console.log(event.data);
+});
+```
+与之对应，如果子页面给父页面发消息的话，如下：
+
+```javascript
+// 父页面中：监听
+window.addEventListener('message', function(event){
+    console.log(event.data);
+});
+// 子页面中：子对父发消息
+window.parent.postMessage('子向父发送的数据');
+```
+
+##### Server Sent Events
+HTML5的服务器端发送事件（Server Sent Events）是由Opera 创建的，它实现了将Comet 技术规范化。这个标准通过JavaScript API EventSource 为应用提供了原生的实时更新支持。Event Source 可以连接到服务器端，通过HTTP 流异步推送数据到客户端。Server-Sent Events 在浏览器和服务器端之间建立一个单一、双向、持久的连接。
+
+和WebSocket API 不同，Server-Sent Events 和EventSource 对象在应用里使用HTTP 实现服务端实时推送功能。
+
+##### Web sockets
+WebSocket的主要作用是，允许服务器端与客户端进行全双工（full-duplex）的通信
+
+WebSocket不使用HTTP协议，而是使用自己的协议
+
+```javascript
+if(window.WebSocket != undefined) {
+    var connection = new WebSocket('ws://localhost:1740');
+}
+
+/*
+建立连接以后的WebSocket实例对象（即上面代码中的connection），有一个readyState属性，表示目前的状态，可以取4个值：
+0： 正在连接
+1： 连接成功
+2： 正在关闭
+3： 连接关闭
+
+*/
+
+// 握手协议成功以后，readyState就从0变为1，并触发open事件，这时就可以向服务器发送信息了
+connection.onopen = wsOpen;
+
+function wsOpen (event) {
+    console.log('Connected to: ' + event.currentTarget.URL);
+}
+
+connection.onmessage = wsMessage;
+
+// event对象的data属性包含了服务器返回的数据。
+function wsMessage (event) {
+    console.log(event.data);
+}
+
+//连接建立后，客户端通过send方法向服务器端发送数据。
+connection.send(message);
+
+// 如果出现错误，浏览器会触发WebSocket实例对象的error事件。
+connection.onerror = wsError;
+
+function wsError(event) {
+    console.log("Error: " + event.data);
+}
+
+connection.onclose = wsClose;
+
+function wsClose () {
+    console.log("Closed");
+}
+
+connection.close();
+
+```
+
+[WebSocket](http://javascript.ruanyifeng.com/htmlapi/websocket.html)
+
+[HTML5 web通信（跨文档通信/通道通信）简介](http://www.zhangxinxu.com/wordpress/2012/02/html5-web-messaging-cross-document-messaging-channel-messaging/)
+
+[Chrome 远程调试协议分析与实战](http://fex.baidu.com/blog/2014/06/remote-debugging-protocol/)
+
 ## 缓存分类
 
 缓存分为数据库缓存、服务端侧（server side，比如 Nginx、Apache）和客户端侧（client side，比如 web browser）。

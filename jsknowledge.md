@@ -210,6 +210,8 @@ sort的排序条件是：
 
 #### 相应的参考资料
 
+[详解js跨域问题](http://segmentfault.com/a/1190000000718840)
+
 [这10道javascript笔试题你都会么](http://web.jobbole.com/82251/)
 
 [40个重要的HTML5面试题及答案](http://blog.jobbole.com/78346/)
