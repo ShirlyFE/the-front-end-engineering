@@ -24,6 +24,9 @@ server.on('listening', function() {
 ### cluster工作原理
 每个worker进程通过使用child_process.fork()函数，基于IPC（Inter-Process Communication，进程间通信），实现与master进程间通信。
 
+关于IPC请看[这里](./IPC.md)
+
+
 当worker使用server.listen（...）函数时 ，将参数序列传递给master进程。如果master进程已经匹配workers，会将传递句柄给worker。如果master没有匹配好worker，那么会创建一个worker，并将句柄传递给worker
 
 当多个进程都在 accept() 同样的资源的时候，操作系统的负载均衡非常高效。Node.js没有路由逻辑，worker之间没有共享状态。

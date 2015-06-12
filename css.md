@@ -1,3 +1,5 @@
+# CSS
+
 ### 1. the most interesting HTML/JS/DOM/CSS hacks that most web developers don't know about
 
 #### see the layout
@@ -80,7 +82,96 @@ BFC(Block Formatting Context)，简单讲，它是提供了一个独立布局的
 6. BFC 可以阻止元素被浮动元素覆盖，浮动元素的块状兄弟元素会无视浮动元素的位置，尽量占满一整行，这样就会被浮动元素覆盖，为该兄弟元素触发 BFC 后可以阻止这种情况的发生。
 
 
+## 获取元素css值之getComputedStyle and getPropertyValue
 
+getComputedStyle获取元素最终应用的CSS属性值，返回一个css样式声明对象 "[object CSSStyleDeclaration]"
+
+语法如下：
+```javascript
+var style = window.getComputedStyle('元素', '伪类') //伪类不是必须
+```
+
+### getComputedStyle与style区别
+
+* getComputedStyle方法只读，element.style可读可写
+* element.style只获取style属性中的css样式，getComputedStyle获取元素最终样式
+
+jquery源码中获取css属性的代码如下：
+
+```javascript
+var getStyles = function( elem ) {
+    // Support: IE<=11+, Firefox<=30+ (#15098, #14150)
+    // IE throws on elements created in popups
+    // FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
+    if ( elem.ownerDocument.defaultView.opener ) {
+        return elem.ownerDocument.defaultView.getComputedStyle( elem, null );
+    }
+
+    return window.getComputedStyle( elem, null );
+}
+```
+### currentStyle
+getComputedStyle方法IE6~8不支持，IE有自己的方式，那就是currentStyle
+
+语法：
+```
+element.currentStyle
+```
+
+那么要获取元素属性，我们就可以这样：
+
+```javascript
+var styleObj = element.currentStyle? element.currentStyle : window.getComputedStyle(element, null)
+
+// styleObj在标准浏览器下float的获取时cssFloat，而IE8及以下是styleFloat，IE9中styleFloat和cssFloat都可以
+
+var height = styleObj.height
+```
+
+**注：** currentStyle属性不支持伪类样式获取，这是其与getComputedStyle方法的差异
+
+### getPropertyValue
+getPropertyValue方法可以获取CSS样式申明对象上的属性值（直接属性名称），例如：
+
+```javascript
+window.getComputedStyle(element, null).getPropertyValue("float");
+```
+如果我们不使用getPropertyValue方法，直接使用键值访问，其实也是可以的。但是，比如这里的的float，如果使用键值访问，则不能直接使用getComputedStyle(element, null).float，而应该是cssFloat与styleFloat，需要浏览器判断了
+
+使用getPropertyValue方法不使用驼峰书写形式，例如：
+
+```javascript
+style.getPropertyValue("border-top-left-radius")
+```
+
+#### 兼容性
+getPropertyValue方法IE9+以及其他现代浏览器都支持
+
+### IE的getAttribute
+老的IE浏览器（包括最新的），getAttribute方法提供了与getPropertyValue方法类似的功能，可以访问CSS样式对象的属性。用法与getPropertyValue类似：
+
+```javascript
+styleObj.getAttribute("float");
+```
+
+```javascript
+style.getAttribute("background-color");
+```
+
+IE6浏览器需要驼峰写法：
+
+```javascript
+style.getAttribute("backgroundColor")
+```
+
+## css3伪元素的content玄机
+
+content内容生成有非常多的特别的技术和应用，移步这里查看相关[demo](http://shirlyloveu.github.io/shirlyDemo/fakeEleContentCounter.html)
+
+需要注意的是content生成的内容不可通过DOM操作
+
+## css实现垂直居中
+垂直居中的方法多种多样，请查看此[demo](http://shirlyloveu.github.io/shirlyDemo/verticalCenter.html)了解各种实现方案
 
 ## 资料
 [详解BFC](http://kayosite.com/remove-floating-style-in-detail.html)
