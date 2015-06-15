@@ -1,0 +1,151 @@
+1. console.log() 可以打印任何类型的数据。而 alert() 只能输出string，如果alert输出时对象会自动调用toString()方法。如果想console.log() 输出的与alert相同，需要调用toString():
+console.log(obj.toString());
+
+2. 不同对象通过call调用的执行结果
+function a() {}
+
+
+a. if the function code is strict code,set the ThisBinding to thisArg
+b. Else if thisArg is null or undefined,set the ThisBing to the global Object.
+c. Else if Type(thisArg) is not Object,set the ThisBinding to ToObject(thisArg).
+d. Else set ThisBing to thisArg.
+e. Let localEnv be the result of calling NewDeclarativeEnviroment passing the value of the [[Scope]] internal property of F as the argument.
+
+
+
+题目一：
+
+if (!("a" in window)) {
+    var a = 1;
+}
+alert(a); // undefined
+
+ 
+
+题目二：
+
+var a = 1,
+    b = function a(x) {
+        x && a(--x);
+    };
+alert(a); // 1
+
+ 
+
+题目三：
+
+function a(x) {
+    return x * 2;
+}
+var a;
+alert(a);  // function a(x) {return x * 2;}
+
+ 
+
+题目四：
+
+function b(x, y, a) {
+    arguments[2] = 10;
+    alert(a);
+}
+b(1, 2, 3);  // 10
+
+ 
+
+题目五：
+
+function a() {
+    alert(this);
+}
+a.call(null); // [object Window]
+
+
+
+每个类的内部都有一个[[class]]的属性名并且指向它的构造函数名，当调用Object.prototype.toString()方法时，都会返回一个[object NativeConstructiorName]的字符串且原生的构造函数名与全局作用域无关。
+
+
+null现在被认为是对象的占位符，所以虽然其是基本类型，但是typeof null 为"object"
+
+
+
+var input = 5;  
+switch (input) {  
+    case 10:  
+        function fun1() {  
+            alert(10);  
+        }  
+        break;  
+    case 5:  
+        function fun1() {  
+            alert(5);  
+        }  
+        break;  
+    default:  
+        function fun1() {  
+            alert("default");  
+        }  
+        break;  
+}  
+
+令人恼怒的是，在chrome和IE下执行的是我们前面的推断，function在所有执行代码前先编译，且后面的function会覆盖前面的function定义结果是
+fun1(); //default  
+
+而FireFox把if中的语句作为执行快，运行时才编译，所以他的结果是:
+fun1(); //5  
+
+为了解决这个问题，你需要吧动态分配的函数以函数的表达式来执行，避免编译器对函数还没有执行到就已经分配了，比如
+var input = 5;  
+switch (input) {  
+    case 10:  
+        fun1 = function() {  
+            alert(10);  
+        }  
+        break;  
+    case 5:  
+        fun1 = function() {  
+            alert(5);  
+        }  
+        break;  
+    default:  
+        fun1 = function() {  
+            alert("default");  
+        }  
+        break;  
+}  
+
+** 认识console，调试js
+console.log是最简单的输出信息到console窗口的方法，支持多个参数，该方法会把这些参数组合在一起显示，e.g:
+console.log({name:"xueer"},"HaHa");
+输出： Object  "HaHa"
+         name: "xueer"
+         __proto__: Object
+
+log方法第一个参数支持类似C语言printf字符串替换模式，Log支持下面几种替换模式：
+%s--代替字符串
+%d -- 代替整数
+%f -- 代替浮点数
+%o -- 代替Object
+eg: console.log("Look_%d--%s here is Object: %o",234,"Wahaha",{name:"xueer"})
+控制台输出：Look_234--Wahaha here is Object: Object
+                                                name: "xueer"
+                                                __proto__:Object
+console.debug,info,wran,error这四种方法与log方法使用一模一样，只是显示的图标和文字颜色不一样
+
+console.assert(expression[,object,...]):assert方法类似于单元测试中的断言，当expression表达式为false的时候，输出后面的信息
+e.g: console.assert(false,{message:"xueer add it for test"});
+输出：Assertion failed:Object {message: "xueer add it for test"};
+
+console.clear: 清空console中的所有信息（chrome不支持）
+
+console.dirxml(node)： 把html元素的html代码打印出来，等同于log
+
+console.trace()：查看当前函数的调用栈信息，即当前函数是如何调用的
+
+console.time(name)/console.timeEnd(name):
+我们经常需要测试 js 函数的执行时间，可能我们自己写代码在第1 条语句和 最后 1 条语句取当前时间相减。这组函数其实就实现了这样的功能，time(name)根据 name 创建 1 个新 的计时器。timeEnd(name)停止给定name 的计时器，并显示时间
+比如：
+function a() {console.time(a); var a=2, b=4, sum = a+b; console.log(sum);console.log("接下来获取此方法的执行时间"); console.timeEnd(a);}
+
+
+http://www.cnblogs.com/Arvin-wjw/p/3423207.html
+

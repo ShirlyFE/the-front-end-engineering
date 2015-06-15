@@ -1,0 +1,2 @@
+PhantomJS是一个无界面的WebKit浏览器引擎,还有配套的JavaScript API.它原生支持各种web标准技术: DOM处理, CSS选择器, JSON, Canvas, 以及SVG.
+

@@ -1,0 +1,390 @@
+1.node可以进行同步读写文件也可以异步读写，实例参考readfile.js和readfileSync.js
+———————————————————————————————————————————————————————————————————————————————
+2.Node.js所有异步I/O操作在完成时都会发送一个事件到事件队列。在开发者看来，事件由EventEmitter对象提供。前面提到的fs.readFile和http.createServer的回调函数都是通过EventEmitter来实现的。关于事件的简单例子，可以参见EventEmitter.js文件
+
+events 模块只提供了一个对象： events.EventEmitter。EventEmitter 的核心就
+是事件发射与事件监听器功能的封装
+
+EventEmitter 定义了一个特殊的事件 error，它包含了“错误”的语义，我们在遇到
+异常的时候通常会发射 error 事件。当 error 被发射时，EventEmitter 规定如果没有响
+应的监听器，Node.js 会把它当作异常，退出程序并打印调用栈。我们一般要为会发射 error
+事件的对象设置监听器，避免遇到错误后整个程序崩溃。
+
+大多数时候我们不会直接使用 EventEmitter，而是在对象中继承它。包括 fs、net、
+http 在内的，只要是支持事件响应的核心模块都是 EventEmitter 的子类。
+为什么要这样做呢？原因有两点。首先，具有某个实体功能的对象实现事件符合语义，
+事件的监听和发射应该是一个对象的方法。其次JavaScript 的对象机制是基于原型的，支持
+部分多重继承，继承 EventEmitter 不会打乱对象原有的继承关系。
+———————————————————————————————————————————————————————————————————————————————
+3.node通过exports暴露模块访问方法，但是模块的加载时单次的，也就是说require不会重复加载模块，也就说无论调用多少次require，获得的模块都是同一个，我们看看getModule.js的多require版本：getModuleMultiRequire.js
+———————————————————————————————————————————————————————————————————————————————
+4.不可以覆盖exports，事实上，exports本身仅是一个普通的空对象{},专门用来声明接口，本质上是通过它为模块壁报的内部建立了一个有限的访问接口。不可以通过对exports直接赋值代替对module.exports赋值，exports实际上只是一个和module.exports指向同一个对象的变量，它本身会在模块执行结束后释放，但module不会，因此只能通过指定module.exports来改变访问接口
+实例请看exports.js
+———————————————————————————————————————————————————————————————————————————————
+5.node中文件与模块式一一对应的，文件不仅可以是Javascript代码或者二进制代码，还可以是一个文件夹。最简单的包，就是一个作为文件夹的模块。可以参考getPackage.js。我们把文件夹通过这种方式封装成为一个模块，即所谓的包，有以下好处：包通常是一些模块的集合，在模块的基础上提供了更高层的抽象，相当于提供了一些固定接口的函数库。通过定制包下的package.json，我们可以创建更复杂、更完善、更符合规范的包用于发布。这一点请查看packageHasJson包
+node.js在调用某个包时，会首先检查包中package.json文件的main字段，将其作为包的接口模块，如果package.json或main字段不存在，会尝试寻找index.js或index.node作为包的接口。package.json是CommonJs规定的用来描述包的文件
+———————————————————————————————————————————————————————————————————————————————
+6.通过npm安装包时看，可以通过本地模式和全局模式两种方式安装，两种的区别如下：
+
+  模 式     可通过require使用  注册PATH
+本地模式            是            否
+全局模式            否            是
+总而言之，当我们要把某个包作为工程运行时的一部分时，通过本地模式获取，如果要
+在命令行下使用，则使用全局模式安装。
+———————————————————————————————————————————————————————————————————————————————
+7. 创建全局链接
+npm 提供了一个有趣的命令npm link，它的功能是在本地包和全局包之间创建符号链
+接。我们说过使用全局模式安装的包不能直接通过 require 使用，但通过 npm link命令
+可以打破这一限制。举个例子，我们已经通过 npm install -g express 安装了 express，
+这时在工程的目录下运行命令：
+$ npm link express 
+./node_modules/express -> /usr/local/lib/node_modules/express 
+我们可以在 node_modules 子目录中发现一个指向安装到全局的包的符号链接。通过这
+种方法，我们就可以把全局包当本地包来使用了。
+
+除了将全局的包链接到本地以外，使用 npm link命令还可以将本地的包链接到全局。
+使用方法是在包目录（package.json 所在目录）中运行npm link 命令。如果我们要开发
+一个包，利用这种方法可以非常方便地在不同的工程间进行测试。
+———————————————————————————————————————————————————————————————————————————————
+8.node下可以进行单步调试
+请参见debug.js
+在命令行下输入$node debug debug.js就可以打开调试终端，在终端下分别输入：n;sb("debug.js", 4);repl;x;a+1;c;等一系列命令查看会发生什么
+
+我们可以用一些基本的命令进行单步跟踪调试
+
+命 令                                   |   功能
+————————————————————————————————————————|——————————————————————————————————————
+run                                     |   执行脚本，在第一行暂停
+restart                                 |   重新执行脚本
+cont, c                                 |   继续执行，直到遇到下一个断点
+next, n                                 |   单步执行
+step, s                                 |   单步执行并进入函数
+out, o                                  |   从函数中步出
+setBreakpoint(), sb()                   |   在当前行设置断点
+setBreakpoint(‘f()’), sb(...)           |   在函数f的第一行设置断点
+setBreakpoint(‘script.js’, 20), sb(...) |   在script.js 的第20行设置断点
+clearBreakpoint, cb(...)                |   清除所有断点
+backtrace, bt                           |   显示当前的调用栈
+list(5)                                 |   显示当前执行到的前后5行代码
+watch(expr)                             |   把表达式 expr 加入监视列表
+unwatch(expr)                           |   把表达式 expr 从监视列表移除
+watchers                                |   显示监视列表中所有的表达式和值
+repl                                    |   在当前上下文打开即时求值环境
+kill                                    |   终止当前执行的脚本
+scripts                                 |   显示当前已加载的所有脚本
+version                                 |   显示V8 的版本
+————————————————————————
+node可以进行远程调试，node --debug命令可以启动调试服务器，默认调试端口是5858，也可以通过使用--debug=1234指定调试端口为1234.使用--debug选项运行脚本时，脚本正常执行，但不会暂停。执行过程中调试客户端可以连接到调试服务器。如要求脚本暂停执行等待客户端连接，则应使用--debug-brk选项，这时调试服务器在启动后会立刻暂停执行脚本，等待调试客户端连接。
+当调试服务器启动以后，可以用命令行调试工具作为调试客户端连接，例如：
+//在一个终端中
+$ node --debug-brk debug.js 
+debugger listening on port 5858 
+//在另一个终端中
+$ node debug 127.0.0.1:5858 
+connecting... ok 
+debug> n 
+breakin /home/byvoid/debug.js:2 
+1 var a = 1; 
+2 var b = 'world'; 
+3 var c = function(x) { 
+4 console.log('hello ' + x + a); 
+debug> 
+事实上，当使用node debug debug.js 命令调试时，只不过是用Node.js 命令行工
+具将以上两步工作自动完成而已
+———————————————————————————————————————————————————————————————————————————————
+9.使用node-inspector 调试Node.js 
+大部分基于Node.js 的应用都是运行在浏览器中的，例如强大的调试工具node-inspector。
+node-inspector 是一个完全基于Node.js 的开源在线调试工具，提供了强大的调试功能和友好
+的用户界面，它的使用方法十分简便。
+首先，使用 npm install -g node-inspector 命令安装node-inspector，然后在终
+端中通过node --debug-brk=5858 debug.js 命令连接你要除错的脚本的调试服务器，
+启动node-inspector：
+$ node-inspector 
+在浏览器中打开http://127.0.0.1:8080/debug?port=5858，即可显示出优雅的Web调试工
+具
+node-inspector 的使用方法十分简单，和浏览器脚本调试工具一样，支持单步、断点、
+调用栈帧查看等功能。
+node-inspector 使用了WebKit Web Inspector，因此只能在Chrome、Safari 
+等WebKit 内核的浏览器中使用，而不支持Firefox 或Internet Explorer。
+———————————————————————————————————————————————————————————————————————————————
+10.node中的全局对象是global，而浏览器端是window
+process 是一个全局变量，即 global 对象的属性。它用于描述当前Node.js 进程状态
+的对象，提供了一个与操作系统的简单接口。通常在你写本地命令行程序的时候，少不了要和它打交道
+process.argv是命令行参数数组，第一个元素是 node，第二个元素是脚本文件名，
+从第三个元素开始每个元素是一个运行参数。
+
+process.stdout是标准输出流，通常我们使用的 console.log() 向标准输出打印
+字符，而 process.stdout.write() 函数提供了更底层的接口。
+ process.stdin是标准输入流，初始时它是被暂停的，要想从标准输入读取数据，
+你必须恢复流，并手动编写流的事件响应函数。
+实例可以参见avgs.js文件
+
+process.nextTick(callback)的功能是为事件循环设置一项任务
+初学者很可能不理解这个函数的作用，有什么任务不能在当下执行完，需要交给下次事
+件循环响应来做呢？我们讨论过，Node.js 适合I/O 密集型的应用，而不是计算密集型的应用，
+因为一个Node.js 进程只有一个线程，因此在任何时刻都只有一个事件在执行。如果这个事
+件占用大量的CPU 时间，执行事件循环中的下一个事件就需要等待很久，因此Node.js 的一
+个编程原则就是尽量缩短每个事件的执行时间。process.nextTick() 提供了一个这样的
+工具，可以把复杂的工作拆散，变成一个个较小的事件。
+除此之外process还展示了process.platform、
+process.pid、process.execPath、process.memoryUsage() 等方法
+不要使用setTimeout(fn,0)来代替process.nextTick方法，前者比后者效率低的多
+———————————————————————————————————————————————————————————————————————————————
+11.node的util 是一个Node.js 核心模块，提供常用函数的集合，用于弥补核心JavaScript 的功能
+过于精简的不足。
+util.inherits(constructor, superConstructor)是一个实现对象间原型继承
+的函数。JavaScript 的面向对象特性是基于原型的，与常见的基于类的不同。JavaScript 没有
+提供对象继承的语言级别特性，而是通过原型复制来实现的。请参见source/sec2中的utilinherits.js模块
+注意，Sub 仅仅继承了Base 在原型中定义的函数，而构造函数内部创造的 base 属
+性和 sayHello 函数都没有被 Sub 继承。
+###############################
+util.inspect(object,[showHidden],[depth],[colors])是一个将任意对象转换
+为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。 
+showHidden 是一个可选参数，如果值为 true，将会输出更多隐藏信息。
+depth 表示最大递归的层数，如果对象很复杂，你可以指定层数以控制输出信息的多
+少。如果不指定depth，默认会递归2层，指定为 null 表示将不限递归层数完整遍历对象。
+如果color 值为 true，输出格式将会以ANSI 颜色编码，通常用于在终端显示更漂亮
+的效果。
+特别要指出的是，util.inspect 并不会简单地直接把对象转换为字符串，即使该对
+象定义了toString 方法也不会调用。
+实例参见source/sec2中的utilinspect.js文件
+################################
+util还提供了util.isArray()、util.isRegExp()、
+util.isDate()、util.isError() 四个类型测试工具，以及util.format()、util. 
+debug() 等工具。有兴趣的读者可以访问http://nodejs.org/api/util.html 了解详细内容。
+———————————————————————————————————————————————————————————————————————————————12.fs模块
+fs 模块是文件操作的封装，它提供了文件的读取、写入、更名、删除、遍历目录、链接等POSIX 文件系统操作。与其他模块不同的是，fs 模块中所有的操作都提供了异步的和
+同步的两个版本
+
+fs.open(path, flags, [mode], [callback(err, fd)])是POSIX open 函数的
+封装，与C 语言标准库中的 fopen 函数类似。它接受两个必选参数，path 为文件的路径，
+flags 可以是以下值。
+ r ：以读取模式打开文件。
+ r+ ：以读写模式打开文件。
+ w ：以写入模式打开文件，如果文件不存在则创建。
+ w+ ：以读写模式打开文件，如果文件不存在则创建。
+ a ：以追加模式打开文件，如果文件不存在则创建。
+ a+ ：以读取追加模式打开文件，如果文件不存在则创建。
+mode 参数用于创建文件时给文件指定权限，默认是0666回调函数将会传递一个文
+件描述符 fd
+
+文件读取和访问权限的规范，通常用一个八进制数来表示。例如0754 表
+示文件所有者的权限是7 （读、写、执行），同组的用户权限是5 （读、执行），其他用户的权限是4 （读），
+写成字符表示就是-rwxr-xr--。
+② 文件描述符是一个非负整数，表示操作系统内核为当前进程所维护的打开文件的记录表索引。 
+13.http服务器与客户端
+http 模块，其中封装了一个高效的HTTP服务器和一个简易的HTTP 客户端。http.Server 是一个基于事件的HTTP 服务器，它的核心由Node.js 下层C++
+部分实现，而接口由JavaScript 封装，兼顾了高性能与简易性。http.request 则是一个
+HTTP 客户端工具，用于向HTTP 服务器发起请求
+
+http.Server 是一个基于事件的HTTP 服务器，所有的请求都被封装为独立的事件，
+开发者只需要对它的事件编写响应函数即可实现HTTP 服务器的所有功能。它继承自
+EventEmitter，提供了以下几个事件。
+
+request：当客户端请求到来时，该事件被触发，提供两个参数 req 和res，分别是
+http.ServerRequest 和 http.ServerResponse 的实例，表示请求和响应信息。
+ connection：当TCP 连接建立时，该事件被触发，提供一个参数 socket，为
+net.Socket 的实例。connection 事件的粒度要大于 request，因为客户端在
+Keep-Alive 模式下可能会在同一个连接内发送多次请求。
+ close ：当服务器关闭时，该事件被触发。注意不是在用户连接断开时。
+当然还有 checkContinue、upgrade、clientError 事件，通常我们不需要关
+心，只有在实现复杂的HTTP 服务器的时候才会用到。
+
+HTTP 请求一般可以分为两部分：请求头（Request Header）和请求体（Requset Body）。
+以上内容由于长度较短都可以在请求头解析完成后立即读取。而请求体可能相对较长，
+需要一定的时间传输，因此 http.ServerRequest 提供了以下3个事件用于控制请求体
+传输。
+ data   ：当请求体数据到来时，该事件被触发。该事件提供一个参数 chunk，表示接
+收到的数据。如果该事件没有被监听，那么请求体将会被抛弃。该事件可能会被调
+用多次。 
+ end    ：当请求体数据传输完成时，该事件被触发，此后将不会再有数据到来。
+ close  ： 用户当前请求结束时，该事件被触发。不同于 end，如果用户强制终止了
+传输，也还是调用close。
+ServerRequest的属性如下：
+名 称             |含 义
+—————————————————— ————————————————————————————————————————————
+complete          | 客户端请求是否已经发送完成
+httpVersion       | HTTP 协议版本，通常是1.0 或1.1 
+method            | HTTP 请求方法，如 GET、POST、PUT、DELETE 等
+url               | 原始的请求路径，例如/static/image/x.jpg或/user?name=byvoid 
+headers           | HTTP 请求头
+trailers          | HTTP 请求尾（不常见）
+connection        | 当前HTTP 连接套接字，为net.Socket 的实例
+socket connection | 属性的别名
+client client     | 属性的别名
+####################################
+获取GET 请求内容
+注意，http.ServerRequest 提供的属性中没有类似于PHP 语言中的$_GET 或
+$_POST 的属性，那我们如何接受客户端的表单请求呢？由于GET 请求直接被嵌入在路径
+中，URL是完整的请求路径，包括了 ? 后面的部分，因此你可以手动解析后面的内容作为GET 
+请求的参数。Node.js 的 url 模块中的 parse 函数提供了这个功能
+###################################
+获取POST 请求内容
+HTTP 协议1.1 版本提供了8种标准的请求方法，其中最常见的就是GET 和POST。相比
+GET 请求把所有的内容编码到访问路径中，POST 请求的内容全部都在请求体中。
+http.ServerRequest 并没有一个属性内容为请求体，原因是等待请求体传输可能是一件
+耗时的工作，譬如上传文件。而很多时候我们可能并不需要理会请求体的内容，恶意的POST请求会大大消耗服务器的资源。所以Node.js认是不会解析请求体的，当你需要的时候，
+需要手动来做
+请查看source/chap4/sec5/httpserverrequestpost.js文件得到结果
+####################################
+http.ServerResponse 是返回给客户端的信息，决定了用户最终能看到的结果。它
+也是由 http.Server 的 request 事件发送的，作为第二个参数传递，一般简称为
+response 或 res。
+http.ServerResponse 有三个重要的成员函数，用于返回响应头、响应内容以及结束
+请求。
+ response.writeHead(statusCode, [headers])：向请求的客户端发送响应头。
+statusCode 是HTTP 状态码，如200 （请求成功）、404 （未找到）等。headers 
+是一个类似关联数组的对象，表示响应头的每个属性。该函数在一个请求内最多只
+能调用一次，如果不调用，则会自动生成一个响应头。
+ response.write(data, [encoding])：向请求的客户端发送响应内容。data 是
+一个 Buffer 或字符串，表示要发送的内容。如果 data 是字符串，那么需要指定
+encoding 来说明它的编码方式，默认是utf-8。在response.end 调用之前，
+response.write 可以被多次调用。
+ response.end([data], [encoding])：结束响应，告知客户端所有发送已经完
+成。当所有要返回的内容发送完毕的时候，该函数 必须 被调用一次。它接受两个可
+选参数，意义和response.write 相同。如果不调用该函数，客户端将永远处于
+等待状态。
+################################
+http 模块提供了两个函数 http.request 和 http.get，功能是作为客户端向HTTP 
+服务器发起请求。
+ http.request(options, callback) 发起HTTP 请求。接受两个参数，option 是
+一个类似关联数组的对象，表示请求的参数，callback 是请求的回调函数。option
+常用的参数如下所示。
+  host ：请求网站的域名或IP 地址。
+  port ：请求网站的端口，默认80。
+  method ：请求方法，默认是GET。
+  path ：请求的相对于根的路径，默认是“/”。QueryString 应该包含在其中。
+例如 /search?query=byvoid。
+  headers ：一个关联数组对象，为请求头的内容。
+callback 传递一个参数，为 http.ClientResponse 的实例。
+http.request 返回一个 http.ClientRequest 的实例。 
+示例代码可以参看source/chap4/sec5/httprequest.js文件，该文件通过http.request发送了POST请求
+
+http.get(options, callback) http 模块还提供了一个更加简便的方法用于处
+理GET请求：http.get。它是 http.request 的简化版，唯一的区别在于http.get
+自动将请求方法设为了GET 请求，同时不需要手动调用req.end()。
+#################################
+http.ClientRequest 是由 http.request 或 http.get 返回产生的对象，表示一
+个已经产生而且正在进行中的HTTP 请求。它提供一个 response 事件，即 http.request 
+或 http.get 第二个参数指定的回调函数的绑定对象。我们也可以显式地绑定这个事件的
+监听函数,请参见source/chap4/sec5/httpresponse.js文件
+#################################
+http.ClientResponse 与 http.ServerRequest 相似，提供了三个事件 data、end
+和 close，分别在数据到达、传输结束和连接结束时触发，其中 data 事件传递一个参数
+chunk，表示接收到的数据。
+http.ClientResponse 也提供了一些属性，用于表示请求的结果状态，
+名 称          |  含 义
+——————————————— ——————————————————————————————————
+statusCode     |  HTTP 状态码，如200、404、500 
+httpVersion    |  HTTP 协议版本，通常是1.0 或1.1 
+headers        |  HTTP 请求头
+trailers       |  HTTP 请求尾（不常见）
+http.ClientResponse 还提供了以下几个特殊的函数。
+ response.setEncoding([encoding])：设置默认的编码，当 data 事件被触发
+时，数据将会以 encoding 编码。默认值是 null，即不编码，以 Buffer 的形式存
+储。常用编码为utf8。
+ response.pause()：暂停接收数据和发送事件，方便实现下载功能。
+ response.resume()：从暂停的状态中恢复。
+###############################################
+使用http模块，以一个简单例子来说明node http的优势。
+我们要实现一个POST 数据的表单，例如：
+<formmethod="post" action="http://localhost:3000/">
+<inputtype="text" name="title" />
+<textareaname="text"></textarea>
+<inputtype="submit" />
+</form> 
+这个表单包含两个字段：title 和 text，提交时以POST 的方式将请求发送给
+http://localhost:3000/。假设我们要实现的功能是将这两个字段的东西原封不动地返回给用户，
+PHP 只需写两行代码，储存为 index.php 放在网站根目录下即可：
+echo $_POST['title']; 
+echo $_POST['text']; 
+在3.5.1 节中使用了类似下面的方法（用http模块）：
+var http = require('http'); 
+var querystring = require('querystring'); 
+var server = http.createServer(function(req, res) { 
+    var post = ''; 
+    req.on('data', function(chunk) { 
+        post += chunk; 
+    }); 
+    req.on('end', function() { 
+        post = querystring.parse(post); 
+        res.write(post.title); 
+        res.write(post.text); 
+        res.end(); 
+    }); 
+}).listen(3000); 
+其实这个比较是不公平的，PHP之所以显得简单并不是因为它没有做这些事，而是因为
+PHP 已经将这些工作完全封装好了，只提供了一个高层的接口，而Node.js 的 http 模块提供的是底层的接口，尽管使用起来复杂，却可以让我们对HTTP协议的理解更加清晰。
+———————————————————————————————————————————————————————————————————————————————
+14. express框架
+express作为node的开发框架，因为它是目前最稳定、使用最广泛，而且Node.js官方推荐的唯一一个web开发框架，它除了为http模块提供了更高层的接口外，还实现了许多功能。
+其中包括：
+ 路由控制；
+ 模板解析支持；
+ 动态视图；
+ 用户会话；
+ CSRF 保护；
+ 静态文件服务；
+ 错误控制器；
+ 访问日志；
+ 缓存；
+ 插件支持。
+需要指出的是，Express 不是一个无所不包的全能框架，像Rails 或Django 那样实现了
+模板引擎甚至ORM （Object Relation Model，对象关系模型）。它只是一个轻量级的Web 框架，多数功能只是对HTTP协议中常用操作的封装，更多的功能需要插件或者整合其他模块来完成。
+下面用Express 重新实现前面的例子：
+varexpress = require('express'); 
+varapp = express.createServer(); 
+app.use(express.bodyParser()); 
+app.all('/', function(req, res) { 
+    res.send(req.body.title + req.body.text); 
+}); 
+app.listen(3000); 
+可以看到，我们不需要手动编写 req 的事件监听器了，只需加载 express.bodyParser() 
+就能直接通过 req.body 获取POST 的数据了。
+———————————————————————————————————————————————————————————————————————————————
+**********************************开始blog*********************************
+15.express
+express本来是应该作为本地安装程序，但考虑到其已经可以成为一个方便开发的工具，因此最好全局安装：npm install -g express
+不了解express的用法的话，可以express --help查看其帮助信息
+express在初始化一个项目的时候需要指定模板引擎，默认支持Jade和ejs。
+########################################
+set配置和use启动中间件
+app.set 是Express 的参数设置工具，接受一个键（key）和一个值（value），可用的参
+数如下所示。
+ basepath：              | 基础地址，通常用于res.redirect() 跳转。
+ views：                 | 视图文件的目录，存放模板文件。
+ view engine：           | 视图模板引擎。
+ view options：          | 全局视图参数对象。
+ view cache：            | 启用视图缓存。
+ case sensitive routes： | 路径区分大小写。
+ strict routing：        | 严格路径，启用后不会忽略路径末尾的“ / ”。
+ jsonp callback：        | 开启透明的JSONP 支持。
+Express 依赖于connect，提供了大量的中间件，可以通过 app.use 启用，几个重要中间件的用途说明：
+bodyParser          | 功能是解析客户端请求，通常是通过POST 发送的内容。
+methodOverride      | 用于支持定制的HTTP 方法①。
+router              | 是项目的路由支持。
+static              | 提供了静态文件支持。
+errorHandler        | 是错误控制器。
+###################################################
+layout模板文件
+默认情况下所有的模板都继承自layout.ejs，即<%- body %>部分才是独特的内容，其他部分都是共有的，可以看做是页面的框架
+
+有Express创建的网站架构如图所示：
+————————————————————————
+|                       |
+|     浏览器            |
+|                       |
+————————————————————————
+            |
+            |
+________________________
+|                       |
+|     路由控制器        |
+|_______________________|
+   |        |        |
+   |        |        |
+ ——————   ——————   ———————
+| 模板 | | 静态 | |  对象 |
+| 引擎 | | 文件 | |  模型 |
+ ——————   ——————   ———————
+ 可以看出，这是一个典型的MVC架构，浏览器发起请求，由路由控制器接受，根据不同的路径定向到不同的控制器。控制器处理用户的具体请求，可能会访问数据库中的对象，及模型部分。控制器还要访问模板引擎，生成视图的HTML，最后再由控制器返回给浏览器，完成一次请求

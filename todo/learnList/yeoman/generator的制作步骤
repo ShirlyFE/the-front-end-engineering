@@ -1,0 +1,8 @@
+创建generator的基本步骤：
+1. npm install -g generator-generator
+2. 建立一个目录，命名必须为generator-____,下划线是你的generator的真实名字
+3. cd到你的generator目录，yo generator命令生成最基本的generator
+4. npm link命令使得本地全局可以使用你的generator，当然像使用其他generator一样
+5. 修改app下的index.js(generator的入口文件)，和templates下面的内容形成自己想要的generator功能
+6. 注意：在windows不能自动安装依赖，并且grunt server命令会因为警告而退出任务，可以添加--force强制continue，然后再浏览器中输入服务器地址，这样不会影响功能，但是这些问题在linux下都不是问题，尤其在linux下grunt server会自动开启浏览器看到我们想要的效果
+7. 建立子generator，yo generator:subgenerator "post"命令会创建post/index.js 和post/templates/somefile.js两个文件，你可以像在generator中编辑index.js一样编辑你自己的子generator。然后就可以像这样使用：yo blog:post "hey,buddy"

@@ -1,0 +1,816 @@
+其实不是非要给自己书写的代码戴个帽子说我这用了什么模式，相信在工作中大家不知不觉也已经应用了各种模式，甚至你们也可能说自己将js早已用的炉火纯青，但是我个人觉得学习设计模式可以让我对js有一个更深刻的理解，同时可以让自己解决问题的时候思路更广，而且弄清楚了之后我自己其实是有一种很踏实的感觉，在技术上，工作中我其实是很少会觉得踏实，因为我足够菜
+
+
+
+1.单例模式：
+单例就是保证一个类只有一个实例。实现方法一般是判断实例存在与否，存在就返回，不存在就创建再返回。
+
+js中，单例作为命名空间的提供者，从全局命名空间里提供唯一的一个访问点来协调系统整体间的行为。比如在整个系统的配置文件中，配置数据有一个单例对象进行统一读取和修改，其他对象需要配置数据的时候也统一通过该单例对象来获取配置数据，这样就可以简化复杂环境下的配置管理。
+
+单例模式就是每次得到的对象都是同一个对象的引用，有三种方法：全局变量引用；function的静态属性引用；闭包
+
+有人说：对象字面量也是一种单例模式
+
+function Universe() {
+    // do we have an existing instance?
+    if (typeof Universe.instance === "object") {
+        return Universe.instance;
+    }
+    // proceed as normal
+    this.start_time = 0;
+    this.bang = "Big";
+    // cache
+    Universe.instance = this;
+    // implicit return:
+    // return this;
+}
+劣势：Universe.instance是可以被外部修改的
+
+// 闭包：
+function Universe() {
+    // the cached instance
+    var instance = this;
+    // proceed as normal
+    this.start_time = 0;
+    this.bang = "Big";
+    // rewrite the constructor
+    Universe = function () {
+        return instance;
+    };
+}
+// testing
+var uni = new Universe();
+var uni2 = new Universe();
+uni === uni2; // true
+劣势： 丢失了对原Universe构造的引用，原构造上prototype上定义的方法也失去了意义
+
+
+// 立即执行
+(function () {
+    var instance;
+
+    Universe = function Universe() {
+        if (instance) {
+            return instance;
+        }
+        instance = this;
+        // all the functionality
+        this.start_time = 0;
+        this.bang = "Big";
+    };
+}());
+// 好处，可以添加各种私有属性方法
+
+function Universe() {
+    // the cached instance
+    var instance;
+    // rewrite the constructor
+    Universe = function Universe() {
+        return instance;
+    };
+    // carry over the prototype properties
+    Universe.prototype = this;
+    // the instance
+    instance = new Universe();
+    instance.constructor = Universe;
+    // all the functionality
+    instance.start_time = 0;
+    instance.bang = "Big";
+    return instance;
+}
+
+Universe.prototype.nothing = true; // true
+var uni = new Universe();
+
+Universe.prototype.everything = true; // true
+var uni2 = new Universe();
+
+uni === uni2; // true
+
+uni.constructor === Universe; // true
+
+总结：使用数据缓存来存储单例，用作判断单例是否已经生成，是单例模式主要的实现思路。
+
+2.factory 模式
+工厂模式定义用于创建对象的接口，此接口在runtime时由提供的类型决定实例化某个类。
+工厂模式的应用场景：
+1.需要依赖具体环境(类型)创建不同实例
+2.建立大量相似对象时进行重复的操作
+
+看一个实例场景：
+* 一个父构造：CarMaker
+* 父构造的一个静态方法factory，它用来创建car对象
+* 继承自CarMaker的特定构造：CarMaker.Compact,CarMaker.SUV,CarMaker.convertible,他们都作为CarMaker的静态方法存在，使得全局命名空间干净清爽，当我们需要他们的时候也知道去哪找
+
+使用：
+var corolla = CarMaker.factory('Compact');
+var solstice = CarMaker.factory('Convertible');
+var cherokee = CarMaker.factory('SUV');
+corolla.drive(); // "Vroom, I have 4 doors"
+solstice.drive(); // "Vroom, I have 2 doors"
+cherokee.drive(); // "Vroom, I have 17 doors"
+
+可以看到factory方法在运行时接收一个类型参数来创建返回相应类型的对象。没用new或者任何对象迭代来得到自己想要的对象
+实现：
+function CarMaker() {}
+
+CarMaker.prototype.drive = function () {
+    return "Vroom, I have " + this.doors + " doors";
+};
+
+CarMaker.factory = function (type) {
+    var constr = type,
+        newcar;
+    if (typeof CarMaker[constr] !== "function") {
+        throw {
+            name: "Error",
+            message: constr + " doesn't exist"
+        };
+    }
+
+    if (typeof CarMaker[constr].prototype.drive !== "function") {
+        CarMaker[constr].prototype = new CarMaker(); 
+    }
+
+    newcar = new CarMaker[constr]();
+
+    return newcar;
+};
+
+CarMaker.Compact = function () {
+    this.doors = 4;
+};
+CarMaker.Convertible = function () {
+    this.doors = 2;
+};
+CarMaker.SUV = function () {
+    this.doors = 24;
+};
+
+事实上：Object就是个内建的factory方法，它会根据传入其中的参数类型，生成不同的类型对象
+var o = new Object(),
+n = new Object(1),
+s = Object('1'),
+b = Object(true);
+// test
+o.constructor === Object; // true
+n.constructor === Number; // true
+s.constructor === String; // true
+b.constructor === Boolean; // true
+
+总结：将具有相似操作的对象创建过程抽象为一个接口方法，然后在执行阶段根据需求来输出相应的对象是工厂模式的主要实现思路
+
+3.迭代器模式：提供一种方法获取一个对象集合中的各个具有复杂数据结构的元素，而又不暴露其内部表示，此模式的特点是：
+    a. 为遍历不同数据结构的元素提供一个统一的接口，以支持同样的算法在不同的结构上进行操作
+    b. 访问一个对象集合的内容而无需暴露其内部表示
+一般的迭代至少需要两个方法：hasNext和Next
+var agg = (function () {
+    var index = 0,
+    data = [1, 2, 3, 4, 5],
+    length = data.length;
+    return {
+        next: function () {
+            var element;
+            if (!this.hasNext()) {
+                return null;
+            }
+            element = data[index];
+            index = index + 2;
+            return element;
+        },
+        hasNext: function () {
+            return index < length;
+        },
+        rewind: function () { // 回归到最开始的元素
+            index = 0;
+        },
+        current: function () { // 返回当前的元素
+            return data[index];
+        }
+    };
+}());
+
+jquery中一个非常强大的迭代器就是$.each方法，通过each可以传入function对所有的item项进行迭代操作
+$.each(['dudu', 'dudu', '酸奶小妹', '那个MM'], function (index, value) {
+    console.log(index + ': ' + value);
+});
+
+总结：通过一个接口方法封装对象集合中的元素遍历操作来遍历集合元素是迭代器模式的主要实现思路
+
+4.装饰者模式：
+装饰者模式提供比继承更有弹性的替代方案，可以给不同对象各自添加新行为。其通过重载方法的形式添加新功能，该模式可以在被装饰者前面或者后面加上自己的行为以达到特定的目的
+
+function ConcreteClass() {
+    this.performTask = function () {
+        this.preTask();
+        console.log('doing something');
+        this.postTask();
+    };
+}
+
+function AbstractDecorator(decorated) {
+    this.performTask = function () {
+        decorated.performTask();
+    };
+}
+
+function ConcreteDecoratorClass(decorated) {
+    this.base = AbstractDecorator;
+    this.base(decorated);
+
+    decorated.preTask = function () {
+        console.log('pre-calling..');
+    };
+
+    decorated.postTask = function () {
+        console.log('post-calling..');
+    };
+
+}
+
+var concrete = new ConcreteClass();
+var decorator1 = new ConcreteDecoratorClass(concrete);
+var decorator2 = new ConcreteDecoratorClass(decorator1);
+decorator2.performTask();
+console.log(decorator2.performTask.toString());
+console.log(decorator1.performTask.toString());
+console.log(concrete.performTask.toString());
+
+console.log(decorator1.preTask.toString());
+console.log(concrete.preTask.toString());
+
+
+另一个比较彻底的例子：
+var tree = {};
+tree.decorate = function () {
+    console.log('Make sure the tree won\'t fall');
+};
+
+tree.getDecorator = function (deco) {
+    tree[deco].prototype = this;
+    return new tree[deco];
+};
+
+tree.RedBalls = function () {
+    this.decorate = function () {
+        this.RedBalls.prototype.decorate(); 
+        console.log('Put on some red balls'); 
+    }
+};
+
+tree.BlueBalls = function () {
+    this.decorate = function () {
+        this.BlueBalls.prototype.decorate(); 
+        console.log('Add blue balls'); 
+    }
+};
+
+tree.Angel = function () {
+    this.decorate = function () {
+        this.Angel.prototype.decorate(); 
+        console.log('An angel on the top'); 
+    }
+};
+
+tree = tree.getDecorator('BlueBalls'); 
+// BlueBall增强了tree对象decorate提供的基本功能
+
+tree = tree.getDecorator('Angel'); 
+// Angle在Blue的基础上增强了Bluetree对象decorate的功能
+
+tree = tree.getDecorator('RedBalls'); 
+// RedBall在Angel的基础上增强了Angletree对象decorate的功能
+
+tree.decorate(); 
+
+// 执行结果：
+Make sure the tree won't fall
+Add blue balls
+An angle on the top
+Put on some red balls
+可见是先调用执行基本功能，在执行附加功能
+
+总结：装饰者模式是为已有功能动态地添加附加功能的一种方式，把每个要装饰的功能放在单独的函数里，然后用该函数包装所要装饰的已有函数对象，因此，当需要执行特殊行为的时候，调用代码就可以根据需要有选择地、按顺序地使用装饰功能来包装对象。优点是把类（函数）的核心职责和装饰功能区分开了。这里prototype是装饰者模式实现的关键
+
+5.策略模式（Strategy）:
+策略模式允许在运行时选择算法。客户端的代码可以使用同一个接口，由此接口从一系列可能的算法中选择一个来根据将要处理的上下文处理指定任务
+
+在做数据合法性验证的时候一般会使用switch语句来判断，如果增加需求的话，需要再次修改代码增加逻辑，而且在进行单元测试的时候也会越来越复杂。使用策略模式我们可以创建一个拥有validata方法的验证对象。不论表单类型是什么调用此方法总是会返回同样的处理数据
+比如有以下数据需要验证，它们是来自页面上的某个表单：
+var data = {
+    first_name: "Super",
+    last_name: "Man",
+    age: "unknown",
+    username: "o_0"
+}  
+为了使验证器知道哪个验证策略是最合适的，你需要首先配置验证器，设置你认为valid和acceptable的验证规则
+
+比如你不需要last name，但是接受任意的first name，需要age是一个number，username只包含字母和数字，不包含特殊符号。配置信息可能如下所示：
+validator.config = {
+    first_name: "isNonEmpty",
+    age: "isNumber",
+    username: "isAlphaNum"
+}
+
+然后像下面这样调用执行你的validate方法进行验证
+validator.validate(data);
+if (validator.hasErrors()) {
+    console.log(validator.messages.join("\n"));
+}
+它可能会print如下的error message：
+Invalid value for *age*, the value can only be a valid number, e.g. 1, 3.14 or 2010
+Invalid value for *username*, the value can only contain characters and numbers, no special
+symbols
+
+请看针对上述的简单实现：
+// checks for non-empty values
+validator.types.isNonEmpty = {
+    validate: function (value) {
+        return value !== "";
+    },
+    instructions: "the value cannot be empty"
+};
+// checks if a value is a number
+validator.types.isNumber = {
+    validate: function (value) {
+        return !isNaN(value);
+    },
+    instructions: "the value can only be a valid number, e.g. 1, 3.14 or 2010"
+};
+// checks if the value contains only letters and numbers
+validator.types.isAlphaNum = {
+    validate: function (value) {
+        return !/[^a-z0-9]/i.test(value);
+    },
+    instructions: "the value can only contain characters and numbers, no special symbols"
+};
+var validator = {
+    // 所有验证规则处理类集合
+    types: {},
+    // 验证类型对应的错误消息
+    messages: [],
+    // 配置验证类型的地方
+    config: {},
+    // 唯一暴露的public API，用来处理验证，参数是key->value的验证对象
+    validate: function (data) {
+        var i, msg, type, checker, result_ok;
+        // 清空所有验证消息
+        this.messages = [];
+        for (i in data) {
+            if (data.hasOwnProperty(i)) {
+                type = this.config[i];
+                checker = this.types[type]; // 获取验证规则的验证类
+                if (!type) {
+                    continue; // 验证规则不存在不处理
+                }
+                if (!checker) { // 验证器不存在抛出错误
+                throw {
+                    name: "ValidationError",
+                    message: "No handler to validate type " + type
+                };
+            }
+            // 使用对应验证器验证数据元素是否符合要求
+            result_ok = checker.validate(data[i]);
+            if (!result_ok) {
+                msg = "Invalid value for *" + i + "*, " + checker.instructions;
+                this.messages.push(msg);
+            }
+        }
+        return this.hasErrors();
+    },
+    // helper
+    hasErrors: function () {
+        return this.messages.length !== 0;
+    }  
+};
+
+总结：策略模式定义了一系列算法，从概念上说，所有这些算法都是做相同的事情，只是实现不同，它可以以相同的方式调用所有方法，减少了各种算法类与使用算法类之间的耦合
+
+另外单独定义算法类也方便了单元测试
+
+在分析过程中需要在不同的时间应用不同的业务规则，就可以考虑使用策略模式来处理各种变化
+
+6.外观模式：
+外观模式为子系统的一组接口提供了一个可选的高层接口，将复杂操作封装起来，使这一子系统的调用更加简单。
+
+比如：拿事件对象的preventDefault和stopProprogation方法来说，经常需要同时调用此两个方法阻止事件冒泡和触发默认事件
+var myevent = {
+    // ...
+    stop: function (e) {
+        // others
+        if (typeof e.preventDefault === "function") {
+            e.preventDefault();
+        }
+        if (typeof e.stopPropagation === "function") {
+            e.stopPropagation();
+        }
+        // IE
+        if (typeof e.returnValue === "boolean") {
+            e.returnValue = false;
+        }
+        if (typeof e.cancelBubble === "boolean") {
+            e.cancelBubble = true;
+        }
+    }
+    // ...
+};
+
+很多js类库就大量的通过其封装一些接口用于兼容多浏览器。
+
+总结：使用外观模式一般分三个阶段
+首先： 设计初期，应有意识的将不同的层进行分离，比如经典的三层结构,在数据访问层和业务逻辑层、业务逻辑层和表示层之间建立外观模式
+
+其次：开发阶段，子系统往往因不断的重构演化而变得越来越复杂，增加外观模式可以提供一个简单的接口减少他们之间的依赖
+
+三： 在维护一个遗留的大型系统时，可能这个系统已经很难维护了，这时使用外观模式比较合适，位系统开发一个外观类，为设计粗糙和高度复杂的遗留代码提供比较清晰的接口，让新系统和Facade对象交互，Facade与遗留代码交互所有的复杂工作
+
+
+7.代理模式：
+为其他对象提供一种代理以控制对这个对象的访问。顾名思义就是帮助别人做事
+更简单的说就是：代理对象控制具体对象的引用
+
+比如：某boy要给某girl送玫瑰花，却不知其联系方式或不好意思，委托知情男士去送，那该知情男士就是个代理(此人可以扣几朵给女朋友)
+
+// 先声明受理玫瑰的某girl
+var girl = function (name) {
+    this.name = name;
+};
+
+// 想送玫瑰给girl的某boy
+var boy = function (girl) {
+    this.girl = girl;
+    this.sendGift = function (gift) {
+        alert("Hi " + girl.name + ", dudu送你一个礼物：" + gift);
+    }
+};
+
+// 知情男士是代理
+var proxyTom = function (girl) {
+    this.girl = girl;
+    this.sendGift = function (gift) {
+        (new boy(girl)).sendGift(gift); 
+    }
+};
+
+var proxy = new proxyTom(new girl("甜美小妹"));
+proxy.sendGift("999朵玫瑰");
+
+
+
+不同于外观模式的将不同的方法combine组成个简单的方法，代理模式可以保护对象的访问权限
+
+一个简单的应用实例可能就是lazy initialization.假设初始化真正的对象代价昂贵，而且客户端进行初始化之后却没有使用。这种情况下代理可以作为真实对象的接口，接受初始化请求却不传递给真实对象，直到真实对象的确被使用到web应用中，最昂贵的操作之一是http请求，通过引进代理模式将多个web请求合并到同一个请求中也是一个比较常用的应用(获取MV信息并播放)
+
+核心代码：
+var proxy = {
+    ids: [],
+    delay: 50,
+    timeout: null,
+    callback: null,
+    context: null,
+    makeRequest: function (id, callback, context) {
+        // add to the queue
+        this.ids.push(id);
+        this.callback = callback;
+        this.context = context;
+        // set up timeout
+        if (!this.timeout) {
+            this.timeout = setTimeout(function () {
+                proxy.flush();
+            }, this.delay);
+        }
+    },
+    flush: function () {
+        http.makeRequest(this.ids, "proxy.handler");
+        // clear timeout and queue
+        this.timeout = null;
+        this.ids = [];
+    },
+    handler: function (data) {
+        var i, max;
+        // single video
+        if (parseInt(data.query.count, 10) === 1) {
+            proxy.callback.call(proxy.context, data.query.results.Video);
+            return;
+        }
+        // multiple videos
+        for (i = 0, max = data.query.results.Video.length; i < max; i += 1) {
+            proxy.callback.call(proxy.context, data.query.results.Video[i]);
+        }
+    }
+};
+
+代理模式也可以充当缓存的角色，将第一次请求的数据进行缓存，如果再次调用同样的数据信息就可以从代理缓存中直接获取，而不用通过http网络
+
+总结：
+代理模式特别适合对真实对象进行访问权限控制
+
+8. 观察者模式：
+观察者模式主要用来进行解耦，浏览器端的事件监听就是一种典型的观察者模式。
+
+观察者模式的好处：
+    a. 支持简单的广播通信，自动通知所有已订阅的对象
+    b. 页面载入后目标对象很容易与观察者存在一种动态关联，增加了很大的灵活性；
+    c. 目标对象与观察者之间的抽象耦合关系能够单独扩展以及重用
+
+场景：有一个发布者Paper，它发布每日新闻(daily newspaper)和月季杂志(monthly magazine)，当其发布信息时，订阅者joe会得到通知。
+Paper对象需要一个数组subscribers属性来存储所有的订阅者。Paper也可以提供unsubscribe方法取消订阅。也就是说发布者需要这些成员属性：
+subscribers: []
+subscribe: function
+unsubscribe:function
+publish:function
+上面的三个方法都需要一个type参数，因为发布者可能会发布几个消息事件(newspaper或者magazine)，相应的订阅者可以选择性的订阅需要的事件。先看一个简单的实现实例：
+
+var publisher = {
+    subscribers: {
+        any: [] // event type: subscribers
+    },
+    subscribe: function (fn, type) {
+        type = type || 'any';
+        if (typeof this.subscribers[type] === "undefined") {
+            this.subscribers[type] = [];
+        }
+        this.subscribers[type].push(fn);
+    },
+    unsubscribe: function (fn, type) {
+        this.visitSubscribers('unsubscribe', fn, type);
+    },
+    publish: function (publication, type) {
+        this.visitSubscribers('publish', publication, type);
+    },
+    visitSubscribers: function (action, arg, type) {
+        var pubtype = type || 'any',
+            subscribers = this.subscribers[pubtype],
+            i,
+            max = subscribers.length;
+
+        for (i = 0; i < max; i += 1) {
+
+            if (action === 'publish') {
+                subscribers[i](arg);
+            } else {
+                if (subscribers[i] === arg) {
+                    subscribers.splice(i, 1);
+                }
+            }
+        }
+    }
+};
+
+function makePublisher(o) {
+    var i;
+    for (i in publisher) {
+        if (publisher.hasOwnProperty(i) && typeof publisher[i] === "function") {
+            o[i] = publisher[i];
+        }
+    }
+    o.subscribers = {any: []};
+}
+
+var paper = {
+    daily: function () {
+        this.publish("big news today");
+    },
+    monthly: function () {
+        this.publish("interesting analysis", "monthly");
+    }
+};
+
+makePublisher(paper);
+
+var joe = {
+    drinkCoffee: function (paper) {
+        console.log('Just read ' + paper);
+    },
+    sundayPreNap: function (monthly) {
+        console.log('About to fall asleep reading this ' + monthly);
+    }
+};
+
+paper.subscribe(joe.drinkCoffee);
+paper.subscribe(joe.sundayPreNap, 'monthly');
+
+
+paper.daily();
+paper.daily();
+paper.monthly();
+执行结果是：
+Just read big news today
+Just read big news today
+About to fall asleep reading this interesting analysis
+
+接下来让joe也成为publisher，可以发布blog或者micro blog
+
+makePublisher(joe);
+joe.tweet = function (msg) {
+    this.publish(msg);
+};
+
+paper想要订阅其订阅者的blog，为其自身添加readTweets方法
+paper.readTweets = function (tweet) {
+    alert('Call big meeting! Someone ' + tweet);
+};
+joe.subscribe(paper.readTweets);
+
+joe.tweet("hated the paper today");
+发布结果是：
+“Call big meeting! Someone hated the paper today.”
+
+观察者的使用场合就是：当一个对象的改变需要同时改变其它对象，并且它不知道具体有多少对象需要改变的时候，就应该考虑使用观察者模式。
+
+总的来说，观察者模式所做的工作就是在解耦，让耦合的双方都依赖于抽象，而不是依赖于具体。从而使得各自的变化都不会影响到另一边的变化。
+
+
+
+9.中介者模式(Mediator)：
+
+随着应用程序的扩增，你会添加非常多的object，如果对象间彼此依赖的太多，或者直接通信将会造成严重的紧耦合问题。很难只改变一方而不用改变另一方。中间者模式通过提供一个统一的接口让系统的不同部分通过它进行通信，从而促进松耦合，确保可维护性。
+
+这种模式的工作过程是：当某个对象改变了其state，通知mediator，然后mediator将此改变通知给所有需要知道其状态改变的对象
+
+以平时常见的机场交通控制系统为例，塔台就是中介者，它控制着飞机（子模块）的起飞和降落，因为所有的沟通都是从飞机向塔台汇报来完成的，而不是飞机之间相互沟通。中央控制系统就是该系统的关键，也就是软件设计中扮演的中介者角色。
+
+看一个Mediator模式的实例：
+两个玩家在一分半的时间里比赛按下按钮的次数。玩家一按1按钮，玩家二按0按钮。记分板及时更新成绩。
+则涉及的对象是Player1 、Player2、ScoreBoard、Mediator
+
+其中mediator知道所有其他的对象。它与键盘设备(input)通信，处理keypress事件，决定哪个玩家按了按钮并将之记录下来。除了mediator，其他对象之间互不相识，这使得更新游戏变得很简单，比如添加新的玩家，或者增加另一个显示剩余时间的对象
+function Player(name) {
+    this.points = 0;
+    this.name = name;
+}
+Player.prototype.play = function () {
+    this.points += 1;
+    mediator.played();
+};
+var scoreboard = {
+    // HTML element to be updated
+    element: document.getElementById('results'),
+    // update the score display
+    update: function (score) {
+        var i, msg = '';
+        for (i in score) {
+            if (score.hasOwnProperty(i)) {
+                msg += '<p><strong>' + i + '<\/strong>: ';
+                msg += score[i];
+                msg += '<\/p>';
+            }
+        }
+        this.element.innerHTML = msg;
+    }
+};
+
+
+var mediator = {
+    // all the players
+    players: {},
+    // initialization
+    setup: function () {
+        var players = this.players;
+        players.home = new Player('Home');
+        players.guest = new Player('Guest');
+    },
+    // someone plays, update the score
+    played: function () {
+        var players = this.players,
+        score = {
+            Home: players.home.points,
+            Guest: players.guest.points
+        };
+        scoreboard.update(score);
+    },
+
+    // handle user interactions
+    keypress: function (e) {
+        e = e || window.event; // IE
+        if (e.which === 49) { // key "1"
+            mediator.players.home.play();
+            return;
+        }
+        if (e.which === 48) { // key "0"
+            mediator.players.guest.play();
+            return;
+        }
+    }
+};
+
+mediator.setup();
+window.onkeypress = mediator.keypress;
+// game over in 30 seconds
+setTimeout(function () {
+    window.onkeypress = null;
+    alert('Game over!');
+}, 30000);
+
+
+
+对比观察者模式实现中介者模式中的game
+var publisher = {
+    subscribers: {
+        any: []
+    },
+    on: function (type, fn, context) {
+        type = type || 'any';
+        fn = typeof fn === "function" ? fn : context[fn];
+        if (typeof this.subscribers[type] === "undefined") {
+            this.subscribers[type] = [];
+        }
+        this.subscribers[type].push({fn: fn, context: context || this});
+    },
+    remove: function (type, fn, context) {
+        this.visitSubscribers('unsubscribe', type, fn, context);
+    },
+    fire: function (type, publication) {
+        this.visitSubscribers('publish', type, publication);
+    },
+    visitSubscribers: function (action, type, arg, context) {
+        var pubtype = type || 'any',
+            subscribers = this.subscribers[pubtype],
+            i,
+            max = subscribers ? subscribers.length : 0;
+        for (i = 0; i < max; i += 1) {
+            if (action === 'publish') {
+                subscribers[i].fn.call(subscribers[i].context, arg);
+            } else { // unsubscribe
+                if (subscribers[i].fn === arg && subscribers[i].context === context) {
+                    subscribers.splice(i, 1);
+                }
+            }
+        }
+    }
+};
+
+function Player(name, key) {
+    this.points = 0;
+    this.name = name;
+    this.key = key;
+    this.fire('newplayer', this);
+}
+Player.prototype.play = function () {
+    this.points += 1;
+    this.fire('play', this);
+};
+
+var game = {
+    keys: {},
+    addPlayer: function (player) {
+        var key = player.key.toString().charCodeAt(0);
+        this.keys[key] = player;
+    },
+    handleKeypress: function (e) {
+        e = e || window.event; // IE
+        if (game.keys[e.which]) {
+            game.keys[e.which].play();
+        }
+    },
+    handlePlay: function (player) {
+        var i,
+            players = this.keys,
+            score = {};
+        for (i in players) {
+            if (players.hasOwnProperty(i)) {
+                score[players[i].name] = players[i].points;
+            }
+        }
+        this.fire('scorechange', score);
+    }
+};
+
+makePublisher(Player.prototype);
+makePublisher(game);
+
+Player.prototype.on("newplayer", "addPlayer", game);
+Player.prototype.on("play", "handlePlay", game);
+game.on("scorechange", scoreboard.update, scoreboard);
+window.onkeypress = game.handleKeypress;
+
+var playername, key;
+while (1) {
+    playername = prompt("Add player (name)");
+    if (!playername) {
+        break;
+    }
+    while (1) {
+        key = prompt("Key for " + playername + "?");
+        if (key) {
+            break;
+        }
+    }
+    new Player(playername, key);
+}
+
+其中mediator知道所有其他的对象。它与键盘设备(input)通信，处理keypress事件，决定哪个玩家按了按钮并将之记录下来。除了mediator，其他对象之间互不相识，这使得更新游戏变得很简单，比如添加新的玩家，或者增加另一个显示剩余时间的对象
+
+中介者和观察者貌似差不多，有什么不同呢？
+----观察者模式没有封装约束的单个对象，相反，观察者Observer和具体类Subject是一起配合来维护约束的，沟通是通过多个观察者和多个具体类来交互的：每个发布者通常包含多个观察者，而有时发布者里的观察者也是另一个观察者的 发布者
+
+而中介者模式所做的不是简单的分发，而是扮演维护这些约束的职责
+
+很多人可能也比较迷糊中介者和外观模式的区别，他们都是对现有各模块进行抽象，但有一些微妙的区别。
+
+中介者所做的是在模块之间进行通信，是多向的，但外观模式只是为某一个模块或系统定义简单的接口而不添加额外的功能。系统中的其它模块和外观模式这个概念没有直接联系，可以认为是单向性。
+
+注意点：
+中介者模式一般应用于一组对象已定义良好但是以复杂的方式进行通信的场合，一般情况下，中介者模式很容易在系统中使用，但也容易在系统里误用，当系统出现了多对多交互复杂的对象群时，先不要急于使用中介者模式，而是要思考一下是不是系统设计有问题。
+
+另外，由于中介者模式把交互复杂性变成了中介者本身的复杂性，所以说中介者对象会比其它任何对象都复杂。

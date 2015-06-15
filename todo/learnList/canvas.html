@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta type="utf-8" />
+        <title>设置canvas</title>
+        <style>
+            #scene {
+                height: 500px;
+                width: 100%;
+
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <canvas id="scene" width="800" height="600"></canvas>
+
+        <script>
+            scene = document.getElementById("scene");
+            ctx = scene.getContext("2d");
+            ctx.beginPath(); // 开始路径绘制
+
+            ctx.moveTo(20, 20);
+            ctx.lineTo(80, 80);
+
+            ctx.lineWidth = 1.0; // 设置线宽
+
+            ctx.strokeStyle = "#CC0000"; // 设置线的颜色
+
+            ctx.stroke(); // 进行线的着色，这时整条线才变得可见
+
+
+        </script>
+
+    </body>
+
+</html>

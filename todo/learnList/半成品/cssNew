@@ -1,0 +1,247 @@
+1.-webkit-text-size-ajust
+chrome version 27以上不再支持-webkit-text-size-ajust，而chrome在这种情况下对于简体中文版最小字号限制为12px，要想该表字号为更小，可以粗暴的通过transform:scale(0.8)来达到。而其他浏览器默认识别小号字体，但注意opera也可以识别webkit前缀，所以还是小心设置的好
+.webkit {
+font-size: 9px;
+-webkit-transform: scale(0.75);
+-o-transform: scale(1);
+}
+禁用此属性的好处是设置-webkit-text-size-adjust:none直接导致了放大网页的时候字号不能改变，可用性降低，对于视觉障碍的用户是没有情怀的
+
+其实该属性最初是为了移动端设计的，only effect Mobile Safari
+
+2.-webkit-font-smooth   : normal|button|checkbox|menulist|menulist-button|radio|searchfield|slider-horizontal
+非标准，
+
+3.css3 appearance
+此属性可以用来伪装或是实现一些特殊的界面
+示例：让div表现的是个button
+div{
+appearance:button;
+-moz-appearance:button; /*ff*/
+-webkit-appearance:button; /*Safari and Chrome*/
+}
+Browser Support:FF Chrome Safari
+
+
+
+4.-WebKit-tap-highlight-color : color 
+是点击反馈时的区域背景或者是点击时的高亮背景颜色
+用户可感知的性能体验相对于实际的良好性能其重要性不可忽略，而要提升可感知的性能体验就要让用户感受到最及时的交互
+在移动端每次用户在站点的button上tap时，它不得不等300ms然后才能看到响应。浏览器设置这个时间是为了确定用户不会再想要做其他操作(准确的说是a double tap)。因此它会等待1/3s看看用户会做什么，如果什么都不做，就会响应initial tap，当响应真正发生的时候，它会以灰色背景高亮点击内容，然后继续后续操作。而这其实是很糟糕的体验
+
+为了使站点感觉faster，我们必须是我们的button快速的响应用户的touch，让用户明确意识到something正在发生，在桌面端我们用的最多的是:active状态，然而移动端不支持此属性，这样你就需要做以下几点：
+1>js:使用ontouchstart事件绑定来使:activbe属性生效
+document.addEventListener("touchstart",function(){},true)
+或者HTML上：<a class="html5log" href="javascript:void(0);ontouchstart="return true;">
+2>css:使用css添加active状态并且移除默认的tap highlight
+.html5logo{
+background:url(html5-128.png) no-repeat;
+-webkit-tap-highlight-color:rgba(0,0,0,0);
+-webkit-tap-highlight-color: transparent; /* For some Androids */  
+}
+.html5logo:active{
+-webkit-transform:scale3d(0.9,0.9,1);
+}
+
+
+此属性仅用于ios(iphone和ipad)
+
+
+5.-webkit-user-select : all | auto(可以选择元素内容) | none(不能选择元素内容) | text(可以选择元素文本) 
+设置用户是否可以选择元素内容
+
+
+支持性：所有版本的FF/Chrome/Safari/IE10均支持,Opera不支持
+
+6.-webkit-text-stroke: [text-stroke-width(描边宽度)] | [text-stroke-color(描边颜色)]
+设置文字描边
+text-stroke-width对应的脚本特性为：textStrokeWidth
+
+
+
+支持情况：只有webkit内核的chrome和safari支持
+7.text-fill-color:
+文本填充色
+同时使用text-fill-color和color属性，text-file-color将覆盖color属性的颜色值
+
+支持情况：只有webkit内核的chrome和safari支持
+
+8.-webkit-align-content:
+9.-webkit-align-items:
+10.-webkit-align-self:
+11.-webkit-animation:animation-name | animation-duration | animation-timing-function | animation-delay | animation-iteration-count | animation-direction 
+其中animation-direction反应动画对象在循环中是否反向运动:normal | alternate
+
+-webkit-animation-fill-mode: none| forwards |backwards | both
+设置动画时间之外的状态
+forwards设置对象状态为动画结束时的状态
+backwards设置对象为动画开始时的状态
+both设置对象状态为动画结束或者开始的状态
+
+-webkit-animation-play-state:running | paused
+设置动画对象的状态，running为运动状态，paused为暂停状态
+
+12.-webkit-backface-visibility:visible(默认，翻转之后上面的内容还是可见) | hidden
+决定翻转后的元素是否可见
+<div class="backfaceTest" /></div>
+.backfaceTest{
+width:200px;
+height:200px;
+background-image:url(http://shirlyfrontend.com/wordpress/wp-content/themes/twentyten/images/randomImgs/imgRan0);
+-webkit-backface-visibility:visible;
+-webkit-transform:rotateY(180deg);
+background-repeat:no-repeat no-repeat;
+}
+
+13.-webkit-background-clip:padding-box | border-box | content-box | text
+指定对象的背景图像向外裁剪的区域
+border-box:从border区域(不含border)开始向外裁剪背景
+content-box: 从content区域开始向外裁剪背景
+padding-box:从padding区域(不含padding)开始向外裁剪背景
+text:从前景内容的形状(比如文字)作为裁剪区域向外裁剪，如此即可实现使用背景作为填充色之类的遮罩效果
+
+
+14.-webkit-background-origin:padding-box | border-box | content-box
+设置背景图像计算background-position时的参考点
+padding-box:从padding区域(含padding)开始显示背景图像
+border-box : 从border区域(含border)开始显示背景图像
+content-box:从content区域开始显示背景图像
+
+15.-webkit-background-size:<length> | <percentage> | <auto> | cover | contain
+length:用长度值来制定背景图像大小
+percentage：用百分比指定背景图像大小，用的最多，设置为100% 100%使得背景图像和容器大小一致
+auto:真是大小
+cover:将背景图像等比缩放到完全覆盖容器，背景图像有可能超出容器
+contain:将背景图像等比缩放到宽度或高度与容器的宽度或高度响度，背景图像始终被包含在容器内
+
+
+16.-webkit-border-image：[border-image-source] | [border-image-slice] | [border-image-width] | [ border-image-outset] | [border-image-repeat]
+设置对象的边框样式使用图像来填充。使用图像替代border-style去定义边框样式，当border-image为none或者图像不可见时，显示border-style所定义的边框样式效果
+border-image-source：定义图像来源路径
+border-iamge-slice:设置对象的边框背景图的分割方式
+border-image-width:设置边框厚度
+border-image-outset:设置边框背景图的扩展
+border-image-repeat:设置边框图像平铺方式
+
+？？？？？？？？？？？？？？？？？？？？？？？？
+
+17.webkit-box-align:start | end | center | baseline | stretch
+设置弹性盒模型对象的子元素的对齐方式,其兄弟属性-webkit-box-pack两者效果正好互补
+受box-orient影响；默认情况下（即box-orient设置为horizontal）start和end所呈现的效果等同于顶部对齐和底部对齐；当box-orient设置为vertical时，start和end所呈现的效果等同于左对齐和右对齐。
+对应的脚本特性为boxAlign。
+start:设置弹性和模型对象的子元素从开始元素对齐，依次center、end
+baseline：设置弹性盒模型对象的子元素基线对象
+stretch：弹性盒模型对象的子元素自适应父元素尺寸。此为默认
+display:-webkit-box;-webkit:box-align:start;-webkit-box-flex:2;此三个属性相结合才可以组合出完美的弹性布局样式
+
+
+18.-webkit-box-align:slice | clone
+设置在分页符(br)处断开方框的方式
+slice:不会针对整个方框呈现 border 、 padding 、 box-shadow 、 border-radius 和 border-image ，就好像方框是连续的一样。此值为默认值
+
+clone :将在分页符处插入 border 和 padding 值，包括 border-image 、 border-radius 和 box-shadow 值。任何背景图像均以独立方式呈现
+http://ued.ctrip.com/blog/wp-content/webkitcss/demo/box-decoration-break.html  ---演示
+
+19.-webkit-box-direction:normal | reverse
+设置或检索弹性盒模型对象的子元素的排列顺序是否反转。
+normal  设置弹性盒模型对象的子元素按正常顺序排列。此值为默认值
+reverse 反转弹性盒模型对象的子元素的排列顺序
+
+20.-webkit-box-flex:<number>
+弹性盒模型对象的子元素如何分配其剩余空间。box-flex生效需定义其父元素display为box或inline-box
+误区：注意box-flex只是动态分配父元素的剩余空间，而不是整个父元素的空间。子元素所分到的应该是除内容外所剩余下来的宽度
+
+<number>    使用浮点数指定对象所分配其父元素剩余空间的比例。
+
+21.-webkit-box-flex-group : <interger>
+设置弹性盒模型对象的子元素的所属组。动态给数值较大的组分配其内容所需的实际空间（如无内容、padding、border则不占空间），剩余空间则均分给数值最小的那个组（可能有1个或多个元素）
+<interger>  用整数值来定义弹性盒模型对象的子元素所在的组
+
+？？？？？？？？？？？？
+
+22.-webkit-overflow-scrolling:touch
+
+
+
+
+利用css3的硬件加速功能对于移动端动画来说可以使其表现的如native app，增强用户体验，为了使animation feel native，首先需要确保动画不慢而且不是频繁的改变方向的
+60fps(每帧16ms)是使我们feel native and smooth的速率，而IOS上动画默认就是以这个速度运行，这也是为什么iPhone上的动画体验比android设备上好的原因。因此。我们应该努力使所有与用户交互的动画在60fps这个速度上进行
+
+
+23.-webkit-witing-mode:horizontal-tb |  vertical-rl | vertical-lr | lr-tb | tb-rl
+horizontal-tb   水平方向自上而下的书写方式。即 left-right-top-bottom（类似IE私有值lr-tb）
+vertical-rl 垂直方向自右而左的书写方式。即 top-bottom-right-left（类似IE私有值tb-rl）
+vertical-lr 垂直方向自左而右的书写方式。即 top-bottom-left-right
+lr-tb   左-右，上-下。对象中的内容在水平方向上从左向右流入，后一行在前一行的下面。 所有的字形都是竖直向上的。这种布局是罗马语系使用的（IE）
+tb-rl   上-下，右-左。对象中的内容在垂直方向上从上向下流入，自右向左。后一竖行在前一竖行的左面。全角字符是竖直向上的，半角字符如拉丁字母或片假名顺时针旋转90度。这种布局是东亚语系通常使用的（IE）
+
+24. -webkit-wrap
+-webkit-wrap-flow:
+-webkit-wrap-margin:
+-webkit-wrap-padding:
+-webkit-wrap-throgh:
+
+
+
+25.-webkit-user-drag : auto | element | none
+设置整个元素而非它的内容可拖动，注意是整个元素，不要看着其内容复制之后可拖动就觉得此定义有问题
+auto    使用的默认拖动行为
+element 整个元素而非它的内容可拖动
+none    元素不能被拖动
+
+
+26.-webkit-user-modify: read-only | read-write | read-write-plaintext-only
+
+设置用户是否可以编辑元素内容。对应的脚本特性为contentEditable。
+read-only   内容只读
+read-write  内容可读写
+read-write-plaintext-only   内容可读写，但富粘贴的文本格式会丢失
+
+27.-webkit-transform-style: flat | preserve-3d
+
+设置内嵌的元素在 3D 空间如何呈现。两个值：
+flat：所有子元素在 2D 平面呈现。
+preserve-3d：保留3D空间。
+
+
+28.-webkit-text-stroke and -webkit-text-fill-color and -webkit-background-clip and background:-webkit-linear-gradient组合起来的demo
+http://ued.ctrip.com/blog/wp-content/webkitcss/demo/text.html
+
+29.-webkit-perspective(在3d前提下，-webkit-transform-style:preserve-3d)
+显示器中3D效果元素的透视点在显示器的上方（不是后面），近似就是我们眼睛所在方位！
+比方说，一个1680像素宽的显示器中有张美女图片，应用了3D transform，同时，该元素或该元素父辈元素设置的perspective大小为2000像素。则这张美女多呈现的3D效果就跟你本人在1.2个显示器宽度的地方(1680*1.2≈2000)看到的真实效果一致！！
+
+我们都知道近大远小的道理，对于没有rotateX以及rotateY的元素，translateZ的功能就是让元素在自己的眼前或近或远。比方说，我们设置元素perspective为201像素，如下：
+perspective: 201px;
+则其子元素，设置的translateZ值越小，则子元素大小越小（因为元素远去，我们眼睛看到的就会变小）；translateZ值越大，该元素也会越来越大，当translateZ值非常接近201像素，但是不超过201像素的时候（如200像素），该元素的大小就会撑满整个屏幕（如果父辈元素没有类似overflow:hidden的限制的话）。因为这个时候，子元素正好移到了你的眼睛前面，所谓“一叶蔽目，不见泰山”，就是这么回事。当translateZ值再变大，超过201像素的时候，该元素看不见了——这很好理解：我们是看不见眼睛后面的东西的！
+
+http://www.zhangxinxu.com/wordpress/2012/09/css3-3d-transform-perspective-animate-transition/
+perspective属性的两种书写
+perspective属性有两种书写形式，一种用在舞台元素上（动画元素们的共同父辈元素）；第二种就是用在当前动画元素上，与transform的其他属性写在一起。如下代码示例：
+.stage {
+perspective: 600px;
+}
+以及：
+#stage .box {
+transform: perspective(600px) rotateY(45deg);
+
+
+
+30.-webkit-nbsp-mode 已被新版的chrome禁用
+
+
+31.-webkit-mask-box-image:uri top right bottom left x_repeat y_repeat
+
+???????????
+
+
+32.-webkit-marquee 
+.marquee {
+//marquee工作的前提：white-space设为nowrap，overflow设为-webkit-marquee
+white-space: nowrap; 
+overflow:-webkit-marquee;
+width: 70px;
+-webkit-marquee-direction: forwards;
+-webkit-marquee-speed: slow;
+-webkit-marquee-style: alternate;
+}

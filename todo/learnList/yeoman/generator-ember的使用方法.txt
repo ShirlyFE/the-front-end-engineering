@@ -1,0 +1,71 @@
+generator-ember的使用方法：
+
+Usage
+
+    npm install -g generator-ember
+    mkdir myemberapp && cd myemberapp(The directory's name is your application's name)
+    yo ember
+    npm install -g grunt-mocha
+    grunt server
+
+A welcome page should appear in your browser.
+Generators
+
+Add'l generators:
+
+    ember:model
+    ember:view
+    ember:controller
+
+ember:model
+
+Creates a model, views, handlebars, controllers, view/edit routes, and some basic fixtures given an arg, as in:
+
+yo ember:model User name:string zipcode:number
+
+see:
+
+    http://localhost:9000/#/users
+
+see also:
+
+    http://localhost:9000/#/user/1
+    http://localhost:9000/#/user/1/edit
+
+ember:view
+
+Creates a view and template given an arg, as in
+
+yo ember:view Foo
+
+KNOWN ISSUE: IF YOU ADD A NEW VIEW, REGARDLESS OF WITH WHICH GENERATOR, YOU HAVE TO RESTART THE SERVER.
+ember:controller
+
+Creates a view, handlebar, controller and route given an arg, as in:
+
+yo ember:controller Bar
+
+(and updates router.js, overwrite when prompted)
+
+see:
+
+    http://localhost:9000/#/bar
+
+Options
+
+    --skip-install
+
+    Skips the automatic execution of bower and npm after scaffolding has finished.
+
+    --test-framework=[framework]
+
+    Defaults to mocha. Can be switched for another supported testing framework like jasmine.
+
+    --coffee
+
+    Enable support for CoffeeScript.
+
+    --karma
+
+    Enables support for karma test runner
+

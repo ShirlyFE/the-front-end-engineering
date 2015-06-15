@@ -1,0 +1,73 @@
+Zepto 的一些问题是：
+更新较慢。让人感觉这个项目不够活跃；长期处在 beta 状态，无法给用户够信心。不过不久前终于更新到 1.0rc1 了，算是有了点动作。
+不完全兼容 jQuery。这大概是最让用户犹豫不决的。一方面 Zepto 并没有实现所有 jQuery 的 API；另一方面已经实现的 API 与 jQuery 并非完全一致，往往只是实现了较基本的功能。因此，目前还无法做到平滑、无疼的移植。
+打包。从 1.0 开始，发行文件不再包含所有模块，如果需要完整功能则需要自行打包。感觉不够便利。
+
+
+
+当初开发的时候，就是用来处理webkit内核浏览器。当然mobile版本的webkit。现在它已经扩展支持桌面浏览器。当然，只支持现代浏器。 别指望它支持IE6这种古董界别的浏览器。
+
+官网解释：
+zepto是针对现代浏览器的小型的js库，兼容大部分jquery API
+
+大概是jQuery的1/4的大小，加载更快
+
+可以和phonegap很好的结合
+
+目标就是一个5-10k的现代库，可以下载执行的更快
+
+默认的文件包括以下几个模块：Core, Ajax, Event, Form, Effects, Polyfill, and Detect.，当然还有更多的模块
+
+如果想要兼容IE那么你可以考虑jquery，需要注意的是IE 10已经不支持条件注释，所以我们推荐下面document.write方法加载
+<script>
+document.write('<script src=' +
+('__proto__' in {} ? 'zepto' : 'jquery') +
+'.js><\/script>')
+</script>
+
+
+Zepto modules are individual files in the "src/" directory.
+
+module ： default description
+zepto  ：   Core module; contains most methods  @o
+event   ：   Event handling via on() & off()   @o
+detect  ：   Provides $.os and $.browser information
+fx  ：  The animate() method
+fx_methods    ：   Animated show, hide, toggle, and fade*() methods.
+ajax    ：   XMLHttpRequest and JSONP functionality
+form    ：   Serialize & submit web forms
+assets   ：    Experimental support for cleaning up iOS memory after removing image elements from the DOM.
+data       ：  A full-blown data() method, capable of storing arbitrary objects in memory.
+deferred    ：     Provides $.Deferred promises API. Depends on the "callbacks" module.
+callbacks    ：    Provides $.Callbacks for use in "deferred" module.
+selector    ：     Experimental jQuery CSS extensions support for functionality such as $('div:first') and el.is(':visible').
+touch    ：    Fires tap– and swipe–related events on touch devices. This works with both `touch` (iOS, Android) and `pointer` events (Windows Phone).
+gesture    ： Fires pinch gesture events on touch devices
+stack    ：   Provides andSelf & end() chaining methods
+ios3     ：    String.prototype.trim and Array.prototype.reduce methods (if they are missing) for compatibility with iOS 3.x.
+ie     ：  Experimental support for Internet Explorer 10+ on desktop and Windows Phone 8. (Some tests are failing. Help us fix this!)
+
+
+Zepto会将全局$设置为自己，如果$没有定义的话，没有Zepto.noConflict方法
+
+
+Zepto在浏览器能力扩展方面以及在native app框架(PhoneGap)下开发基于HTML的views是一个很好的选择
+
+在core中，有一点一开始让我觉得有些困惑，它里面的静态函数分别挂载在两个命名空间下，一个是$，一个是zepto。后来仔细看了下才发现原来$下的方法是属于纯工具类的方法，一半不会拿来重写。而zepto下面的方法是比较核心的方法，通常会被$下的方法调用，也可能被$.fn下的方法调用，比如match，qsa，Z，init，isZ，fragment。这些比较核心的方法是可以在插件中进行重写的，从而很好地扩展zepto，特别是当你想修改zepto，让其兼容更多的浏览器时。
+
+
+在rebuild zepto的时候win7下总是到coffee make dist就不执行了，估计是环境的问题，还有代码的bug，不得已在linux下rebuild，当然linux下刚开始也不成功，因为我的Coffee version是1.2.0，所以说其对环境的要求还是很苛刻的
+从src直接打包编译成zepto.js可以执行运行：
+$ npm install
+$ npm run-script dist
+要是想要增删模块可以使用全局的Coffee进行build，步骤如下：
+git clone https://github.com/madrobby/zepto.git
+cd zepto
+npm install coffee-script -g
+npm install
+MODULES="zepto event data" ./make dist
+这个过程执行的环境是：
+ubuntu 12.04
+node 0.11.10-pre
+coffee 1.6.3
+

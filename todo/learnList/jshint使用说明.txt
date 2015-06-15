@@ -1,0 +1,432 @@
+jshint可以在node下直接运行使用,安装方法：npm install jshint -g
+使用方法：jshint myfile.js
+
+jshint有三种配置方式：通过命令行的--config参数来配置；使用.jshintrc文件来配置;或者将配置信息放在package.json文件中的jshintConfig的属性下面
+
+undef: 设为true时，对于未定义直接使用的变量会warning，设为false时，不会触发警告
+unused: 设为true时，对于定义了却从未使用的变量会发出警告，设为false，不会触发warning
+eqnull: 设为false，当碰到"==null"时触发warning，设为true时，碰到"==null"不会warning
+
+ curly: 大括号包裹，即不能使用这种代码：
+1   while (notEnd())
+2       doSomething();
+
+eqeqeq: 对于简单类型，使用===和!==，而不是==和!=
+
+newcap: 对于首字母大写的函数（声明的类），强制使用new
+
+noarg: 禁用arguments.caller和arguments.callee
+sub: 对于属性使用aaa.bbb而不是aaa['bbb']
+
+undef: 查找所有未定义变量
+
+boss: 查找类似与if(a = 0)这样的代码
+
+node: 指定运行环境为node.js 
+
+
+
+jshint除了可以在配置文件中进行配置之外，还可以在校验文件本身之中用特定的注释符号进行校验设置，这些注释以jshint或者global开始，后面跟随一系列逗号分隔的值。比如，下面的注释片段可以在变量未声明或者未使用的情况下触发warning，并且告诉jsHint一个全局变量MY_GLOBAL
+
+/* jshint undef: true, unused: true */
+/* global MY_GLOBAL */
+
+这些jshint配置是有作用域的，设置在function中的jshint指令只对此function内code有用，放置在全局环境中，对全局起作用，global指令无此限制
+
+可以通过下面的方式将一些全局变量，避免其在当前文件的任意地方使用，它相当于说明变量BAD_LIB未声明，不可以使用
+/* global -BAD_LIB */
+
+
+下面的ignore指令告诉jshint忽略哪些部分code的校验
+// Code here will be linted with JSHint.
+/* jshint ignore:start */
+// Code here will be linted with ignored by JSHint.
+/* jshint ignore:end */
+
+jshint有两种类型的选项配置：enforcing和relaxing。前者使jshint更严格，后者用来阻止一些警告。比如下面的例子：
+function main(a,b) {
+    return a == null;
+}
+当运行默认的jsHint选项时，上述代码会产生下列warning：
+line 2, col 14, Use '===' to compare with 'null'.a
+假如 你知道自己在干什么并且想要禁用上述warning，同时，你很好奇是否你有一些变量声明了但是从未使用。这种情况，你需要做的是开启两个选项：一个relaxing选项，它可以禁用===null 警告，一个enforcing选项，用来检查未使用过的变量。他们分别是：eqnull和unused
+
+/* jshint unused:true, eqnull:true */
+function main(a,b){
+    return a = null;
+}
+运行结果如下：
+[L2:C14] W098: "main" is defined but never used.
+[L2:C18] W098: "b" is defined but never used.
+
+
+有时jshint没有一个合适的选项来禁用一些特别的warning。这种情况下你可以使用jshint指令码来禁用这些warning。比如你有个文件是从其他多个文件合并而来的，合并效果如下：
+"use strict";
+/* ... */
+
+// From another file
+function b() {
+  "use strict";
+  /* ... */
+}
+
+这种代码会触发一个warning，说明在b方法中有不必要的指令出现。因为jshint认为已经有一个“use strict”指令，它要提醒你其他的同样指令是多余的。但你又不想移除这些指令，因为它们是合并文件自动完成的，解决办法是带着--verbose选项运行jshint，并注意警告码(W034)。
+$ jshint --verbose myfile.js
+myfile.js: line 6, col 3, Unnecessary directive "use strict". (W034)
+
+要隐藏此警告，可以在源文件中注释如下：
+/* jshint -W034 */
+需要注意的是，这种语法只适用于warning（code starts with W），对于errors无效（code starts with E）.
+
+要想让之前禁用的warning可用，可以进行如下注释：
+/* jshint +W034 */
+
+默认情况下，jshint会在switch条件语句下缺失break或者return语句时进行warning
+switch (cond) {
+case "one":
+  doSomething(); // JSHint will warn about missing 'break' here.
+case "two":
+  doSomethingElse();
+}
+
+如果你确定自己没有错，可以添加/* falls through */注释来屏蔽warning
+switch (cond) {
+case "one":
+  doSomething();
+  /* falls through */
+case "two":
+  doSomethingElse();
+}
+
+下面的选项是属于Enforcing options。设为true，会使得jshint产生warning，现介绍如下：
+bitwise：这个选项禁止使用位操作符比如^或者|或者其他，在js中未操作符是很罕见的，更多的是&&的错误书写变成了&
+camelcase：此选项允许将所有变量名使用驼峰命名法或者下划线分割的全大写方式。
+    比如：
+        var testWord = 43;   //yes
+        var TEST_WORD = 23;  //yse
+        var testworld = 'df'; //yse
+        var Test_WorlD = 'dss';  //no
+curly：此选项需要你始终在循环或者条件判断场合下使用花括号包裹语句块，哪怕条件语句只有一句话。
+
+eqeqeq: 此选项禁用==、 !=,更喜欢===和!==
+    比如：下面代码设置eqeqeq为false，就不会警告，但如果设为true，就会报错如下：
+    [L2:C12] W116: Expected "===" and instead saw "==".
+    /* jshint eqeqeq: false */
+    if('str' == 1) {
+        console.log("hello");
+    }
+
+es3:此选项告诉jshint，你的代码需要支持ECMA3规范，以使之可以可以运行在旧的浏览器上。比如IE6、7、8、9或者其他的环境中
+
+forin:这个选项需要for in循环必须过滤对象属性，避免对继承属性的滥用,或者其他不谨慎的使用
+如下面所示：
+    var obj = {
+        name: "雪儿",
+        age: 25
+    };
+    for (key in obj) {
+      console.log("hello"); // 此语句在if之前所以依然会报错，必须将所有的操作放在if语句之内
+      if (obj.hasOwnProperty(key)) {
+        // We are sure that obj[key] belongs to the object and was not inherited.
+      }
+    }
+
+    for (key in obj) { // 此语句块不会报错，因为其做了过滤操作
+        if (obj.name ) {
+            console.log("hello")
+        }
+    }
+
+
+freeze：此选项禁止重写本地对象的prototype，自定义方法的prototype不在校验范围之内。比如Array，Date等等
+/* jshint freeze:true */
+Array.prototype.count = function (value) { return 4; };
+// -> Warning: Extending prototype of native object: 'Array'.
+
+immed:此选项禁止没有包裹在括号中的方法自执行。括号可以使读者了解到此段代码是方法执行的结果，而不是方法本身。
+    /* jshint immed: true */
+    (function test () {
+        var name = "xueer";
+        var age = 23;
+        console.log(name + " 今年 "+age);
+    }());
+
+    错误：
+    function test () {
+        var name = "xueer";
+        var age = 23;
+        console.log(name + " 今年 "+age);
+    }() //它不会自执行
+
+indent: 这个选项强迫定义tab宽度，比如下面的代码会触发warning on line 4
+
+latedef: 此选项禁止变量在定义之前就使用。因为js的声明预处理，先使用后声明可能会造成一些bug，这样做可以很好的避免
+    /* jshint latedef:true */
+    function test () {
+        console.log(a);
+        var a = "ds";
+        console.log(a);
+    }
+    warning: W003: 'a' was used before it was defined.
+
+    将latedef设置为"nofunc"则在方法声明之前就已经使用的情况下不会报错
+
+newcap：此选项需要将构造函数的首字母大写，注意它会认为使用new操作符的方法是构造函数，然后要求将其首字母大小，不使用new的方法无此warning
+
+noarg：此选项禁止arguments.caller和arguments.callee的使用，因为.caller和.callee使得一些优化变得不可能，因此js的未来版本中是被废弃的，ECMA5禁止在严格模式下arguments.callee的使用
+
+noempty：这个选项会在你的代码中有empty block时进行警告。
+
+nonbsp：  ??
+
+nonew: 此选项禁止构造函数的new操作后不赋给相应的变量而产生不必要的副作用，可以说这样的操作毫无意义：
+    new MyConstructor();
+
+plusplus：这个选项禁止一元运算符的自增自减操作。一些人认为++和--降低了他们代码风格的质量，并且有些语言比如python根本就没有这些操作符
+
+quotmark：这个选项enforce你代码中引号使用的一致性。有三个选项：true：不强制使用哪种引号，但是使用的引号必须一致，比如使用了单引号，就不可以使用双引号，使用了双引号就不可以使用单引号；single：只可以使用单引号；double：只可以使用双引号
+
+undef：此选项禁止未声明变量的直接使用，此选项对于避免泄露或者错误类型的变量很有用，比如：
+/*jshint undef:true */
+
+function test() {
+  var myVar = 'Hello, World';
+  console.log(myvar); // Oops, typoed here. JSHint with undef will complain
+}
+
+如果变量在其他的文件中有定义，可以使用/* global ... */指令告诉jshint
+
+unused：此选项在定义了变量却没有使用的情况下很有用,它也可以设置三个值，vars：只检查变量声明之后未使用的变量(包括方法的声明)，不检查方法中参数未使用的情况；strict：检查所有的变量和参数；true(默认)
+
+strict：此选项要求所有的方法都运行在ECMA5的严格模式下。需要注意的是此选项只让function范围内的code在严格模式下校验，禁止全局范围的strict校验，因为它可能会破坏第三方组件。是在想使用global strict mode，请看globalstrict选项
+实例：
+    /* jshint strict:true ,unused: false, undef: false*/
+    j = "dfs";
+    function test (hello) {
+        var a = "ds"+"sd";
+        var b = "sfd";
+        c = "hh";
+    }
+
+    警告：
+    [L5:C5] E007:Missing "use strict" statement.
+        var a = "ds"+"sd";
+
+trailing: 此选项在代码后有空格时报错，在多行的string中后面的空格可能是个bug，比如：
+//下面的work perfectly的代码如果"\"后跟一个空格，那么就会报错
+
+var str = "Hello \
+World";
+
+maxparams：此选项用来设置每个方法最多允许的参数个数
+
+maxdepth:此选项使你控制你的代码块可以有几层嵌套；实例：
+/*jshint maxdepth:2 */
+
+function main(meaning) {
+  var day = true;
+
+  if (meaning === 42) {
+    while (day) {
+      shuffle();
+
+      if (tired) { // JSHint: Blocks are nested too deeply (3).
+          sleep();
+      }
+    }
+  }
+}
+
+maxstatements: 此选项让你设置每个方法允许的最大语句数；方法中的内嵌方法算作一条语句，实例：
+/*jshint maxstatements:4 */
+
+function main() {
+  var i = 0;  //1条语句
+  var j = 0; //2条语句
+
+  // Function declarations count as one statement. Their bodies
+  // don't get taken into account for the outer function.
+  function inner() { // 三条语句
+    var i2 = 1;
+    var j2 = 1;
+
+    return i2 + j2;
+  }
+
+  j = i + j;  // 四条语句
+  return j; // JSHint: Too many statements per function. (5) // 第五条语句
+}
+
+maxcomplexity：此选项让你设置你代码的循环复杂度，
+
+    实例： ？？
+
+
+maxlen：此选项让你设置一行的最大字符数
+
+*******************************************************************************
+Relaxing options
+当将relaxing options设为true时，jshint将产生比较少的warnings
+
+asi：此选项禁止丢失";"的警告
+
+boss: 此选项禁止比较条件下的赋值操作，比如if(a=10) {}
+或者for(var i = 0, person; person = people[i]; i++) {}
+以上两种情况都会使jshint发出warning，将此选项设为true，忽略此warning，
+当然你也可以通过将赋值操作包裹在括号中来避免jshint报错：
+for(var i = 0, person; (person = people[i]); i++) { }
+
+debug：此选项阻止debugger语句的warning ？？
+
+eqnull: 此选项阻止 ==null的比较发出warning，这种比较通常很有用，当你想要检查变量是否是null或者undefined
+
+esnext:这个选项告诉jshint你的代码使用ECMA6规范语法。需要注意的是这些特性还没有最终拍板，也不是所有浏览器都实现了
+
+
+
+eval：此选项阻止eval的使用warning，我们不鼓励eval的使用，因为其可能导致各种注入攻击使你的代码变得很脆弱，并且很难进行一些优化
+
+expr：此选项阻止表达式的warning，主要表现在应该期望的是复制或者方法调用的时候却使用了表达式。比较少见的情况， 实例？？
+
+funcscope：此选项阻止在控制结构内部声明了变量但是却在外部调用的警告。尽管js只有两种作用范围：全局和局部，这种实践使得新接触这种语言的人比较困惑，而且很难debug。这也是为什么，jshint浸膏变量被用在它们应该在的作用域范围之外的原因
+比如：
+    function test() {
+      if (true) {
+        var x = 0;
+      }
+
+      x += 1; // Default: 'x' used out of scope.
+                // No warning when funcscope:true
+    }
+
+gcl: 此选项使得jshint与Google Closure Compiler兼容
+
+globalstrict：此选项阻止global strict mode的警告
+
+
+iterator: 此选项阻止__iterator__属性使用的警告，因为此属性还不被所有的浏览器所支持，因此小心的使用之
+
+lastsemic：此选项阻止丢失;的警告，但只有在;应该出现在一行代码块的最后的时候才会警告
+
+lastbreak: 阻止不安全的断行警告，但是它不会阻止comma-first coding style，要阻止此警告，请查看lastcomma
+
+lastcomma：阻止comma-first coding style的警告
+var obj = {
+    name: 'Anton'
+  , handle: 'valueof'
+  , role: 'SW Engineer'
+};
+
+
+loopfunc: 此选项阻止循环内部使用function的warning，因为循环内部定义的function容易导致bug，比如：
+var nums = [];
+
+for (var i = 0; i < 10; i++) {
+  nums[i] = function (j) {
+    return i + j;
+  };
+}
+
+nums[0](2); // Prints 12 instead of 2
+为了修复上述代码，需要将i值传递，如下：
+var nums = [];
+
+for (var i = 0; i < 10; i++) {
+  (function (i) {
+    nums[i] = function (j) {
+        return i + j;
+    };
+  }(i));
+}
+
+maxerr: 此选项允许你设置jshint可以产生的最大warning数，默认50
+
+moz：此选项告诉jshint你的代码使用Mozilla js 扩展
+
+multistr：此选项阻止多行字符串的警告。比如
+/*jshint multistr:true */
+
+var text = "Hello\
+World"; // All good.
+
+text = "Hello
+World"; // Warning, no escape character.
+
+text = "Hello\
+World"; // Warning, there is a space after \
+
+notypeof：此选项阻止无效的typeof操作值的警告。比如：
+// 'fuction' instead of 'function'
+if (typeof a == "fuction") { // Invalid typeof value 'fuction'
+  /* ... */
+}
+
+proto: 此选项阻止__proto__属性使用的警告
+
+scripturl：此选项阻止基于script的url，比如javascript:...
+    var url = "javascript:alert(0)";
+
+smarttabs: 此选项阻止tabs和spaces(space只用来赋值的情况)混合使用的情况，比如：
+    var a = document,
+        b    = navigator;
+
+shadow: 此选项阻止变量声明不明朗的警告，比如声明了一个已经在作用域之外声明过的变量
+
+    var a = "d";
+    function test() {
+        console.log(a);
+        var a = "c";
+        console.log(a);
+    }
+
+sub: 此选项阻止[]引用属性的警告，比如当可以使用.时却使用了[],对比：person['name']和person.name
+
+supernew:此选项用来阻止奇怪构造方法的警告，比如：new function () { ... }和new Object;这种构造通常被用来创建js的单例模式
+
+    var singleton = new function() {
+      var privateVar;
+      privateVar = "hello";
+      this.publicMethod  = function () {console.log("privateVar is : "+privateVar);};
+      this.publicMethod2 = function () {};
+    };
+
+    console.log(singleton);
+
+validthis: 此选项只在function内部使用(必须放在function内部)，在全局的情况下失效。当运行在严格模式下却有些违反规则时比如使用this在非构造函数中就会触发警告：
+    /* jshint unused:false*/
+    function test() {
+        /* jshint validthis: true  */
+        "use strict";
+        this.age = 23;
+    }
+    test();
+
+noyield:  无解 ？？
+
+
+*******************************************************************************
+
+Environments: 这些选项让jshint了解一些预定义的global 变量
+
+browser：此选项定义现代浏览器暴露的全局变量，比如document、navigator、FileReader等，不过此选项不包含alert、console变量
+
+couch:此选项定义CouchDB暴露的globals
+
+devel：此选项用来定义log debugging信息的globals，比如console、alert等
+
+dojo: 此选项定义由Dojo Toolkit暴露的globals
+
+jquery： 此选项定义由jquery js库定义的globals
+
+mootools：定义由MooTools js框架暴露的globals
+
+node：定义当code运行在Node环境下时的globals
+
+nonstantard：定义非标准的但是被广泛采用的globals，比如escape和unescape
+
+还有phantom、prototypejs、rhino、worker、wsh、yui
+
+
+
+
+

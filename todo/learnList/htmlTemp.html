@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>test</title>
+</head>
+<body>
+    <script>
+
+        jQuery = function() {};
+
+
+        jQuery.fn = jQuery.prototype = {constructor: jQuery};
+
+        jQuery.isPlainObject = function(obj) {
+            
+            if(!obj || Object.prototype.toString.call(obj) !== "[obj Object]" || obj.nodeType || obj.window == obj) {
+                return false;
+            }
+
+            try {
+
+                if(obj.constructor && !Object.prototype.hasOwnProperty.call(obj, "constructor") && !Object.prototype.hasOwnProperty.call(obj.constructor.prototype, "isPrototypeOf")) {
+                    return false;
+                }
+            } catch (e){
+                return false;
+            }
+
+            var key;
+            for(key in obj) {};
+            return key === undefined || Object.prototype.hasOwnProperty.call(obj, key);
+        }
+
+        jQuery.isArray = Array.isArray || function(obj) {
+            return Object.prototype.toString.call(obj) === "[object Array]";
+        }
+
+        jQuery.isFunction = function(obj) {
+
+            console.log("obj is : ");
+            console.log(obj);
+            console.log(Object.prototype.toString.call(obj));
+            return Object.prototype.toString.call(obj) === "[object Function]";
+        }
+
+        jQuery.extend = jQuery.fn.extend = function() {
+            console.log("jquery extend 鏂规硶");
+            console.log(arguments);
+            var src, copyIsArray, copy, name, options, clone,
+                target = arguments[0] || {},
+                i = 1,
+                length = arguments.length,
+                deep = false;
+
+            // Handle a deep copy situation
+            if ( typeof target === "boolean" ) {
+                deep = target;
+                target = arguments[1] || {};
+                // skip the boolean and the target
+                i = 2;
+            }
+
+            // Handle case when target is a string or something (possible in deep copy)
+            if ( typeof target !== "object" && !jQuery.isFunction(target) ) {
+                console.log("target 不是对象也不是方法");
+                target = {};
+            }
+
+            // extend jQuery itself if only one argument is passed
+            if ( length === i ) {
+                target = this;
+                --i;
+            }
+
+            console.log(target);
+
+
+
+            for ( ; i < length; i++ ) {
+
+                // Only deal with non-null/undefined values
+                if ( (options = arguments[ i ]) != null ) {
+                    console.log("options is : ");
+                    console.log(options);
+
+
+                    // Extend the base object
+                    for ( name in options ) {
+                        console.log("name is : "+name);
+                        src = target[ name ];
+                        copy = options[ name ];
+
+                        console.log("src is : "+src);
+                        console.log("copy is : "+copy)
+
+                        // Prevent never-ending loop
+                        if ( target === copy ) {
+                            continue;
+                        }
+
+                        // Recurse if we're merging plain objects or arrays
+                        if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {
+                            if ( copyIsArray ) {
+                                console.log("copyIsArray is : "+ copyIsArray);
+                                copyIsArray = false;
+                                clone = src && jQuery.isArray(src) ? src : [];
+
+                            } else {
+                                clone = src && jQuery.isPlainObject(src) ? src : {};
+                            }
+
+                            // Never move original objects, clone them
+                            target[ name ] = jQuery.extend( deep, clone, copy );
+
+                        // Don't bring in undefined values
+                        } else if ( copy !== undefined ) {
+                            target[ name ] = copy;
+                        }
+                    }
+                }
+            }
+            console.log("target is : ");
+            console.log(target);
+            // Return the modified object
+            return target;
+        };
+
+
+    </script>
+    <script type="text/javascript">
+        var target = function() {console.log("xueer")},
+            source = {arr: ['d', 'df']};
+        jQuery.extend(true, target, source);
+        console.log("target.arr is : ");
+        console.log(target.arr);
+        
+    </script>
+</body>
+</html>

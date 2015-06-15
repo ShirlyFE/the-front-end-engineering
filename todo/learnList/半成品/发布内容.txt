@@ -1,0 +1,105 @@
+
+移动开发js加载图片时通过判断媒体条件加载适用于当前媒体的图片
+主要通过window.matchMedia方法来测试,举例：
+if (window.matchMedia("(min-width: 400px)").matches) {
+ // The screen width is 400px or wider.
+ } else {
+ // The screen width is less than 400px.
+ }  
+此方法返回MediaQueryList对象，有俩属性matches（bolean），media（str）
+
+
+响应式图片策略
+
+ src.sencha.io 服务
+<img src=‘http://src.sencha.io/http://sencha.com/files/u.jpg’ alt=‘My smaller image’ />、
+
+<img src='http://src.sencha.io/320/200/http://sencha.com/files/u.jpg' alt='My constrained image' width='320' height='200' />
+
+会缓存相同请求，不会每次都生成一个图片
+
+
+
+
+
+
+第三方的服务端
+例如adaptive-image.php，把屏幕的分辨率保存在cookie中，后端根据需求缩放图片大小（尺寸and文件大小）。
+
+
+直接检测带宽
+
+Var conn = navigator.connection||navigator.mozConnection;
+navigator.webkitConnection;
+Alert(navigator.connection.bandwidth); 
+//0,infinity(未知),xx(MB/s)
+Alert(navigator.connection.metered); (是否有流量限制)
+
+Navigator.connection.addEventListener(‘change’,func(),false);
+监听带宽的变化
+
+
+
+
+node的安装，在node官网下载node(msi格式)，http://www.nodejs.org/download/，然后在系统变量中进行配置使其在dos下可用，之后安装npm，npm安装包下载地址https://github.com/isaacs/npm/archive/v1.3.14.zip#
+下载之后在dos下运行npm -v看是否已可用，如果不可用设置全局系统变量
+之后就可以通过npm install -g grunt-cli安装grunt-cli模块了(如果你以前全局安装过Grunt, 需要先卸载掉npm uninstall -g grunt)
+注意了～，装上了 grunt-cli 不代表就装上了grunt task runner!, grunt CLI的工作很简单：将某个版本的grunt安装到 Gruntfile的旁边。它还允许同时安装多个版本的grunt在同一台机器上。
+cli是怎么工作的？
+每次grunt执行的时候，都会先使用node的require()方法来查看本地安装的grunt. 基于此，你可以在你项目的任意子目录里执行grunt 命令
+
+如果找到了本地安装的Grunt， CLI就载入本地安装的grunt库，并且使用Gruntfile里的配置，执行你需要运行的任何tasks。
+
+假设Grunt CLI已经安装并且项目已经配置好了package.json和Gruntfile, 开展工作就十分滴简单： 1. 定位到项目的根目录 2. 使用 npm install 安装项目依赖 3. 执行grunt
+
+这就是所有的事情鸟！～ 已装的Grunt tasks 可以用grunt --help命令列出来。
+package.json
+package.json 放在项目的根目录下，并且应该被提交到源码中，执行在package.json同目录执行nom install,就会安装每个列在里面的依赖。
+
+有几个方式可以创建package.json
+
+使用 grunt-init 模块 http://gruntjs.com/project-scaffolding
+执行 npm init 命令
+自己写入下面的内容建一个
+{
+  "name": "my-project-name",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-contrib-nodeunit": "~0.1.2"
+  }
+}
+安装Grunt 和 gruntplugins
+
+通过 npm install (module) --save-dev命令把Grunt和runtplugins加入到已存在的package.json. 很方便。
+
+安装grunt及其插件，进入到某项目根目录，在命令行模式下，例如文件在c盘testGrunt目录下，利用cd命令到testGrunt目录下后，使用命令: 
+
+npm install grunt --save-dev
+
+
+Grunt和Grunt插件应该作为项目依赖定义在你项目的package.json中。这样就允许你使用一个单独的命令:npm install安装你项目中的所有依赖(在package.json中定义好的grunt和grunt插件在使用npm install时会自动安装相关依赖，正如我们已经了解到的，这些依赖都定义在package.json中了)。当前稳定的和开发中的Grunt版本始终都列在wiki页面上。
+
+安装指定版本的Grunt
+如果你要安装指定版本的Grunt或者Grunt插件，只需要运行npm install grunt@VERSION --save-dev命令，其中VERSION就是你所需要的版本(指定版本号即可)。这样会安装指定版本的Grunt或者插件，并将它作为你的项目依赖添加到package.json。
+
+注意，当你给npm install添加--save-dev标志时，一个波浪线范围将被用于你的package.json中。通常这么做是很好的，因为如果指定版本的Grunt或者插件有更新补丁出现时，它将自动升级到开发中的版本，与semver对应。
+
+安装已发布的开发版本的Grunt
+通常当新功能开发完成后，Grunt构建都可能会定期被发布到npm中。没有显式指定的版本号，这些构建不可能安装到依赖中，通常它会有一个内部版本号或者alpha/beta/指定候选版本号。
+
+与安装指定版本的Grunt一样，运行npm install grunt@VERSION --save-dev其中VERSION就是你所需要的版本，同时npm将会安装那个版本(所指定版本的模块)的Grunt到你的项目目录中(通常都会安装到nodemodule中)，并把它添加到package.json依赖中。
+
+注意，如果你没有注意指定版本号，都会有一个波浪线的版本范围将被指定到package.json中。这是非常糟糕的，因为指定开发版本的模块都是新的，可能是不兼容的，如果开发发布的补丁通过npm被安装到你的package.json中会有可能破坏你的构建工作。
+
+在这种情况下手动的编辑你的package.json是非常重要的，并且你应该从package.json中的版本号中移除~(波浪线)。这样就会锁定你所指定的精确的开发版本(稳定并安装好的依赖模块)。
+
+这种方式同样也可以用于安装已发布的开发版本的Grunt插件。
+
+译注：通常发布的开发版都只是作为源代码提交到指定的仓库如Github等，可能并没有作为npm模块正式发布。在使用的过程中，建议按需添加稳定版本的依赖模块。如果你有足够的信心，也可以尝试使用最新的未正式发布的模块来满足工作需求。
+http://www.gruntjs.org/article/installing_grunt.html
+
+
+jasmine :https://github.com/mhevery/jasmine-node
+http://pivotal.github.io/jasmine/

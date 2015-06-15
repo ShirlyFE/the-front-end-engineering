@@ -1,0 +1,493 @@
+1. css2.1包含outline属性，与border属性不同，轮廓绘制在元素框之上，所以他们不影响元素的大小或定位。因此轮廓有助于修复bug，因为他们不影响页面的布局。IE7和更低版本不支持轮廓. IE中当设置浮动或者position、relative、fix定位的时候容易有不合理的offset，原因是因为其会在random的位置设置random的pixel,通过将引起问题的top、left、bottom、right设置为0来解决部分问题
+
+
+2. js 获取css样式表中的属性值需要通过getComputedStyle(非IE)和currentStyle(IE)
+对于元素的内联css样式(<div style="color:#369">hello</div>)可以直接使用element.style.color来直接获取，但对于外部定义的css样式使用这种方式是无法获取的，必须使用上面的两种方式获取
+
+3.由于浏览器对盒模型的定义不同（IE盒模型中width = border + padding +content width），在处理尺寸的时候可能会有差异，css3的box-sizing可以定义使用哪种盒模型，但是用的不多，目前最好的解决办法是回避这个问题，也就是说，不要给元素添加具有指定宽度的内边距，而是尝试将内边距或者外边距添加到元素的父元素或子元素
+
+4. 只有普通文档流中块框的垂直外边距才会发生外边距叠加，行内框、浮动框或绝对定位框之间的外边距不会叠加
+
+5.行内框可以使用水平内边距、边框和外边距调整他们的水平间距，但是，垂直内边距、边框和外边距不影响行内框的高度。同样在行内框上设置显示的高度和宽度也没有影响。所以修改行内框尺寸的唯一方法是修改行高或者水平边框、内边距或外边距,input在现代浏览器的表现为inline-block.IE6中虽然为inline但是其表现更像是inline-block,因为可以设置width和height
+
+
+6. 在使用相对定位时，无论是否移动，元素仍然占据原来的空间，因此，移动元素会导致它覆盖其他框
+
+7. 相对于已相对定位的祖先元素对框进行绝对定位，在大多数现代浏览器中实现的很好，但是，在windows上的IE5.5 和IE6中有个bug，如果要相对于相对定位的框的右边或底部设置绝对定位的框的位置，那么需要确保相对定位的框已经设置了尺寸。如果没有，那么IE会错误的相对于画布定位这个框。或者出现诡异的行为，简单的解决方案是为相对定位的框设置宽度和高度，从而避免这一问题。
+
+8. 绝对定位的元素与文档流无关，所以他们不影响普通流中的框。如果扩大绝对定位的框（例如，通过增加字号），周围的框不会重新定位。因此，尺寸的任何改变都会导致绝对定位的框产生重叠，从而破坏精心调整过的布局。
+
+9. IE6和更低版本不支持固定定位。IE7部分支持这个属性,因此在IE6及以下需要使用js重现此效果
+
+10. 浮动让元素脱离文档流，不再影响不浮动的元素。实际上，并不完全如此。如果浮动元素后面有一个文档流中的元素，那么这个元素的框会表现的像浮动根本不存在一样，但是框的文本会受到浮动元素的影响，会移动以留出空间。基于此，创建浮动框可以使文本围绕图像
+
+11. clear属性可以清除浮动，它的值可以是left、right、both、none，他表示框的哪些边不应该挨着浮动框。清除的实际情况下是在清理元素时，浏览器在元素顶上添加足够的外边距，是元素的顶边缘垂直下降到浮动框的下面.overflow属性定义在包含的内容对于指定的尺寸太大的情况下元素应该怎样，但是应用值为hidden或auto的overflow属性有一个有用的副作用，在包含元素上设置它即会自动的清理包含的任何浮动元素，不过其并不适合所有情况，因为设置框的overflow属性会影响它的表现，但是IE6及以下无效。
+
+结合使用:after伪类和内容声明在指定的现有内容(包含浮动的包含元素)的末尾添加新的内容，比如添加一个点，因为不希望新内容占据垂直空间或者在页面上显示，所以需要将height设置为0，将visibility设置为hidden，因为被清理的元素在它们的顶外边距添加了空间，因此生成的内容需要将它的display属性设为block，这样就可以对生成的内容进行清理：
+.clear: after {
+    content: ".";
+    height: 0;
+    visibility: hidden;
+    display:block;
+    clear: both;
+}
+不过此方法在IE6和更低版本中不起作用。
+当然也可以通过js来解决此问题
+
+12. 因为背景图像总是出现在背景颜色的上面，所以当固定长度的图像(比如渐变图像)，颜色就会显示出来，而且如果渐变底部和背景颜色的颜色相同，那么图像和背景颜色之间的转换就看不出来了。
+body {
+    background-image: url(/img/gradient.gif);
+    background-repeat: repeat-x;
+    background-color: #ccc;
+}
+
+13.使用百分比定位背景图像时不是对背景图像的左上角进行定位，而是使用图像上的一个对应点。所以，如果指定垂直和水平位置都是20%，那么实际上是在将图像上距离左上角20%的点定位到父元素上距离左上角20%的位置。
+
+14. css3的多背景图像可以避免添加较多的无意义标记。它采用与一般背景图像相同的形式。主要的差异就是，不是定义一个背景图像，而是可以使用任意数量的图像。具体做法如下：
+.box {
+    background-image: url(/img/top-left.gif),url(/img/top-right.gif),url(/img/bottom-left.gif),url(/img/bottom-right.gif);
+    background-repeat: no-repeat,no-repeat,no-repeat,no-repeat;
+    background-position: top left, top right, bottom left, bottom right;
+}
+
+15. border-image 会将图像分成9分，也会自动的把图像的每个部分用于对应的边框，实现此效果的代码如下：
+.box {
+    -webkit-border-image: url(/img/corners.gif) 25% 25% 25% 25% / 25px round round;
+}
+round可以替换成：sketch或者repeat等
+
+16. 投影效果除了可以使用box-shadow之外，也可以使用背景图像的方式来实现，我们希望div包围图像，可以显示的设置容器div的款对，但是这么做限制了此技术的用途，可以浮动div，让它在现代浏览器上产生“收缩包围”的效果。
+
+代码如下：
+#id2 {
+    float: left;
+    background: url(../shadow.png) no-repeat bottom right;
+    position: relative;
+    clear:right;
+}
+#id2 img {
+    height: 390px;
+    width: 390px;
+    background: #fff;
+    display:block;
+    border: 1px solid #CCC;
+    position:relative;
+    margin: -5px 5px 5px -5px;
+    padding: 4px;
+    position:relative
+}
+
+<div id="id2">
+    <img src="../img1.jpg"/>
+</div> 
+
+17. rgba的a表示不透明度值。比如background-color: rgba(0,0,0,0.8);那么0.8表示这个背景的不透明度是80%，换句话说，透明度是20%。值为1表示100%不透明，值为0表示完全透明。
+
+18. 对于不支持PNG透明度的IE6，有两种解决方法。
+    a. 使用专有的AlphaImageLoader过滤器，为此需要包含如下代码：
+    .img-wrapper div {
+        filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/img/shadow2.png", sizinigMethod="crop"); //  此规则使用专有的过滤器加载PNG并应用alpha透明度
+        background: none; // 原来的背景图像仍然会显示，所以第二个规则隐藏原来的背景图像
+    }
+    此技术的问题是：对于要使用的每个透明PNG，都必须包含这行代码，因此使用起来有点麻烦
+
+    b. 另一种是使用IE PNG fix技术，也就是Microsoft专有的css扩展(行为behavior)，下载合适的.htc文件并在IE6专用的样式表引用它，就可以在任何元素上启用PNG透明度。
+    img,div {
+        behavior: url(iepngfix.htc);
+    }
+
+    c. 公司的办法：touming.js
+
+18. 要想出现常见的改变窗口大小，藤蔓移动的有趣效果，可以使用css的背景图来实现。比如www.silverbackapp.com页面中当改变窗口大小时就会看到背景图像以稍微不同的速度移动，让人觉得此页面时有深度的。而这种现象称为视差滚动。
+
+实现此种效果，首先需要创建几个不同的背景图像，一个时绿色背景上的藤蔓，另两个图像是alpha透明背景上的藤蔓。这样中景和前景图像可以相互覆盖并盖在背景上。主背景应用在body元素上，但如果我们不适用css3的多背景图像法，就要添加额外的元素来应用背景。其标记结构类似下面这样：
+<body>
+    <div class="midground">
+        <div class="foreground">
+            <p> Your content will go here! </p>
+        </div>
+    </div>
+</body>
+
+添加背景时如希望平铺就设置repeat-x,关键点事把图像相对于窗口大小水平偏移，不同的层根据自己的想要的效果进行不同的偏移，这样当水平调整窗口大小时，背景图像的位置会改变，看起来像是移动了
+body {
+    background: url("/imges/background/body.gif") repeat-x scroll -10% 0 #6E9B68;
+    color: #333;
+}
+.midground {
+    background: url("/images/background/vines-mid.png") repeat-x scroll 70% 0 rgba(0,0,0,0);
+}
+.foreground {
+    background: url("/images/background/vines-font.png") repeat-x scroll 300% 0 rgba(0,0,0,0);
+}
+
+
+19. 因为html文本具有很多优点，搜索引擎可以读取它，如果在浏览器中增加文本字号，就可以让它放大。因此，尽可能使用HTML文本而不是文本的图像是一种好想法。
+    实现上述的文本替换有几种方法，将文本隐藏，把图像当背景。
+    <h2>
+        <span> Hello World </span>
+    </h2>
+
+    h2 {
+        background: url(hello_world.gif) no-repeat;
+        width: 150px;
+        height: 35px;
+    }
+    span {
+        display: none;
+    }
+    此方案的缺陷：许多流行的屏幕阅读器会忽略哪些display为none或visibility为hidden的元素。因此会完全忽略这个文本，造成严重的可访问性问题。
+
+    方案二： 对标题进行非常大的复制文本缩进：
+    <h2>
+        Hello World
+    </h2>
+    h2 {
+        text-indent : -500px;
+        background: url(/img/hello-world.gif) no-repeat;
+        width: 150px;
+        height: 35px;
+    }
+    此方法解决了屏幕阅读器的问题
+
+    图像替换试图解决的主要问题之一是在大多数计算机上缺少可用的字体。为了避免将文本换成文本的图像，使用Flash允许将字体嵌入SWF文件，所以他们并不把文本换成图像，而是用Flash文件替换文本。进行这一替换的方法是使用js搜索文档，找到特定元素或具有特定类名的元素中的所有文本。然后js将文本替换为小的Flash文件。这种技术并不为每段文本创建单独的Flash文件，而是将被替换的 文本放回一个重复的Flash文件中。因此，进行图像替换所要做的只是添加一个类，Flash和js会完成余下的工作。另一个好处是Flash文件中的文本是可选择的，意味着可轻松的复制和黏贴它
+
+
+20. IE7和更低版本不支持在除链接之外的其他元素上使用伪类选择器，其他浏览器的除链接之外的其他元素也可以使用:hover、:active或:focus伪类选择器。
+
+21. 链接的样式设置顺序，a:link,a:visited,a:hover,a:focus,a:active ----lovehate加个focus，否则会因层叠规则致使一些效果失效
+
+22. 除了连接到特定的文档之外，还可以使用包含片段标识符的链接链接到页面的特定部分。只需在href的末尾加一个#字符，然后加上要链接的元素的ID。
+<a href="http://example.com/story.html#comment3">
+    A great comment by Simon
+</a>
+再单击上面的链接时，就会转到相应的文档，而且页面向下滚动到comment3元素。但如果页面内容非常多，常常很难看出链接把你转到了哪个元素。为了解决此问题，css3允许使用:target伪类为目标元素设置样式
+.comment:target {
+    background-color: yellow;
+}
+
+
+23. 属性选择器大多数现代浏览器都支持这种技术，而老式浏览器(比如IE6和更低版本)会忽略它。不过可以通过在每个元素中添加类，使用js和DOM实现相似的效果。
+a[href^="http://www.yoursite.com"],
+a[href^="http://yoursite.com"] {
+    background-image: none;
+    padding-right: 0;
+}
+
+24. 链接状态改变的多图像方式的主要缺点是：在浏览器第一次加载鼠标悬停的图像时有短暂的延迟，这会造成闪烁效果，让人感觉按钮有点反应迟钝。可以用css spring方法将不同状态图像放在一个文件来加载，通过改变图像对齐方式来切换图像样式，可惜即使只是改变图像的对齐方式，IE仍会向服务器请求新的图像，这回产生轻微的闪烁，有点儿烦人，为了避免闪烁，需要将翻转状态应用于链接的父元素，例如包含它的段落。
+p {
+    background: url(/img/buttons.png) no-repeat right top;
+}
+
+25. line-height:的值为实数时，代表缩放因子；为百分比、em、ex时其取值基于元素的字体尺寸。
+
+基线指的是一行字横排时下沿的基础线，基线并不是汉字的下端沿，而是英文字母x的下端沿。
+
+当行高设定的比字体高度小时，多行的文字将叠加到一起。
+
+行高是可以继承的，但是继承的是计算值，例如：
+p {font-size: 20px; line-height: 2em;}
+p span {font-size: 30px;}
+
+<p>字高20p.<span>字高30px</span></p>
+虽然span元素的字体尺寸30px，不过其继承的行高仍为40px，这样的话当元素内的文字字体尺寸不一样的时候，如果设定固定的行高很可能造成字体的重叠。
+
+为了避免这种情况出现，可以定义一个没有单位的实数值作为缩放因子来统一控制行高，缩放因子是直接继承的，而不是继承计算值。例如上例中的行高为：
+p { line-height: 1;}
+
+当内容中含有图片的时候，如果图片的高度大于行高，则含有图片行的行框将被撑开到图片的高度，需要注意的是：图片虽然撑开了行框，但是不会影响行高，因此也不会影响到基于行高来计算的其他属性。 
+
+提示：当行内含有图片的时候，图片和文字的垂直对齐方式默认是基线对齐。
+
+行距 = 行高-字体尺寸； 行高：两个基线之间的距离
+
+26. vertical-align :适用于行内元素和单元格元素，其取值也可以为百分比和长度值等绝对长度
+
+垂直对齐不能被继承
+
+基线对齐（vertical-align : baseline）使元素的基线同父元素的基线对齐
+而像图片或者输入框这样的元素，本身没有基线，则将其底端同父元素的基线对齐
+
+顶端对齐（vertical-align : top）是将元素的行内框的顶端与行框的顶端对齐
+p {
+    line-height : 7em;
+}
+p strong {
+    vertical-align:top;
+    line-height:2em;
+}
+p img {
+    vertical-align : top;
+}
+<p>顶端对齐：<strong>vertical-align:top;</strong><img src="img/ddcat_anim.gif" alt="图片" width="88" height="31" /></p>
+
+对于<strong>元素，不仅设定了vertical-align，还设定了line-height，这是因为行高可以改变行内框的高度，如果不重新设定行高，则<strong>元素继承了父元素<p>行高，因此行内框高和行框的高度是一样的，则顶端对齐将看不出效果。
+
+文本顶端对齐（vertical-align : text-top）是将元素行内框的顶端同文本行的顶线对齐
+
+中间对齐（vertical-align : middle）通常使用在图片上，将图片的垂直方向的中线与文本行的中线对齐
+
+上标（vertical-align:super）使元素的基线（替换元素的底端）相对于父元素的基线升高，下标（vertical-align:sub）使元素的基线降低，移动的幅度CSS规范中没有规定，由浏览器来决定。
+
+和上下标类似，长度值和百分比值可使元素的基线（替换元素的底端）相对于父元素的基线升高（正值）或者降低（负值）,其中百分比与行高有关
+
+设置垂直对齐会影响到行框高（注意是行框高不是行高，行框高值行内元素最大的行高）
+
+注意：在IE中设定百分比或者数值对齐会造成内容的叠加混乱
+
+27. 创建基本垂直导航条：
+ul.nav {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    width: 8em; // 设置符列表的宽度而不是锚的宽度代码更容易维护
+    background-color: #8BD400;
+    border: 1px solid #486B02;
+}
+
+ul.nav a {
+    display: block;
+    color: #2B3F00;
+    text-decoration: none;
+    border-top: 1px solid #E4FFD3;
+    border-bottom: 1px solid #486B02;
+    background: url(images/) no-repeat 5% 50%;
+    padding: 0.3em 1em;
+}
+
+ul.nav a:hover, ul.nav a:focus {
+    color: #E4FFD3;
+    background: #6DA203;
+}
+
+ul.nav .last a{
+    border-bottom: 0;
+}
+
+<ul class="nav">
+    <li><a href="home.html">Home</a></li>
+    <li><a href="home.html">About</a></li>
+    <li><a href="home.html">Our Services</a></li>
+    <li><a href="home.html">Our work</a></li>
+    <li class="last"><a href="home.html" >News</a></li>
+</ul>
+
+上面Windows上的IE6和更低版本之外的所有主浏览器上，这种技术都是有效的，但是，IE6在列表项上下添加了额外的空间，为了修复此bug，有两种做法：
+a. 在li元素上添加display:inline
+ul.nav li {
+    display: inline;
+}
+b. 设置a元素的具体高度
+
+
+28. IE不显示其内容隐藏在屏幕之外的链接，即使显式的设置宽度和高度也不行。有一种解决办法是：给锚链接设置某种背景，就可以让IE正常的表现，不过我们其实不希望链接有背景，因为它们应该是隐藏的。不过我们可以设置图像url不指向真实的图像，只需指定一个不存在的URL，这就可以让IE的表现正常。
+
+29. 行标题和列标题应该使用th而不是td标记，表格标题可以设置值为row或col的scope属性，定义他们是行标题还是列标题，他们可以设置rowgroup或colgroup的值，表示他们与多行或多列相关。
+
+css的border-spacing属性可以控制单元格之间的距离，可惜IE7和更低版本不理解这个属性，因此需要使用老式但可靠的cellspacing属性。
+
+30. 在表单输入控件和标签之间创建关联需要id属性，而将表单数据发送回服务器需要name属性。id和name不必相同，但为了保持一致，大家还是喜欢尽可能让他们相同。
+
+
+31. <button type="submit">Book Now</button>
+button元素的主要限制是IE6(在某种程度上还有IE7)处理提交的方式。其他浏览器提交value属性的内容，但是IE6和IE7提交元素本身的内容，因此，如果页面上有多个按钮，IE6会提交所有按钮的内容，而不仅仅是被点击的按钮，如需在一个页面上使用多个按钮，就需要确保他们的功能时相同的
+
+32. 在所有现代浏览器居中只需要margin: 0 auto;但是混杂模式的IE5.x和IE 6 不支持margin: auto声明，幸运的是，IE将text-align:center 误解为让所有东西居中，而不只是文本。利用它让主体标签所有东西居中，包括容器div，然后让容器的内容重新向左对齐：
+body {
+    text-align: center;
+}
+
+.wrapper {
+    width: 920px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+31. IE考虑元素内容的尺寸，而不是元素本身的尺寸。在符合标准的浏览器中，如果元素的内容太大，它只会超出框之外。但是，zaiIE中，如果元素的内容太大，整个元素就会扩展。这可能是由很小的东西引起的，比如把一些文本设置为斜体。如果这发生在非常紧密的布局中，那么就没有足够的空间可以让元素并排出现，并排浮动的其中一个浮动元素就会推到下面去。其他IEbug以及各种浏览器取整错误也会导致浮动元素下降。
+比较好的方法是设置浮动分别左右浮动，自动留出隔离带，这样哪怕稍微尺寸放大也只是填充了隔离带而不是浮动下移。
+.content {
+    width: 920px;
+    overflow: hidden;
+}
+
+.content .primary {
+    width: 650px;
+    padding-right: 20px;
+    float: right;
+    display: inline;
+}
+.content .secondary {
+    width: 230px;
+    float: left;
+    display: inline; // 防止IE中的双外边距浮动产生的bug
+}
+
+<div class="content">
+    <div class="primary">
+        ……
+    </div>
+    <div class="secondary">
+        ……
+    </div>
+</div>
+
+
+上面命名为primary和secondary而不是content_primary和content_secondary是有原因的，通用的命名可以反复使用。比如创建三列的浮动布局：
+<div class="content">
+
+    <div class="primary">
+        <div class="primary">
+            <!--your primary primary content goes here-->
+        </div>
+        <div class="secondary">
+            <!--your secondary primary content goes here-->
+        </div>
+    </div>
+
+    <div class="secondary">
+        <!--navigation and secondary content goes here-->
+    </div>
+
+</div>
+
+32. IE中布局的offset是元素的border相对于文档边界的偏移量
+.outer {
+    width: 300px;
+    height: 300px;
+    border: 1px solid red;
+    padding-top: 230px;
+    padding-left: 30px;
+}
+.inner {
+    width: 100px;
+    height: 100px;
+    padding: 30px;
+    margin: 120px;
+    border: 1px solid gray;
+}
+
+
+<div class="outer">
+  <div class="inner">
+    查看内部的margin是相对于哪个元素的
+  </div>
+</div>
+
+IE7及以下的浏览器当元素的垂直padding和包含元素的垂直margin同时存在时，padding和margin不会合并，而是取最大值，但是水平方向上不会出现此情况。
+
+
+33. 弹性布局相对于字号(而不是浏览宽度)来设置元素的宽度。以em为单位设置宽度，可以确保在字号增加时整个布局随之扩大。流式布局(百分比--相对于浏览器宽度)
+
+建议内部宽度使用百分数，只以em为单位设置容器的宽度。这样的话，内部宽度任然是相对于字号的，这样就可以方便的修改布局的总尺寸，不必修改每个元素的宽度，这种解决方案更灵活，更容易维护
+
+弹性或者流式布局中的图像设置，如果图像需要用作页面上的图像元素，那么将容器元素的宽度设置为100%并且将overflow设为hidden，这样的话，图像右边会被截短，使它适合branding元素，而不会随着布局伸缩(IE6除外，会扩展父元素)
+#branding {
+    width: 100%;
+    overflow: hidden;
+}
+
+<div id="branding">
+    <img src="/img/branding.png" width="1600" height="171"/>
+</div>
+
+当你需要图像垂直或水平伸缩以避免被剪切，可以将图像元素添加到没有设置任何尺寸的压面上，然后设置图像的百分数宽度，并且添加与图像宽度相同的max-width以避免像素失真
+
+使用百分比定位背景图像非常有用，因为这样可以创建水平比例与布局相同的背景图像，然后把背景图像定位到希望列出现的地方。
+
+34. windows上的IE 6的bug似乎比大多数浏览器都多，IE的表现欲其他浏览器不同的原因之一是，显示引擎使用一个称为布局的内部概念。
+
+IE使用布局概念来控制元素的尺寸和定位。那些“拥有布局”(have layout)的元素负责本身及其子元素的尺寸设置和定位。如果一个元素“没有拥有布局”，那么 它的尺寸和位置由最近的拥有布局的祖先元素控制。
+
+Ie显示引擎利用布局概念减少它的处理开销。所有元素都控制自己的尺寸和定位。但是，这会在IE中导致很大的性能问题。因此，IE开发团队决定只将布局应用于实际需要它的那些元素。这样就可以充分的减少性能开销。
+
+默认情况下拥有布局的元素包括：
+body、html、table、tr、td、img、hr、input、select、textarea、button、iframe、embed、object、applet、marquee
+可以使用js函数的hasLayout查看一个元素是否拥有布局，如果元素拥有布局，这个属性就返回true，否则返回false。hasLayout是一个只读属性，所以无法使用js进行设置
+比如：document.body.currentStyle.hasLayout
+
+设置一下css属性会自动地使元素拥有布局
+float:left或right;
+display: inline-block;
+width: 任何值;
+height: 任何值;
+zoom: 任何值;
+writing-mode: tb-rl;
+IE7中以下属性也成了布局触发器：overflow:hidden、scroll或auto；min-width:任何值；max-width: 除none之外的任何值
+
+布局是许多IE显示bug的根源。比如：如果一个文本段落靠着一个浮动元素，那么我们期望文本围绕这个元素，但是，在Windows上的IE7和更低版本中，如果段落拥有布局(例如，由于设置了高度)，那么它就被限制为矩形，因此阻止文本围绕浮动元素
+
+另外，对于某些元素，布局似乎清理了其中包含的浮动元素，就像是设置了overflow:hidden一样
+
+另一个问题是拥有布局的元素如何确定自己的尺寸，如果元素的内容变得比元素本身大，那么我们希望内容溢出到元素外，但是，在IE6和更低版本中，拥有布局的元素会错误的扩展以便适应内容的尺寸。这种显示错误意味着Window上的 IE中的width实际上更像是min-width.这种行为也是在IE中许多浮动布局被破坏的原因。
+其他问题包括： 拥有布局的元素不会收缩；布局元素对浮动进行自动清理；在拥有布局的元素之间外边距不叠加；在滚动时，列表项上的背景图像间歇性的显示和消失。
+
+IE8使用全新的显示引擎，据称不使用hasLayout属性
+
+条件注释写法：
+<!--[if IE]>-->
+    <link rel="stylesheet" type="text/css" href="http://users.skynet.be/mgueury/css/main.css"/>
+<!--<![endif]-->
+
+35. getPropertypeValue方法可以获取css样式声明对象(window.getComputedStyle(dom,伪类或null))上的属性值(直接属性名称)比如：
+window.getComputedStyle(element, null).getPropertyValue("float");
+如果不适用getPropertyValue方法直接使用键值访问，也可以，但是，比如这里的float，如果使用键值访问，则不能直接使用getComputedStyle(element,null).float,而应该是cssFloat与styleFloat，自然需要浏览器判断了，比较折腾！
+
+IE获取元素最终样式使用dom.currentStyle,当获取属性值时使用getAttribute方法
+style.getAttribute("float");
+
+使用getAttribute方法也不需要cssFloat和styleFloat的兼容处理
+
+36. css被设计成具有很强的向前兼容性。如果浏览器不理解某个选择器，那么它会忽略整个规则
+应该使用依赖于不被支持的css的过滤器，而不是依赖于某种浏览器bug的过滤器，这可能比较安全，因为bug在新版本中可能被修复或者有新的表现形式。
+
+最有用的css过滤器之一是*，针对IE6和更低版本。HTML元素被认为是网页上的第一个元素(即根元素)，但是，IE的老版本有一个匿名的根元素，它包围着HTML元素。可以使用通用选择器指定包围在另一个元素中的HTML元素。因这种情况只在IE6和更低版本中出现，所以可以将特定的规则应用于这些浏览器。(这个bug在IE7中已经修复了，它是针对IE老版本的可靠方法)
+#content {
+    width: 80px;
+    padding: 10px;
+}
+* html #content {
+    width: 100px;
+    w\idth: 80px;
+}
+
+37. 合理的设置了doctype声明之后IE盒模型显示的与标准盒模型一致，不设置doctype会被认为是混杂模式，这时IE就表现为其自身的盒模型
+
+IE7及以上支持子选择器和PNG透明，因此可以子选择器做hack
+
+IE混杂模式下的常见bug是3px文本偏移bug，当文本与一个浮动元素相邻，并且使用与浮动元素宽度相同的左外边距使得相邻段落中的文本不围绕浮动元素，这个bug就会表现出来，修改这个bug可以a.通过设置属性迫使元素拥有布局，在表面上消除文本偏移(比如，height:1px--注意只在IE下的hack，因为IE将height当做min-height)；b.将左外边距设置的比浮动元素大3px
+
+IE6中的藏猫猫(peel-a-boo)bug,之所以起这个名称是因为在某些条件下文本看起来消失了，只有在重新加载页面时才再度出现。出现这个bug的条件是： 一个浮动元素后面跟着一些非浮动元素，然后是一个清理元素，所有这些元素都包含在一个设置了背景颜色或图像的父元素中。如果清理元素碰到了浮动元素，那么中间的非浮动元素看起来消失了，隐藏到了父元素的背景颜色或图像后面，只有在刷新页面时才重新出现。其解决方法：a.去掉父元素上的背景颜色或图像，这常不可行；b.避免清理元素与浮动元素接触；c.给容器指定行高，这个bug也不会出现；d.将 浮动元素和容器元素的position属性设置为relative也会减轻这个问题。
+
+
+38. 另一个主要浏览器bug与相对定位容器中的绝对定位元素有关。当IE中绝对定位的元素嵌套在相对元素中出现bug时，因为相对定位的元素没有获得IE的内部hasLayout属性。因此，它们不创建新的定位上下文，所有绝对定位元素相对于视口进行定位，解决方法就是使相对定位元素拥有布局
+
+39. text-overflow 定义当文本太长，在包含它的元素中放不下时该怎样表现。
+text-overflow: ellipsis（取ellipsis值会在被截断的文本后面加上省略号...）
+
+40. word-break: break-all | keep-all | normal
+
+word-wrap: normal | break-word
+**其中normal控制连续文本换行，允许内容顶开容器的边界
+**break-word将内容在边界内换行(不截短英文单词换行，截断英文单词换行需要使用word-break:all属性)
+
+注意break-word和break-all属性值的不同
+我们在实际中主要碰到的是长串英文和英文单词如何断行的问题，对于长串英文，我个人认为是个恶意的东西，我们没有必要去理会他，但对于长串的英文单词，我让为不能在单词的某个部位断开，换句话说最好是行内换行而不应该是词内换行，这样一来最好的方式是使用
+   word-wrap:break-word;
+   overflow:hidden;
+而不应该使用
+  word-wrap:break-word;
+  word-break:break-all;
+
+有一点需要特别提出来，当以上word-wrap：break-word放在<pre>和<table>标签中时，在Firefox和Opera下是不会换行的，那么有没有别的办法可以让他像在safari,chrome下换行呢？回答是Yes的
+解决这样的bug我们需要在pre标签增加一个white-space属性
+
+ white-space: normal || pre || nowrap || pre-line || pre-wrap || inherit
+
+ normal：为其默认值。空白处会被浏览器忽略
+ pre:空白处会被浏览器保留，其行为方式就类似于HTML中的<pre>标签
+ nowrap:文本不会换行，文本会在同一行上，直到碰到了换行标签<br />为止
+ pre-wrap:保留空白符序列，但是正常进行换行
+
+ pre-line:合并空白符序列，但保留换行符
+ 
+

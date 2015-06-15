@@ -1,0 +1,122 @@
+require的源码优秀部分：
+1. 怎样保证依赖优先加载执行
+
+2.define中factory的执行作用域是什么？
+
+3.requirejs Node适配器r.js使得node module不用修改的使用requirejs
+
+Requirejs使用配置选项查找modules，如果Requirejs不能通过配置来查找到对应模块，就假设它是一个node类型的模块和配置。因此，再使用RequirejsAPI时，只配置requirejs模块的路径。对于使用node API的模块请使用node包管理比如npm将他们装载到node模块下，且不用配置
+
+使用npm安装node模块到node_modules目录下时，不要配置Requirejs去node_modules目录下去查找，也不要使用相对模块ID来引用node模块,所以不要这样做：require("./node_modules/foo/foo")
+
+requirejs只可以加载本地磁盘的文件，不能跨http加载模块
+
+使用方法：通过npm install requirejs安装r.js或者通过下载引用r.js
+
+
+
+These instructions assume an npm installation of 'requirejs'. If you are using the r.js file directly, replace require('requirejs') with require('./path/to/r.js'). Basic usage is:
+
+    require('requirejs')
+    Pass the main js file's "require" function in the configuration to requirejs.
+
+Example:
+
+var requirejs = require('requirejs');
+
+requirejs.config({
+    //Pass the top-level main.js/index.js require
+    //function to requirejs so that node modules
+    //are loaded relative to the top-level JS file.
+    nodeRequire: require
+});
+
+requirejs(['foo', 'bar'],
+function   (foo,   bar) {
+    //foo and bar are loaded according to requirejs
+    //config, but if not found, then node's require
+    //is used to load the module.
+});
+
+Be sure to read the notes in section 2 about configuring RequireJS so that it can load node-only modules installed via npm.
+
+To see a more complete example that loads a module via RequireJS but uses Node-native modules for other things, see the embedded test in the r.js repo.
+
+Note: requirejs([], function() {}) will call the function callback asynchronously in RequireJS 2.1+ (for earlier versions it was synchronously called). However, when running in Node, module loading will be loaded using sync IO calls, and loader plugins should resolve calls to their load method synchronously. This allows sync uses of the requirejs module in node to work via requirejs('stringValue') calls:
+
+//Retrieves the module value for 'a' synchronously
+var a = requirejs('a')
+
+Building node modules with AMD or RequireJS
+
+If you want to code a module so that it works with RequireJS and in Node, without requiring users of your library in Node to use RequireJS, then you can use the amdefine package to do this:
+
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
+define(function(require) {
+    var dep = require('dependency');
+
+    //The value returned from the function is
+    //used as the module export visible to Node.
+    return function () {};
+});
+
+The RequireJS optimizer, as of version 1.0.3, will strip out the use of 'amdefine' above, so it is safe to use this module for your web-based projects too. Just be sure to use the exact 'amdefine' if() test and contents as shown above. Differences in spaces/line breaks are allowed. See the amdefine project for more information.
+
+If you want to use RequireJS directly to code your module, and then export a module value to node so that it can be used in other Node programs without requiring that app to use RequireJS, you can use the approach listed in the next example.
+
+It is best to set the baseUrl specifically to the directory containing the module, so that it works properly when nested inside a node_modules heirarchy. Use the synchronous requirejs('moduleId') to fetch the module using the config and rules in requirejs, then use Node's module.exports to export your module value:
+
+var requirejs = require('requirejs');
+
+requirejs.config({
+    //Use node's special variable __dirname to
+    //get the directory containing this file.
+    //Useful if building a library that will
+    //be used in node but does not require the
+    //use of node outside
+    baseUrl: __dirname,
+
+    //Pass the top-level main.js/index.js require
+    //function to requirejs so that node modules
+    //are loaded relative to the top-level JS file.
+    nodeRequire: require
+});
+
+//foo and bar are loaded according to requirejs
+//config, and if found, assumed to be an AMD module.
+//If they are not found via the requirejs config,
+//then node's require is used to load the module,
+//and if found, the module is assumed to be a
+//node-formatted module. Note: this synchronous
+//style of loading a module only works in Node.
+var foo = requirejs('foo');
+var bar = requirejs('bar');
+
+//Now export a value visible to Node.
+module.exports = function () {};
+
+Using the optimizer as a node module
+
+The node module also exposes the RequireJS Optimizer as an optimize method for using the RequireJS optimizer via a function call instead of a command line tool:
+
+var requirejs = require('requirejs');
+
+var config = {
+    baseUrl: '../appDir/scripts',
+    name: 'main',
+    out: '../build/main-built.js'
+};
+
+requirejs.optimize(config, function (buildResponse) {
+    //buildResponse is just a text output of the modules
+    //included. Load the built file for the contents.
+    //Use config.out to get the optimized file contents.
+    var contents = fs.readFileSync(config.out, 'utf8');
+}, function(err) {
+    //optimization err callback
+});
+
+This allows you to build other optimization workflows, like a web builder that can be used if you prefer to always develop with the "one script file included before the </body> tag" approach. The optimizer running in Node if fairly fast, but for larger projects that do not want to regenerate the build for every browser request, but just if you modify a script that is part of the build. You could use Node's fs.watchFile() to watch files and then trigger the build when a file changes.

@@ -1,0 +1,377 @@
+
+ 1. iScroll4启用snap时原生滚动被阻止的解决办法
+
+iScroll4启用snap时原生滚动会被阻止，具体表现是拖动snap作用的元素往非snap路径时将无法拖动页面。
+
+官方的解决办法是追加onBeforeScrollStart事件：
+
+onBeforeScrollStart: function (e) { return true; }
+
+这种办法在测试中iOS和原生android设备是没有问题的，但第三方定制系统的设备（如小米，魅族）以及将页面在android应用中打开都会造成滑动非常的卡的现象。这时只要改改iScoll4的源码即可。具体参看  https://github.com/zmathew/iscroll/commit/86acfc09298a999c6f3097ecea736169e00b8e52
+复制代码
+
+onBeforeScrollStart: function (e) {
+    if(!hasTouch) e.preventDefault();
+    }，
+---------------------------------------------------
+// Zoom
+if (that.options.zoom && hasTouch && e.touches.length > 1) {
+    e.preventDefault();
+    c1 = m.abs(e.touches[0].pageX - e.touches[1].pageX);
+    c2 = m.abs(e.touches[0].pageY - e.touches[1].pageY);
+---------------------------------------------------
+// Lock direction
+        if (that.options.lockDirection) {
+            if (that.absDistX > that.absDistY + 5) {
+                newY = that.y;
+                deltaY = 0;
+            } else if (that.absDistY > that.absDistX + 5) {
+                newX = that.x;
+                deltaX = 0;
+            }
+        }
+        var oldX = that.x;
+        var oldY = that.y;
+        that.moved = true;
+        that._pos(newX, newY);
+        if(hasTouch && (that.x != oldX || that.y != oldY)) {
+            e.preventDefault();
+        }
+
+
+
+
+——————————————————————————————————————————————————————————————————————————
+
+
+
+
+
+
+
+4、iscroll4 实现自动滚动+手动滚动
+
+为了满足傻b客户的需求，需要在webapp里面，实现图片的手动滚动与自动滚动，底部都导航的小圆点，类似于iscroll4官方文档中carousel  贴出代码
+复制代码
+
+//全局的iscroll
+var globleScroll = {
+helperScroll : null,
+    homeScroll : null, //首页的活动iscroll
+    myCareScroll : null, //我的关注
+    wrapperCardStyle : null, //卡样库
+    cardStyleMainMySelf : null,//我的卡样
+    brandLetterList : null, //letter brand
+    brandFloorList : null,//floor brand
+    homePageIndex : 1 ,//记录当前homeScroll滚动到第几个图片了  
+    autoScroll : true,//是否是自动滚动
+    autoScrollInterval : null, //定时器
+    tabBrand : null, //店铺
+    pageEventScroll : null, //普通活动
+    tabDiscount: null, //优惠信息
+    pageEventScrollVip : null //VIP活动
+};
+
+ globleScroll.homeScroll = new iScroll("wrapperIndexActivity", {
+        snap : true,
+        momentum : false,
+        hScrollbar : false,
+        vScrollbar : false,
+        onScrollStart :function(){
+            //若手动拖动的时候 则clear 定时器  currPageX 归位 自动执行标识改为手动标识
+            globleScroll.autoScroll = false;
+            globleScroll.homePageIndex = 1;
+            clearInterval(globleScroll.autoScrollInterval);
+        },
+        onScrollEnd : function() {
+        $('#indicator > li.active').removeClass("active");
+            if(globleScroll.autoScroll){
+            $('#indicator > li:nth-child(' + (this.currPageX+1) + ')').addClass("active");
+            setHomeActivityIntro(this.currPageX+1, document.querySelector('#activityIntroMain .activityIntro'));
+            }else{
+            $('#indicator > li:nth-child(' + (this.currPageX+1) + ')').addClass("active");
+                setHomeActivityIntro(this.currPageX+1, document.querySelector('#activityIntroMain .activityIntro'));    
+                autoHomeScroll();
+           }
+        }
+    });
+    
+    autoHomeScroll();//执行定时器    
+    function autoHomeScroll(){//自动滚动代码        
+         globleScroll.autoScrollInterval = setInterval(function(){//自动执行代码
+             globleScroll.autoScroll = true;//是手动还是自动滚动             
+             globleScroll.homeScroll.currPageX += globleScroll.homePageIndex;             
+             if(globleScroll.homeScroll.currPageX >= globleScroll.homeScroll.pagesX.length-1){
+                globleScroll.homePageIndex = -1;
+             }else if(globleScroll.homeScroll.currPageX <= 0){
+                 globleScroll.homePageIndex =1;
+             }
+             globleScroll.homeScroll.scrollToElement('li:nth-child('+ (globleScroll.homeScroll.currPageX+1)+')',500);
+        },3000)
+    }
+
+复制代码
+
+ 5、
+
+。
+
+
+9、iscroll兑现图片的循环滑动
+
+html
+复制代码
+
+<div class="gexian">
+</div>
+<div style="margin:0 auto;">
+    <div class="bgfont">
+        <div>
+            <span class="meihong size20">99特惠</span>
+            超低价无限购
+        </div>
+    </div>
+</div>
+<div id="index-splash-block1" class="index-splash-block" style="position:relative;width:320px;overflow:hidden;">
+    <div id="scroller_99ii">
+        <div id="pullDown_99" style="display:none;">
+            <span class="pullDownIcon">  </span>
+            <span class="pullDownLabel"> Pull down to refresh...</span>
+        </div>
+        <ul id="feature-slide-block1" class="feature-slide-block" style="width:1600px;">
+            <li class="feature-slide-preview1">
+                <div class="dtk-list">
+                    <div class="dtk-item">
+                        <a href="/wap/queryPromotionDetail.do?id=M0212060101&appCode=prop&type=990002&merchantType=sale99">
+                            <div class="dazhe">
+                                <span style="font-size:18px;">4.5</span>
+                                <span style="font-size:12px;">折</span>
+                            </div>
+                            <div class="sp_bg">
+                                <img src="http://pic.99wuxian.com/mall/hpdownload/common/mdse/M0212060101_1_micro.png" alt="商品图片" class="sp01" />
+                            </div>
+                        </a>
+                    </div>
+                    <div class="dtk-item">
+                        <a href="/wap/queryPromotionDetail.do?id=M1312051801&appCode=prop&type=990002&merchantType=sale99">
+                            <div class="dazhe">
+                                <span style="font-size:18px;">3.3</span>
+                                <span style="font-size:12px;">折</span>
+                            </div>
+                            <div class="sp_bg">
+                                <img src="http://pic.99wuxian.com/mall/hpdownload/common/mdse/M1312051801_1_micro.png" alt="商品图片" class="sp01" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="feature-slide-preview1">
+                <div class="dtk-list">
+                    <div class="dtk-item">
+                        <a href="/wap/queryPromotionDetail.do?id=M0112041201&appCode=prop&type=990002&merchantType=sale99">
+                            <div class="dazhe">
+                                <span style="font-size:18px;">0.9</span>
+                                <span style="font-size:12px;">折</span>
+                            </div>
+                            <div class="sp_bg">
+                                <img src="http://pic.99wuxian.com/mall/hpdownload/common/mdse/M0112041201_1_micro.png" alt="商品图片" class="sp01" />
+                            </div>
+                        </a>
+                    </div>
+                    <div class="dtk-item">
+                        <a href="/wap/queryPromotionDetail.do?id=M1112061502&appCode=prop&type=990002&merchantType=sale99">
+                            <div class="dazhe">
+                                <span style="font-size:18px;">4.0</span>
+                                <span style="font-size:12px;">折</span>
+                            </div>
+                            <div class="sp_bg">
+                                <img src="http://pic.99wuxian.com/mall/hpdownload/common/mdse/M1112061502_1_micro.png" alt="商品图片" class="sp01" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="feature-slide-preview1">
+                <div class="dtk-list">
+                    <div class="dtk-item">
+                        <a href="/wap/queryPromotionDetail.do?id=M1112070301&appCode=prop&type=990002&merchantType=sale99">
+                            <div class="dazhe">
+                                <span style="font-size:18px;">2.3</span>
+                                <span style="font-size:12px;">折</span>
+                            </div>
+                            <div class="sp_bg">
+                                <img src="http://pic.99wuxian.com/mall/hpdownload/common/mdse/M1112070301_1_micro.png"
+                                alt="商品图片" class="sp01" />
+                            </div>
+                        </a>
+                    </div>
+                    <div class="dtk-item">
+                        <a href="/wap/queryPromotionDetail.do?id=M1312060101&appCode=prop&type=990002&merchantType=sale99">
+                            <div class="dazhe">
+                                <span style="font-size:18px;">3.9</span>
+                                <span style="font-size:12px;">折</span>
+                            </div>
+                            <div class="sp_bg">
+                                <img src="http://pic.99wuxian.com/mall/hpdownload/common/mdse/M1312060101_1_micro.png" alt="商品图片" class="sp01" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="feature-slide-preview1">
+                <div class="dtk-list">
+                    <div class="dtk-item">
+                        <a href="/wap/queryPromotionDetail.do?id=M1012051802&appCode=prop&type=990002&merchantType=sale99">
+                            <div class="dazhe">
+                                <span style="font-size:18px;">4.0</span>
+                                <span style="font-size:12px;">折</span>
+                            </div>
+                            <div class="sp_bg">
+                                <img src="http://pic.99wuxian.com/mall/hpdownload/common/mdse/M1012051802_1_micro.png" alt="商品图片" class="sp01" />
+                            </div>
+                        </a>
+                    </div>
+                    <div class="dtk-item">
+                        <a href="/wap/queryPromotionDetail.do?id=M1212042601&appCode=prop&type=990002&merchantType=sale99">
+                            <div class="dazhe">
+                                <span style="font-size:18px;">3.2</span>
+                                <span style="font-size:12px;">折</span>
+                            </div>
+                            <div class="sp_bg">
+                                <img src="http://pic.99wuxian.com/mall/hpdownload/common/mdse/M1212042601_1_micro.png" alt="商品图片" class="sp01" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+            <li class="feature-slide-preview1">
+                <div class="dtk-list">
+                    <div class="dtk-item">
+                        <a href="/wap/queryPromotionDetail.do?id=M0812060801&appCode=prop&type=990002&merchantType=sale99">
+                            <div class="dazhe">
+                                <span style="font-size:18px;">6.1</span>
+                                <span style="font-size:12px;">折</span>
+                            </div>
+                            <div class="sp_bg">
+                                <img src="http://pic.99wuxian.com/mall/hpdownload/common/mdse/M0812060801_1_micro.png" alt="商品图片" class="sp01" />
+                            </div>
+                        </a>
+                    </div>
+                    <div class="dtk-item">
+                        <a href="/wap/queryPromotionDetail.do?id=M1312060102&appCode=prop&type=990002&merchantType=sale99">
+                            <div class="dazhe">
+                                <span style="font-size:18px;">6.6</span>
+                                <span style="font-size:12px;">折</span>
+                            </div>
+                            <div class="sp_bg">
+                                <img src="http://pic.99wuxian.com/mall/hpdownload/common/mdse/M1312060102_1_micro.png" alt="商品图片" class="sp01" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div id="pullUp_99" style="display:none;">
+            <span class="pullUpIcon">
+            </span>
+            <span class="pullUpLabel">
+                Pull up to refresh...
+            </span>
+        </div>
+    </div>
+    <div id="feature-slide-list1" class="feature-slide-list" style="top:160px;position: absolute;">
+        <a href="javascript:void(0)" onclick="directionRoll(myScroll_99TeHui,'prev',5,0)"
+        id="feature-slide-list-previous1" class="feature-slide-list-previous i_com">
+        </a>
+        <div id="feature-slide-list-items1" class="feature-slide-list-items">
+            <a href="javascript:void(0)" class="current"></a>
+            <a href="javascript:void(0)"></a>
+            <a href="javascript:void(0)"></a>
+            <a href="javascript:void(0)"> </a>
+            <a href="javascript:void(0)"></a>
+        </div>
+        <a href="javascript:void(0)" onclick="directionRoll(myScroll_99TeHui,'next',5,0)"
+        id="feature-slide-list-next1" class="feature-slide-list-next i_com">
+        </a>
+    </div>
+    <div class="cp_more">
+        <a href="/wap/sale99OrTopicList.do?appCode=prop&type=sale99&cateCode=990002&pager.offset=1&pageSize=18">更多&gt;</a>
+    </div>
+</div>
+<div style="clear: both; position: relative; overflow: hidden; width: 300px;margin:0px 0px 0px 5px;">
+    <div class="lantern_slide" id="lantern_slide">
+        <div class="ls_pic" id="bimg" style="width:300px;">
+            <div id="pullDown_Topic" style="display:none;">
+                <span class="pullDownIcon"></span>
+                <span class="pullDownLabel">Pull down to refresh...</span>
+            </div>
+            <ul style="height:60px;">
+                <li class="dis" name="f">
+                    <a href="/wap/sale99OrTopicList.do?appCode=prop&type=topic&cateCode=9900003&pager.offset=1&pageSize=18">
+                        <img src="http://pic.99wuxian.com/mall/hpdownload/web/20120815181815183.jpg"
+                        />
+                    </a>
+                </li>
+            </ul>
+            <div id="pullUp_Topic" style="display:none;">
+                <span class="pullUpIcon"></span>
+                <span class="pullUpLabel">Pull up to refresh...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+复制代码
+
+js代码
+复制代码
+
+function loadedFor99TeHui(){
+    if(null!=document.getElementById("index-splash-block1")){
+        pullDownEl_99 = document.getElementById('pullDown_99');
+        pullUpEl_99 = document.getElementById('pullUp_99');
+        pullDownOffset_99 = pullDownEl_99.offsetHeight;
+        pullUpOffset_99 = pullUpEl_99.offsetHeight;
+        myScroll_99TeHui = new iScroll('index-splash-block1', {
+                    snap: true,
+                    momentum: false,
+                    hScrollbar: false,                    
+                    checkDOMChanges:true,
+                    onRefresh: function () {
+                        if (pullDownEl_99.className.match('loading')) {
+                            pullDownEl_99.className = '';
+                        } else if (pullUpEl_99.className.match('loading')) {
+                            pullUpEl_99.className = '';
+                        }
+                    },
+                    onScrollMove: function () {
+                        if (this.x > 5 && !pullDownEl_99.className.match('flip')) {
+                            pullDownEl_99.className = 'flip';
+                            this.minScrollX = 0;
+                        } else if (this.x < 5 && pullDownEl_99.className.match('flip')) {
+                            pullDownEl_99.className = '';
+                            this.minScrollX = -pullDownOffset_99;
+                        } else if (this.x < (this.maxScrollX - 5) && !pullUpEl_99.className.match('flip')) {
+                            pullUpEl_99.className = 'flip';
+                            this.maxScrollX = this.maxScrollX;
+                        } else if (this.x > (this.maxScrollX + 5) && pullUpEl_99.className.match('flip')) {
+                            pullUpEl_99.className = '';
+                            this.maxScrollX = pullUpOffset_99;
+                        }
+                    },
+                    onScrollEnd: function () {
+                        document.querySelector('#feature-slide-list-items1 > a.current').className = '';
+                        document.querySelector('#feature-slide-list-items1 > a:nth-child(' + (this.currPageX+1) + ')').className = 'current';
+                        var    count=document.querySelectorAll("#feature-slide-list-items1 > a").length;
+                        if (pullDownEl_99.className.match('flip')) {
+                            pullDownEl_99.className = 'loading';
+                            scrollDirection(this,'next',count);        
+                        } else if (pullUpEl_99.className.match('flip')) {
+                            pullUpEl_99.className = 'loading';                            
+                            scrollDirection(this,'prev',count);                            
+                        }
+                    }
+        });
+    }        
+}
+document.addEventListener('DOMContentLoaded',setTimeout(loadedFor99TeHui,100),false);

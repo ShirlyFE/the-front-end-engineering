@@ -1,0 +1,135 @@
+移动端触摸事件：
+IOS上的Safari支持的多触式事件模型
+
+Gesture事件则是对touch事件的更高级的封装，主要处理手指slide、rotate、scale等动作
+
+touch事件对象包含的重要事件属性信息：
+client / clientY：// 触摸点相对于浏览器窗口viewport的位置
+pageX / pageY：// 触摸点相对于页面的位置
+screenX /screenY：// 触摸点相对于屏幕的位置
+identifier： // touch对象的unique ID 
+touch事件主要有touchstart、touchmove、touchend，且这三个事件都有一个timeStamp的属性
+
+TouchEvent对象有三个TouchList类型的关键属性：
+touches:屏幕上所有手指；
+targetTouches：当前元素上的手指；
+changedTouches：有变化的手指；
+
+手势getsture和touch类似，getsture有gesturestart、gesturechange和gestureend事件，GestureEvent对象包含rotation和scale属性
+
+当一些更高级别的事件发生的时候（如电话接入或者弹出信息）会取消当前的touch操作，即触发ontouchcancel。一般会在ontouchcancel时暂停游戏、存档等操作。
+
+可以使用TouchEvent中的touches属性来构造自定义的手势
+
+Gesture事件，包括手指点击（click），轻拂 （flick），双击（double-click），手指的分开、闭合（scale）、转动（rotate）等一切手指能在屏幕上做的事情，它只在有两根 或多根手指放在屏幕上的时候触发，事件处理函数中会得到一个GestureEvent类型的参数，它包含了手指的scale（两根移动过程中分开的比例） 信息和rotation（两根手指间连线转动的角度）信息。这个事件是对touch事件的更高层的封装，和touch一样，它同样包括 gesturestart，gesturechange，gestureend。
+
+
+div.ontouchmove = function(e){
+    //可为touchstart、touchmove事件加上preventDefault从而阻止触摸时浏览器的缩放、滚动条滚动等
+    e.preventDefault();
+};
+
+
+手势事件手势是指利用多点触控进行旋转、拉伸等操作，例如图片、网页的放大、旋转。需要两个或以上的手指同时触摸时才会触发手势事件。关于缩放我们需要注意的一点是元素的位置坐标：我们通常使用offsetX、getBoundingClientRect等方法获取元素的位置坐标，但在手机浏览器中页面经常会在使用中被缩放，那缩放后的元素坐标会改变吗？答案是有所差异。用一个情景来说明这个问题：页面A加载完成后，JavaScript获取到该元素在document中的坐标为(100,100)，接着用户放大了页面，此时用JavaScript再次输出元素坐标，依然还是(100,100)，但该元素在屏幕上的响应区域会根据缩放比例产生偏移。你可以打开那个打砖块游戏demo，等页面完全加载完成后，再放大，此时你会发现即使手指触摸在“touch here”区域外部，也可以控制到球板，因为区域发生了偏移。除非页面刷新或者恢复缩放，否则偏移量将一直存在。1
+    /**
+    * onGestureEvent
+    */
+    var div = document.getElementById("div");
+    div.ongesturechange = function(e){
+        //scale代表手势产生的缩放比例，小于1是缩小，大于1是放大，原始为1
+        var scale = e.scale;
+        //rotation代表旋转手势的角度，值区间[0,360]，正值顺时针旋转，负值逆时针
+        var angle = e.rotation;
+    };
+
+
+重力感应较简单，只需要为body节点添加onorientationchange事件即可。在此事件中由window.orientation属性得到代表当前手机方向的数值。
+window.orientation的值列表如下：
+    0：与页面首次加载时的方向一致
+    -90：相对原始方向顺时针转了90°
+    180：转了180°
+    90：逆时针转了90°据我测试，Android2.1尚未支持重力感应。
+以上即目前的触屏事件，这些事件尚未并入标准，但已被广泛使用。本人Android2.1，未在其他环境下测试。
+
+
+
+
+document.createEvent(type)：Syntax： var event=document.createEvent(type);
+该方法创建一个特定类型的事件，返回的事件对象必须首先被初始化才可以传递到element.dispatchEvent.
+
+事件可以有Event构造器创建如下：
+var event = new Event("build");
+elem.addEventListener("build", function(e) { ... }, false);
+elem.dispatchEvent(event);
+这种构造事件对象的方式受到大多数现代浏览器的支持(IE例外)
+
+也可以添加自定义数据给自定义的事件对象，实例如下：
+var event = new CustomEvent("build", {"detail": elem.dataset.time});
+function eventHandler(e) {
+    log("The time is : "+e.detail);
+}
+
+传统的比较古老的创建事件对象的方式是如下：
+var event = document.createEvent("Event");
+event.initEvent("build", true, true);
+document.addEventListener("build", function(e) {
+    //e.target matches document from above
+}, false);
+
+document.dispatchEvent(event);
+其中可以传递给createEvent的type可以是如下几个类型："UIEvents", "MouseEvents", "MutationEvents", and "HTMLEvents".下面例子是iScroll中的应用
+ev = document.createEvent('MouseEvents');
+ev.initMouseEvent('click', true, true, e.view, 1,
+    point.screenX, point.screenY, point.clientX, point.clientY,
+    e.ctrlKey, e.altKey, e.shiftKey, e.metaKey,
+    0, null);
+ev._fake = true;
+target.dispatchEvent(ev);
+
+其中initMouseEvent中的参数Syntax如下：
+event.initMouseEvent(type, canBubble, cancelable, view,
+
+                       detail, screenX, screenY, clientX, clientY,
+
+                       ctrlKey, altKey, shiftKey, metaKey,
+
+                       button, relatedTarget);
+
+
+
+gesture事件触发过程：
+Step 1、第一根手指放下，触发touchstart
+Step 2、第二根手指放下，触发gesturestart
+Step 3、触发第二根手指的touchstart
+Step 4、立即触发gesturechange
+Step 5、手指移动，持续触发gesturechange，就像鼠标在屏幕上移动的时候不停触发mousemove一样
+Step 6、第二根手指提起，触发gestureend，以后将不会再触发gesturechange
+Step 7、触发第二根手指的touchend
+Step 8、触发touchstart！注意，多根手指在屏幕上，提起一根，会刷新一次全局touch！重新触发第一根手指的touchstart
+Step 9、提起第一根手指，触发touchend
+
+可以通过下面方法判断是否可以绑定触摸事件
+//判断是否支持触摸事件
+function isTouchDevice(){
+    try {
+        document.createEvent("TouchEvent");
+        console.log("支持TouchEvent事件！" + navigator.appVersion);
+        bindEvent(); //绑定事件
+    }
+    catch (e) {
+        alert(navigator.appVersion + "不支持TouchEvent事件！" + e.message);
+    }
+}
+
+iScroll中时通过以下方法判断的，这种方式更简洁
+isTouchPad = (/hp-tablet/gi).test(navigator.appVersion),
+hasTouch = 'ontouchstart' in window && !isTouchPad,
+
+
+
+css3的transition属性在js中对应的唯一事件是：transitionEnd
+transitionend这个事件对象中带有propertyName和elapseTime属性信息，但是如果设定了对width/background/color做animation，那么这个event会发生三次，分别对应不同的属性。
+
+解决办法：1.
+用Timeout，也就是如果你的transition的時間是1s，那在設定屬性之後就立刻設定一個1秒的timeout去模擬一個transition-end event。由於transition的執行是native code，所以會很準時的做完frame animation，但timer會是JS layer，所以最多就是剛好在 transition結束後的那一刻timeout或者是稍微晚一點點，所以拿來模擬transitionend是不會有問題的。 
+2.每次設定transition就記住有改變的屬性，在收到每個event的時候去檢查看看是不是所有的屬性都已經結束，是的話才真正的去做後處理handler。不過之前這個方法有遇到一個問題，就是有些沒有改變的屬性也會收到對應的transitionend event，應該是Chrome12或13的時候會有問題，剛剛測試過Chrome14好像已經沒有這個問題了。 

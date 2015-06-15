@@ -1,0 +1,6 @@
+node app注意点：
+1.可以让node应用程序在后台运行，只需要在命令后添加&，比如node helloworld.js &
+想要查看运行的进程使用ps -ef,或者ps -ef | grep node
+要关闭某个运行的进程:kill pid
+
+2.

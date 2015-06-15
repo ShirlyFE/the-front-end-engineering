@@ -1,0 +1,85 @@
+CommonJS Module 规范    
+CommonJS 的模块化规范描述在Modules/1.1.1 中
+目前实现此规格的包有：
+Yabble,CouchDB,Narwhal (0.2), Wakanda, TeaJS (formerly v8cgi), CommonScript, PINF JS Loader, SeaJS, ArangoDB, sorrow.js
+此规范定义的具体内容包括：
+    Require
+    require是一个function。这个function接收一个模块的标识，返回外部模块的接口。如果有循环依赖的话，因为需要一个传递依赖，外部模块就不会立即执行
+    如果请求的模组不能被返回，require需要抛出异常。
+    require 函数必须有 "main"属性。
+    必须有"paths" attribute.
+
+    Module Context
+    在一个模块中，有一个"require"的自由变量。
+    有一个"exports"的自由变量。
+    必须有一个"module"的对象变量
+
+
+    Module Identifiers
+    模组标识是正斜杠区隔的字符串短语。
+    短语使用驼峰法，“.”,“..”命名
+    模块的标识可以是“相对的”或“顶层”的。
+    顶层标识解决概念性模块的命名
+    相对标识符解决相对的标识符模块。
+
+看一下依此规范定义和使用的例子：
+math.js
+    exports.add = function() {  
+        var sum = 0, i = 0, args = arguments, l = args.length;  
+        while (i < l) {  
+            sum += args[i++];  
+        }  
+        return sum;  
+    };  
+
+increment.js
+    var add = require('math').add;  
+    exports.increment = function(val) {  
+        return add(val, 1);  
+    };  
+
+program.js
+    var inc = require('increment').increment;  
+    var a = 1;  
+    inc(a); // 2         
+    module.id == "program";  
+
+
+注，以上例子并不能实际run, 因为我们没有实现require这个function.
+
+
+AMD规范                   
+目前实现AMD规范的有：Dojo (1.7)、MooTools (2.0)、Firebug (1.8) ， jQuery (1.7) ，RequireJS等
+AMD的规范定义在 ： https://github.com/amdjs/amdjs-api/wiki
+AMD API 规范主要包含：
+    AMD
+    -引用和定义模块化的JS代码的主要构建块。
+    define() 函数的定义   -- define(id?, dependencies?, factory);
+    id表示该模块的标识，为可选参数。
+
+    dependencies是一个字符串Array，表示该模块依赖的其他所有模块标识，模块依赖必须在真正执行具体的factory方法前解决，这些依赖对象加载执行以后的返回值，可以以默认的顺序作为factory方法的参数。dependencies也是可选参数，当用户不提供该参数时，实现AMD的框架应提供默认值为[“require”，”exports”，“module”]。
+
+    factory是一个用于执行改模块的方法，它可以使用前面dependencies里声明的其他依赖模块的返回值作为参数，若该方法有返回值，当该模块被其他模块依赖时，返回值就是该模块的输出。
+    define.amd property
+
+    看一个例子：
+        define("alpha", ["require", "exports", "beta"], function (require, exports, beta) {  
+             exports.verb = function() {  
+                 return beta.verb();  
+                 //Or:  
+                 return require("beta").verb();  
+             }  
+         });  
+
+
+    require
+    requrie() 函数的API,允许动态的，异步的加载模块和解决模块ID标识字符串到文件路径的转换。
+    require(String)
+    require(Array, Function)
+    require.toUrl(String)
+
+    Loader-Plugins
+    允许加载非传统的JS 依赖项的其他资源。
+    
+    Common-Config
+    可选的常见配置。

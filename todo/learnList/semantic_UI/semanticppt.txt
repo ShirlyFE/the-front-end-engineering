@@ -1,0 +1,143 @@
+Semantic定义了五种UI类型：UI Element、UI Component、UI View、UI Module、UI Behavior
+UI Element是基本的ui元素，是独立的页面原子元素，其可以有复数形式形成元素组，比如：
+<div class="large ui buttons">
+    <div class="ui button">Cancel</div>
+    <div class="ui button">Continue</div>
+</div>
+UI collection：不同页面元素组合起来的元素组
+UI View：表现常见站点内容的方式，比如评论，即时动态
+UI Module：类似Collection，但是其功能API是此元素定义最关键的部分，依赖于js的实现
+UI Behavior：一系列没有被具体绑定到某一个元素的方法
+
+所有的UI元素都有其自身不同的types，且每个type是互斥的
+所有UI元素都有自己的状态States，比如disabled、hovered、pressed down
+所有UI元素都有自己的Variations，它定义了元素的不同样式表现，是可以共同作用在元素上来影响元素的表现的
+
+Elements可以定义组(Group),组中的各元素可以共享同样的属性，比如button元素的组：
+<div class="blue ui buttons">
+    <div class="ui button">一</div>
+    <div class="ui button">二</div>
+    <div class="ui button">三</div>
+</div>
+
+Collection Element可以定义：
+content：Collection元素可以定义内部元素
+states：Collection元素可以定义元素的状态或其子内容的状态
+Variations：Collection元素可以定义元素的Variations或其子内容Variations
+比如：
+<div class="ui warning form segment">
+    <div class="ui warning message">
+        <div class="header">Could you check something!</div>
+        <ul class="list">
+            <li>You forgot your <b>first name</b></li>
+        </ul>
+    </div>
+    <div class="two error fields">
+        <div class="field error">
+            <label>First Name</label>
+            <input placeholder="First Name" type="text">
+            <div class="ui red pointing above ui label">Enter a first name</div>
+        </div>
+        <div class="field disabled">
+            <label>Last Name</label>
+            <input placeholder="Last Name" type="text">
+            <div class="ui red pointing above ui label">Enter a last name</div>
+        </div>
+    </div>
+    <div class="field">
+        <label>Username</label>
+        <input placeholder="Username" type="text">
+    </div>
+    <div class="field">
+        <label>Password</label>
+        <input type="password">
+    </div>
+    <div class="inline field">
+        <div class="ui checkbox">
+            <input type="checkbox">
+            <label>I agree to the Terms and Conditions</label>
+        </div>
+    </div>
+    <div class="date field">
+        <label>Birthday</label>
+        <input type="text" placeholder="xx/xx/xxxx">
+    </div>
+    <div class="ui three fields">
+        <div class="field">
+            <label>First name</label>
+            <input type="text" placeholder="First Name">
+        </div>
+        <div class="field">
+            <label>Middle name</label>
+            <input type="text" placeholder="Middle Name">
+        </div>
+        <div class="field">
+            <label>Last name</label>
+            <input type="text" placeholder="Last Name">
+        </div>
+    </div>
+    <div class="grouped inline fields">
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="fruit">
+                <label></label>
+            </div>
+            <label> Apples</label>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="fruit">
+                <label></label>
+            </div>
+            <label> Oranges</label>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="fruit">
+                <label></label>
+            </div>
+            <label> Pears</label>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="fruit">
+                <label></label>
+            </div>
+            <label> Grapefruit</label>
+        </div>
+    </div>
+    
+    <div class="ui message">
+        <div class="header">出错啦</div>
+        <ul class="list">
+            <li>请输入你的用户名</li>
+            <li>请输入你的密码</li>
+        </ul>
+    </div>
+    <div class="ui blue submit button">Submit</div>
+  </div>
+其类型是form
+其中form元素包含Elements(Field、Text Area、Checkbox、Select、Radio Box、Text Block)
+
+states：Form ：Loading、Error、Warning
+
+Form Fields states：Error、Disabled
+
+Variations:
+Forms:Fluid(表单自动填充其父元素的宽度)、size(表单可以是small或者large)、inverted(表单可以使其background和color跟默认的完全相反)
+
+Fields：inline(label在表单域旁边，而不是在其上面)、Date()
+
+Groups:fields、Grouped Fields、inline
+
+Views元素和Collection元素很相似，先看个例子：UI Item
+
+View用来展示特定类型信息，不像Collection，特别关注界面元素间的关系。View更关注不同站点内容之间的关系
+
+
+需要手动为item添加height和width来很好的匹配其要容纳的内容
+
+
+Modules和Behaviors
+
+

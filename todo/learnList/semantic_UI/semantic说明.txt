@@ -1,0 +1,15 @@
+图像字体在chrome和IE下显示正常，但是在firefox不显示，应该是没有加载字体文件的原因，但是没有任何提示，后来通过查找说是因为firefox的安全限制的原因，必须将字体文件放在页面同目录下或者同目录的子目录下，而我一开始是放在别的目录里的
+
+I think this is a security restriction in Firefox.
+
+If you have a page at file:///<somewhere>/pages/mypage.html, then you can only load fonts located in file:///<somewhere>/pages or below. So, for example, if the fonts are in file:///<somewhere>/fonts, they won't load, but if they are in file:///<somewhere>pages/fonts, then they should work. At least, that's how it seems to work for me.
+
+一直使用firefox的firedebug调试工具，但是找到字体文件不能加载原因之后，发现浏览器自带的开发者工具可以提供更加详细的错误信息
+
+
+
+webfront系列：http://ntesmailfetc.blog.163.com/blog/static/206287061201241854857235/
+
+需要再次了解web front整体机理，搜索font-face就ok
+
+

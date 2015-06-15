@@ -1,0 +1,53 @@
+剖析（Profiles）面板
+内存泄露是逐渐的丧失可用的计算机内存的过程。当程序总是不能释放自己占用的临时内存时就可能出现内存泄露的情况。
+通常，当你觉得你的程序存在内存泄露时你需要考虑三个问题：
+<ul class="discStyle">
+<li>我的页面是否使用了太多内存？-Timeline memory view和Chrome task manager可以帮助你判断是否自己已经使用了太多内存。memory view可以跟踪DOM节点的数目、监测阶段documents和js事件监听器的数目。原则上：避免引用不再需要的DOM元素，解除不需要的事件绑定并且谨慎的存储你可能不会再用的大量数据片段</li>
+<li>我的页面是否没有内存泄露？-Object allocation tracker通过实时观测JS 对象分配情况帮助你缩小存在内存泄露的范畴。你也可以使用heap profiler来查看js的堆栈快照，分析比较内存使用情况从而判断出哪些对象没有被垃圾回收机制回收掉</li>
+<li>我的页面强迫进行垃圾回收的频率是多少？-如果你经常进行垃圾回收，你可能对内存分配的过于频繁。Timeline memory view可以帮你分析垃圾回收时的停顿</li>
+</ul>
+尽管js可以自动进行垃圾回收，但是有效的内存管理仍然很重要
+<h1>术语解释：</h1>
+<h2>Object sizes</h2>
+将内存想象为一张拥有原始类型(比如numbers或者strings)和对象(比如关联数组)的图，那么它可能像下图那样由许多相互关联的点组成
+<img src="thinkgraph.png"/ title="object size graph">
+一个对象可以用两种方式占用内存：
+<ul class="discStyle">
+<li>对象本身</li>
+<li>引用别的对象从而使得那些被引用的对象不能被垃圾回收自动的回收掉</li>
+</ul>
+当查看Heap Profiler(Profiles面板中监测内存问题的工具)，你会需要查看两列信息，它们是Shallow Size和Retained Size，如下图所示，那么它们分别代表什么意思呢？
+<img src="image_1.png" alt="shallow size and retained size">
+<span class="fontBold">shallow size</span>是指对象本身所占用的内存大小。通常只有数组和strings可以有明显的shallow size
+<span class="fontBold">Retained size</span>指
+
+
+剖析面板由 CPU 分析器和堆分析器组成，它能够帮助您了解网页和网络应用程序的执行时间和内存使用情况。 
+•   CPU 分析器显示的是 JavaScript 脚本里的每个函数分别占用了多少执行时间 
+•   堆分析器显示每个 JavaScript 对象所使用的内存大小 
+通过了解资源使用分布，您就可以有效地对代码进行优化，从而提高网站的效率。
+
+
+如果您仅仅对 JavaScript 代码中的几个函数感兴趣，您也可以选中它们，然后点击（eye）按钮，面板中将只显示被选中函数的信息，而（X）按钮作用恰恰相反，将只显示除选中函数以外其它函数的信息。
+
+
+审计（Audits）面板
+审计面板是在 Google Chrome 浏览器 5.0 中新引入的模块。它可以帮助您检查网页性能和网络利用率。打开审计面板，您将看到这样的界面：
+
+
+然后点击“运行”（“ Run ”）按钮，开发人员工具将为您的网页生成一份详细的审计报告并给出关于网络利用及性能优化方面的建议
+
+JavaScript 控制台（Console）
+
+进入 Google Chrome 浏览器开发人员工具的元素面板，点击工具窗口左下角的第二个图标打开 JavaScript 控制台，您可以通过 $(‘element_id’) 来查看一个 DOM 元素，也可以通过“ $N ”（n=0,1,2,...）查看最近选中的元素。
+
+您也可以通过 inspect() 语句获得当前窗口或页面中的对象，例如：使用 inspect(window.navigator.userAgent) 可获得当前浏览器信息，而 inspect(profileEnd) 则会显示 profileEnd 这个函数：
+
+因为控制台会帮您自动补齐命令、对象名以及属性名称等等，所以完全不必担心需要键入太多字符或者敲错。
+使用 dir() 语句可获得一个元素或对象的详细属性，如输入 dir(ghead) ，您将会看到：
+
+
+dirxml() 语句的参数如果是函数名，如 dirxml(profileEnd) ，会显示出这个函数，类似于 inspect(profileEnd) 语句；如果参数是元素的 id，例如 dirxml(ghead) 则以 DOM 树形式显示出这个元素，相当于 $(‘ghead’)。
+
+
+console.profile()方法可以开始CPU profiler

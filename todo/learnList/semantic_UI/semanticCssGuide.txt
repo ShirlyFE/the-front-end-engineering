@@ -1,0 +1,119 @@
+css guide:
+
+1. box-shadow不像border一样可以分开设置属性，但是可以通过继承的方式让box-shadow可以有不同的color，举例如下：
+.ui.widget {
+    -webkit-box-shadow: 0em 0.2em 0em inset;
+    -moz-box-shadow: 0em 0.2em 0em inset;
+    box-shadow: 0em 0.2em 0em inset;
+}
+/*下面的设置会使box-shadow显示red*/
+.ui.red.widget {
+    color: #FF0000;
+}
+
+2. 如果内容需要填充给定的大小的元素，但是内容又是由不同大小的元素组成的，那么可以考虑使用table和table-cell
+.ui.input {
+    display: table;
+}
+
+.ui.input input, .ui.input .button {
+    display: table-cell
+}
+
+3. html中空格不会改变页面布局，但是当使用inline-block设置元素时可能会在相邻inline-block元素之间产生非想要的空格，最简单也是最有效的方式是设置父元素的font-size为0，使所有的空格为0px，然后就可以在子元素重置font-size。比如：
+/* remove whitespace */
+.ui.group {
+  font-size: 0em;
+}
+.ui.group .item {
+  display: inline-block;
+  font-size: 1rem;
+}
+
+4.有时候用户不小心双击了页面文本，就会高亮显示它，可以通过以下代码阻止这种高亮
+.ui.thingy {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select:none
+}
+
+5. 要想在页面中设置多种文本选择时的显示颜色，可以通过以下方式：
+/* text selected turns highlighted yellow */
+::-webkit-selection {
+  background-color: #FFFFCC;
+  color: #555555;
+}
+::-moz-selection {
+  background-color: #FFFFCC;
+  color: #555555;
+}
+::selection {
+  background-color: #FFFFCC;
+  color: #555555;
+}
+/* headers selected turn red */
+h1::-moz-selection,
+h2::-moz-selection,
+h3::-moz-selection {
+  background-color: #F1C1C2;
+  color: #222222;
+}
+h1::selection,
+h2::selection,
+h3::selection {
+  background-color: #F1C1C2;
+  color: #222222;
+}
+
+
+6.使用transform是元素居中显示：
+css中使用百分比会使元素基于父元素的尺寸做移动，如果想要元素完全基于自身的百分比移动，可以考虑transform，请看如下实例：
+/* doesnt work */
+  .ui.modal {
+    width: 800px;
+    height: 500px;
+    left: 50%;
+    top: 50%;
+    margin: -50% 0px 0px -50%x;
+  }
+   /* works with measurements */
+  .ui.modal {
+    width: 800px;
+    height: 500px;
+    left: 50%;
+    top: 50%;
+    margin: -250px 0px 0px -400px;
+  }
+   /* with transform no measurements needed */
+  .ui.modal {
+    position: absolute;
+    width: 800px;
+    top: 50%;
+    left: 50%;
+    transform: transformX(-50%) transformY(-50%);
+  }
+
+
+7. 元素的font-size，通常使用px、em但是css3的rem综合了px和em，还是比较方便的
+rem是相对于根元素的font-size的
+
+8. float容易使父元素无尺寸，通常是通过over-flow:hidden来解决的，但是这种方式会使其任意子元素都包含在父元素中，这限制了父元素的能力，因此不是最优的，可以考虑使用inline-block
+/* not the best */
+.ui.thingy {
+  display: block;
+  overflow: hidden;
+}
+.ui.thingy .part {
+  display: block;
+  float: left;
+}
+ /* these do the same thing */
+.ui.thingy {
+  display: block;
+  font-size: 0rem;
+}
+.ui.thingy .part {
+  display: inline-block;
+  font-size: 1rem;
+}

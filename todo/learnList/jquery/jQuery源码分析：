@@ -1,0 +1,63 @@
+jQuery源码分析：
+	读一个开源的框架，最主要的目的是学习设计的思想和实现的技巧
+
+	jquery的代码结构：
+	(function(){  
+	    //jQuery变量定义  
+	    var jQuery  = function(){...};  
+	    //jQuery原型定义(包含核心方法)                
+	    jQuery.fn = jQuery.prototype = {...};  
+	    //看上去很奇怪吧? 非常巧妙的设计，后面详细介绍  
+	    jQuery.fn.init.prototype = jQuery.fn;  
+	    //提供jQuery静态方法与对象方法的扩展函数  
+	    jQuery.extend = jQuery.fn.extend = function(){...};   
+	    //后面依次有多个对jQuery静态方法的扩展  
+	    jQuery.extend({...});  
+	    //后面依次有多个对jQuery对象方法的扩展  
+	    jQuery.fn.extend({...});  
+	    jQuery.support = (function() {...})();  
+	    //提供统一时间管理,jQuery内部使用,并不对外开放  
+	    jQuery.event = {...};  
+	    //Event类似于Java的POJO类.传递事件的对象  
+	    jQuery.Event = function( src, props ) {...};   
+	    //Sizzle选择器,一个框架,可独立使用。  
+	    (function(){  
+	        ...  
+	        jQuery.find = Sizzle;  
+	        ...  
+	    })();  
+	    ...  
+	    //将定义的jQuery定义为全局变量  
+	    window.jQuery = window.$ = jQuery;  
+	    ...  
+	})(); 
+
+	在结构上非常的清晰，定义一个jQuery对象,对jQuery对象进行扩展,赋给window,变成全局变量。
+
+
+	jQuery是一个面向对象的程序结构，它本身是一个类，而每一个我们构建的jQuery对象则是这个类的实例、
+	1.如何构造jQuery对象：
+		DOMElement ==> elem = document.getElementsByTagName("div"); 
+		HTML strings  ==>var elem = $("<p>hello</p>");
+		TAG  ==>var elem = $("div");
+		expr ==>var elem = $("body > div");
+		$(…) ==>elem = $(elem);
+
+		那么，在jQuery内部，是如何去封装这个对象的呢？ 
+
+
+	2.jQuery对象的继承
+
+		当我们构造完成jQuery对象后，需要jQuery对象继承jQuery中的方法与属性。
+		看代码
+
+		jQuery.fn.init.prototype = jQuery.fn;
+		如此，就将jQuery的原型赋到jQuery对象的原型上去了，jQuery对象就继承了jQuery初始的方法和属性。
+
+		那么，当我需要向已实例化的对象原型中增加方法或者属性怎么办？
+
+这就需要用到扩展方法 –> extend
+
+
+首先是分析源代码的基本框架，在jQuery项目中找到Gruntfile.js文件。里面涉及了src目录下各个模块文件的编译顺序：
+可以根据这个顺序来阅读源码：

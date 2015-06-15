@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Calendar</title>
+    <meta name="description" content="自定义日历插件" />
+    <meta name="author" content="田莉莉" />
+    <link rel="stylesheet" href="./calendar.css" type="text/css" />
+    <style>
+        #date {
+            display: block;
+            margin: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="date" placeholder="请输入日期"/>
+    
+    <script type="text/javascript" src="jquery.js" ></script>
+    <script type="text/javascript" src="calendar.js" ></script>
+    <script>
+        $("#date").calendar();
+    </script>
+</body>
+</html>

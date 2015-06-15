@@ -1,0 +1,23 @@
+大型js应用程序架构模式：
+module模式：
+
+module模式是一个比较流行的设计模式，它可以通过大括号封装私有的变量，方法，状态的，通过包装这些内容，一般全局的对象不能直接访问，在这个设计模式里，只返回一个API，其它的内容全部被封装成私有的了。
+
+var basketModule = (function() {
+var basket = []; //private
+return { //exposed to public
+　　addItem: function(values) {
+　　　　basket.push(values);
+　　},
+　　getItemCount: function() {
+　　　　return basket.length;
+　　},
+　　getTotal: function(){
+　　　　var q = this.getItemCount(),p=0;
+　　　　while(q--){
+　　　　p+= basket[q].price;
+　　　　}
+　　　　return p;
+　　}
+　}
+}());

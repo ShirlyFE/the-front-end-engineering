@@ -1,0 +1,799 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0064)http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" type="text/javascript" src="./javascript单元测试 - 溤淋 - 博客园_files/gpt.js"></script><script type="text/javascript" async="" src="./javascript单元测试 - 溤淋 - 博客园_files/ga.js"></script>
+
+<title>javascript单元测试 - 溤淋 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./javascript单元测试 - 溤淋 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./javascript单元测试 - 溤淋 - 博客园_files/style.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/frostbelt/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/frostbelt/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/frostbelt/wlwmanifest.xml">
+<script src="./javascript单元测试 - 溤淋 - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'frostbelt';</script>
+<script src="./javascript单元测试 - 溤淋 - 博客园_files/blog-common.js" type="text/javascript"></script>
+<script async="" type="text/javascript" src="./javascript单元测试 - 溤淋 - 博客园_files/pubads_impl_31.js"></script><script type="text/javascript" src="./javascript单元测试 - 溤淋 - 博客园_files/osd.js"></script></head>
+<body>
+<a name="top"></a>
+
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+		
+<!--done-->
+<div class="title"><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/frostbelt/">溤淋</a></div>
+<div class="subtitle">成功其实很简单，只要你一开始有计划，并且一直做下去</div>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li id="nav_sitehome"><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li id="nav_myhome"><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/frostbelt/">首页</a></li>
+<li id="nav_q"><a class="menu" href="http://q.cnblogs.com/">博问</a></li>
+<li id="nav_ing"><a class="menu" href="http://home.cnblogs.com/ing/">闪存</a></li>
+<li id="nav_newpost"><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://www.cnblogs.com/frostbelt/admin/EditPosts.aspx?opt=1">新随笔</a></li>
+<li id="nav_contact"></li>
+<li id="nav_rss"><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/frostbelt/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/frostbelt/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li id="nav_admin"><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://www.cnblogs.com/frostbelt/admin/EditPosts.aspx">管理</a></li>
+</ul>
+
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔-551&nbsp;
+文章-2&nbsp;
+评论-91&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="./javascript单元测试 - 溤淋 - 博客园_files/javascript单元测试 - 溤淋 - 博客园.htm">javascript单元测试</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p>&nbsp;</p>
+<h1>1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 什么是单元测试</h1>
+<p>在计算机编程中，单元测试（又称为模块测试）是针对程序模块(软件设计的最小单位)来进行正确性检验的测试工作。程序单元是应用的最小可测试部件。在过程化编程中，一个单元就是单个程序、函数、过程等；对于面向对象编程，最小单元就是方法，包括基类（超类）、抽象类、或者派生类（子类）中的方法。</p>
+<p>每个理想的测试案例独立于其它案例；为测试时隔离模块，经常使用stubs、mock 或fake等测试马甲程序。单元测试通常由软件开发人员编写，用于确保他们所写的代码符合软件需求和遵循开发目标。</p>
+<p>单元测试的目标是隔离程序模块并证明这些单个模块是正确的。单元测试能确保在开发过程的早期就能发现问题，是为了让程序“死得更早”。我们应该从开发的早期就为所有函数和方法编写单元测试，可读性强的单元测试可以使程序员方便地检查代码片断是否依然正常工作。良好设计的单元测试案例覆盖程序单元分支和循环条件的所有路径。采用这种自底向上的测试路径，先测试程序模块再测试模块的集合，一旦变更导致错误发生，借助于单元测试可以快速定位并修复错误。</p>
+<h1>2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JavaScript单元测试现状</h1>
+<p>单元测试在后台开发中非常流行和普及，比如JAVA开发者的JUnit等，而在前端开发中则使用的非常少。究其原因，主要是单元测试更适用于逻辑代码的测试，这对于JAVA等后台编程语言来说测试起来非常方便，但是前端开发很多时候要要UI打交道，UI相关的代码不是不可以进行单元测试，但的确很麻烦，比起逻辑代码来说困难多了，这就导致了单元测试在前端开发没有普及起来。</p>
+<p>但是随着单元测试的普及，尤其是敏捷开发的推动，涌现了许多优秀的JavaScript单元测试框架，如QUnit、Jasmine等。所有的这些框架基本上都能对Javascript代码进行很好的测试，当然UI部分的代码测试一样比较麻烦，但是我们可以通过精心构造我们的测试代码来测试部分UI代码。但是每个框架都不是万能的，它们都有各自擅长的领域，下面选取了几个具有代表性的框架进行介绍。</p>
+<p>&nbsp;</p>
+<h1>3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 单元测试常用框架</h1>
+<h2>l&nbsp;&nbsp; QUnit框架</h2>
+<h3>a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 简介</h3>
+<p>QUnit是jQuery团队开发的JavaScript单元测试工具，功能强大且使用简单。目前所有的JQuery代码都使用QUnit进行测试，原生的JavaScript也可以使用QUnit。</p>
+<p>最初，John Resig将QUnit设计为jQuery的一部分。2008年，QUnit才有了自己的名字、主页和API文档，也开始允许其他人用它来做单元测试。但当时QUnit还是基于jQuery的。直到2009年，QUnit才可以完全的独立运行。</p>
+<h3>b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 优点</h3>
+<p>使用起来非常方便，有漂亮的外观和完整的测试功能（包括异步测试）；</p>
+<p>非常简单，容易上手，目前公开的API只有19个；</p>
+<p>不需要依赖其它任何软件包或框架，只要能运行JS的地方就可以，QUnit本身只有一个JS文件和CSS文件，当然如果需要可以和jQuery等其它框架集成；</p>
+<p>不仅支持在浏览器中测试，还支持在Rhino和node.js等后端测试。</p>
+<h3>c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 不足</h3>
+<p>对自动化支持不好，很难和Ant、Maven或自动构建等工具集成，主要用在浏览器中进行测试。</p>
+<h3>d)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; API</h3>
+<p>QUnit所有的API可以分为三类：Setup，Assertions，Asynchronous Testing，下面就分别对这些API做些介绍：</p>
+<p><strong>Setup:</strong></p>
+<p><span style="color: #00ff00;">test( name, [expected], testFun )&nbsp;</span>&nbsp; 代表QUnit中的一个测试</p>
+<p>name：要测试的名称，比如“加法函数”或“add”等</p>
+<p>expected：可选参数，用来表示该测试函数的断言的数量，是个正整数</p>
+<p>testFun：一个函数，所有的测试代码都应该包括在该函数里，通常这是一个匿名函数。</p>
+<p>例：</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_305338" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">test(“add </code><code class="javascript keyword">function</code><code class="javascript plain">”, 1, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">equal(add(1, 2), 3);</code></div><div class="line number3 index2 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><span style="color: #00ff00;">asyncTest( name, [expected], testFun )&nbsp;</span>&nbsp; 代表QUnit中的一个异步测试，参数同test</p>
+<p><span style="color: #00ff00;">expect( amount )</span>&nbsp;&nbsp; 用在测试函数中，用于声明测试断言的数量，这个函数和test中的expected参数的作用是一样的。主要作用就是检查你声明的个数和你写的断言的实际个数是否一致。</p>
+<p><span style="color: #00ff00;">module( name, [lifecycle] )</span> &nbsp;&nbsp;主要用于测试函数的分组，一个module函数为一个分组，比如module(“validate”)表示后面的测试用例都是validate相关的代码，或者module(“common.js”)，表明后面的测试用例都是common.js里面的代码。一个测试文件可以写多个module。</p>
+<p>name：分组或者模块的名称</p>
+<p>lifecycle：可选参数，它是一个对象，可以设置setup和teardown回调函数</p>
+<p>例：</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_788748" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">module(“common.js”, </code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">{</code></div><div class="line number3 index2 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">setup:</code><code class="javascript keyword">function</code><code class="javascript plain">(){},</code></div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">teardown: </code><code class="javascript keyword">function</code><code class="javascript plain">() {} </code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}</code></div><div class="line number6 index5 alt1"><code class="javascript plain">);</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>setup：在module开始之前执行，可以为该module下面的测试代码做一些准备工作</p>
+<p>teardown：将会在该module的所有测试代码执行后执行，比如做一些清理还原工作等。</p>
+<p><span style="color: #00ff00;">QUnit.init( )</span> &nbsp;&nbsp;用于初始化QUnit测试框架，通常这个函数是不需要我们手工调用的。</p>
+<p><span style="color: #00ff00;">QUnit.reset( )</span>&nbsp;&nbsp; 重设函数，通常是在每个test函数执行后由QUnit自己调用来重设整个QUnit测试环境，当然必要时我们自己也可以调用它来复原，不常用。</p>
+<p>&nbsp;</p>
+<p><strong>Assertions:</strong></p>
+<p><span style="color: #00ff00;">ok( state, [message] )&nbsp;</span>&nbsp; 断言。state值为true时表示通过，否则失败。</p>
+<p><span style="color: #00ff00;">equal( actual, expected, [message] )</span> &nbsp;&nbsp;比较参数actual和expected是否相等，相当于 ==</p>
+<p><span style="color: #00ff00;">notEqual( actual, expected, [message] )</span> &nbsp;&nbsp;比较两个参数是否不相等，相当于 !=</p>
+<p><span style="color: #00ff00;">deepEqual( actual, expected, [message] )&nbsp;</span> &nbsp;主要用于数组和对象等类型的值是否相等，会递归遍历它们所包含的值是否相等。</p>
+<p><span style="color: #00ff00;">notDeepEqual( actual, expected, [message] )</span> &nbsp;&nbsp;主要用于数组和对象等类型的值是否不相等，会递归遍历它们所包含的值是否不相等。</p>
+<p><span style="color: #00ff00;">strictEqual( actual, expected, [message] )&nbsp;</span>&nbsp; 比较两个参数是否严格相等，相当于 ===</p>
+<p><span style="color: #00ff00;">notStrictEqual( actual, expected, [message] )&nbsp;&nbsp;</span> 比较两个参数是否不严格相等，相当于 !==</p>
+<p><span style="color: #00ff00;">throws( block, expected, [message] )&nbsp;</span>&nbsp; 测试block函数是否抛出一个异常，抛出则通过，不抛则失败。</p>
+<p>block：我们要测试的函数</p>
+<p>expected：可选参数，是一个类型，用来验证第一个函数抛出的异常是否是我们预期的类型。</p>
+<p>例：</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_182445" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript keyword">function</code> <code class="javascript plain">CustomError( message ) {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">this</code><code class="javascript plain">.message = message;</code></div><div class="line number3 index2 alt2"><code class="javascript plain">}</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="javascript plain">CustomError.prototype.toString = </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">return</code> <code class="javascript keyword">this</code><code class="javascript plain">.message;</code></div><div class="line number7 index6 alt2"><code class="javascript plain">};</code></div><div class="line number8 index7 alt1"><code class="javascript plain">throws(</code></div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">throw</code> <code class="javascript keyword">new</code> <code class="javascript plain">CustomError(“some error description”);</code></div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">},</code></div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">CustomError,</code></div><div class="line number13 index12 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript string">"raised error is an instance of CustomError"</code></div><div class="line number14 index13 alt1"><code class="javascript plain">);</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>&nbsp;</p>
+<p><strong>Asynchronous Testing:</strong></p>
+<p><span style="color: #00ff00;">stop( [increment] )</span>&nbsp;&nbsp; 停止测试的运行，用于异步测试。在异步测试时一般先把QUnit的test runner停下来。</p>
+<p>increment：增加停止的时间。</p>
+<p><span style="color: #00ff00;">start( [decrement] )</span> &nbsp;&nbsp;当异步调用成功后就应该把停止的test runner启动起来让它接着往前跑</p>
+<p>decrement：用来减少停止的时间。</p>
+<p>例：</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_350006" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">test( </code><code class="javascript string">"a test"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">stop();</code></div><div class="line number3 index2 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">result = </code><code class="javascript keyword">null</code><code class="javascript plain">;</code></div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">$.ajax(</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">url,</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">{},</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">function</code><code class="javascript plain">(data){</code></div><div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">result = data;</code></div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">);</code></div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">setTimeout(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">equals(result, </code><code class="javascript string">"success"</code> <code class="javascript plain">);</code></div><div class="line number13 index12 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">start();</code></div><div class="line number14 index13 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}, 150 );</code></div><div class="line number15 index14 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>&nbsp;</p>
+<h3>e)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 使用</h3>
+<p>test.html</p>
+<p>导入qunit.css，qunit.js</p>
+<p>依次导入被测试文件src.js和测试文件test.js</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321281430.png" alt=""></p>
+<p>src.js里是我们要测试的一些函数</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321284616.png" alt=""></p>
+<p>test.js里放我们的测试</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321290112.png" alt=""></p>
+<p>打开test.html，显示：</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321292264.png" alt=""></p>
+<p>如果期望值与函数执行的结果不一致，会报错：</p>
+<p>test.js</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321293824.png" alt=""></p>
+<p>test.html显示：</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321295827.png" alt=""></p>
+<p>期望值与结果不符，测试不通过。</p>
+<p>&nbsp;</p>
+<p><strong>与浏览器自动化测试工具集成的接口：</strong></p>
+<p>都是QUnit自动调用的一些函数，一般不用改，也可以自己定制</p>
+<p><span style="color: #00ff00;">QUnit.log(Function({ result, actual, expected, message }))&nbsp;</span>&nbsp; 这个接口会在每个断言执行后被自动调用</p>
+<p>result：断言是否通过</p>
+<p>message：断言里的message参数</p>
+<p>例：</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_347155" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">QUnit.log(</code><code class="javascript keyword">function</code><code class="javascript plain">(details){</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">alert(“Log: ” + details.result + “ ” + details.message);</code></div><div class="line number3 index2 alt2"><code class="javascript plain">})</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><span style="color: #00ff00;">QUnit.testStart(Function({ name }))</span> &nbsp;&nbsp;在每个测试函数执行前被自动调用</p>
+<p>name：测试函数中的name参数值</p>
+<p><span style="color: #00ff00;">QUnit.testDone(Function({ name, failed, passed, total }))</span> &nbsp;&nbsp;在每个测试函数结束后执行被自动调用</p>
+<p>name：同上</p>
+<p>failed：指失败断言的个数</p>
+<p>passed：指成功断言的个数</p>
+<p>total：所有断言的个数</p>
+<p><span style="color: #00ff00;">QUnit.moduleStart(Function({ name }))</span> &nbsp;&nbsp;在每个module所有的测试代码执行前被自动调用</p>
+<p>name：module函数中name参数的值</p>
+<p><span style="color: #00ff00;">QUnit.moduleDone(Function({ name, failed, passed, total }))</span> &nbsp;&nbsp;在每个module所有的测试代码执行完之后被自动执行</p>
+<p>failed：指失败断言的个数</p>
+<p>passed：指成功断言的个数</p>
+<p>total：指所有断言的个数</p>
+<p><span style="color: #00ff00;">QUnit.begin(Function())</span> &nbsp;&nbsp;在所有的测试代码调用之前运行</p>
+<p><span style="color: #00ff00;">QUnit.done(Function({ failed, passed, total, runtime }))</span> &nbsp;&nbsp;在所有的测试代码调用之后运行</p>
+<p>failed：指失败断言的个数</p>
+<p>passed：指成功断言的个数</p>
+<p>total：指所有断言的个数</p>
+<p>runtime：所有代码的执行时间</p>
+<p>&nbsp;</p>
+<p>API及下载：<a href="http://api.qunitjs.com/">http://api.qunitjs.com/</a></p>
+<p>参考：<a href="http://www.weakweb.com/articles/255.html">http://www.weakweb.com/articles/255.html</a></p>
+<p><a href="http://www.iteye.com/topic/981253">http://www.iteye.com/topic/981253</a></p>
+<p>&nbsp;</p>
+<h2>l&nbsp; Jasmine框架</h2>
+<h3>a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 简介</h3>
+<p>Jasmine是一个有名的JavaScript单元测试框架，它是独立的行为驱动开发框架，语法清晰易懂。</p>
+<p><strong>行为驱动开发</strong><strong>(BDD)</strong><strong>：</strong>是一种敏捷软件开发的技术，它鼓励软件项目中的开发者、QA和非技术人员或商业参与者之间的协作。BDD最初是由Dan North在2003年命名，它包括验收和客户测试驱动等的极限编程的实践，作为对测试驱动开发的回应。在过去的数年里，得到了极大的发展。</p>
+<p>BDD的重点是通过与利益相关者的讨论取得对预期的软件行为的清醒认识。它通过用自然语言书写非程序员可读的测试用例扩展了测试驱动开发方法。行为驱动开发人员使用混合了领域中统一的语言的母语语言来描述他们的代码的目的。这让开发者得以把精力集中在代码应该怎么写，而不是技术细节上，而且也最大程度的减少了将代码编写者的技术语言与商业客户、用户、利益相关者、项目管理者等的领域语言之间来回翻译的代价。</p>
+<p>&nbsp;</p>
+<p><strong>BDD</strong><strong>的做法包括：</strong></p>
+<p>l&nbsp; 确立不同利益相关者要实现的远景目标</p>
+<p>l&nbsp; 使用特性注入方法绘制出达到这些目标所需要的特性</p>
+<p>l&nbsp; 通过由外及内的软件开发方法，把涉及到的利益相关者融入到实现的过程中</p>
+<p>l&nbsp; 使用例子来描述应用程序的行为或代码的每个单元</p>
+<p>l&nbsp; 通过自动运行这些例子，提供快速反馈，进行回归测试</p>
+<p>l&nbsp; 使用“应当(should)”来描述软件的行为，以帮助阐明代码的职责，以及回答对该软件的功能性的质疑</p>
+<p>l&nbsp; 使用“确保(ensure)”来描述软件的职责，以把代码本身的效用与其他单元(element)代码带来的边际效用中区分出来。</p>
+<p>l&nbsp; 使用mock作为还未编写的相关代码模块的替身</p>
+<p>&nbsp;</p>
+<p><strong>BDD</strong><strong>特性注入：</strong>一个公司可能有多个会带来商业利益的不同愿景，通常包括盈利、省钱或保护钱。一旦某个愿景被开发小组确定为当前条件下的最佳愿景，他们将需要更多的帮助来成功实现这个远景。</p>
+<p>然后确定该愿景的主要利益相关者，会带入其他的利益相关者。每个相关者要定义为了实现该愿景他们需要完成的目标。例如，法务部门可能要求某些监管要得到满足。市场营销负责人可能要参加将使用该软件的用户的社区。安全专家需要确保该软件不会受到SQL注入的攻击。</p>
+<p>通过这些目标，会定义出要实现这些目标所需要的大概的题目或者特性集合。例如，“允许用户排序贡献值”或“交易审计”。从这些主题，可以确定用户功能以及用户界面的第一批细节。</p>
+<p>&nbsp;</p>
+<h3>b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 优点</h3>
+<p>它是基于行为驱动开发实现的测试框架，它的语法非常贴近自然语言，简单明了，容易理解。</p>
+<p>能很方便的和Ant、Maven等进行集成进行自动化测试，也可以方便和Jekins等持续集成工具进行集成，可以生成测试结果的XMl文档。</p>
+<p>它有丰富的API，同时用户也支持用户扩展它的API，这一点很少有其它框架能够做到。</p>
+<p>使用方便简单，只需要引入两个js文件即可</p>
+<p>不仅支持在浏览器中测试，还支持在Rhino和node.js等后端测试。</p>
+<p>对于Ruby语言有特别的支持，能够非常方便的集成到Ruby项目中去</p>
+<h3>c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 不足</h3>
+<p>在浏览器中的测试界面不如QUnit美观、详细。</p>
+<h3>d)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; API</h3>
+<p><span style="color: #00ff00;">it(string, function)&nbsp;</span>&nbsp; 一个测试Spec</p>
+<p>string：测试名称</p>
+<p>function：测试函数</p>
+<p><span style="color: #00ff00;">describe (string, function)</span> &nbsp;&nbsp;&nbsp;一个测试组开始于全局函数describe，一个describe是一个it的集合。describe包含n个it，一个it包含n个判断断言&nbsp; Suite</p>
+<p>string：测试组名称</p>
+<p>function：测试组函数</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_253803" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">describe(</code><code class="javascript string">"测试add()函数"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"1 + 1 = 2"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">(){</code></div><div class="line number3 index2 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(add(1, 1)).toBe(2);</code></div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number5 index4 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><span style="color: #00ff00;">beforeEach(function)</span>&nbsp;&nbsp; 定义在一个describe的所有it执行前做的操作</p>
+<p><span style="color: #00ff00;">afterEach(function)</span>&nbsp;&nbsp; 定义在一个describe的所有it执行后做的操作</p>
+<p><span style="color: #00ff00;">expect(a).matchFunction(b)</span></p>
+<p><span style="color: #00ff00;">expect(a).not.matchFunction(b)</span> &nbsp;&nbsp;期望a和b满足匹配方式matchFunction</p>
+<p><strong>matchFunctions</strong><strong>：</strong></p>
+<p>&nbsp;</p>
+<p><span style="color: #00ff00;">toBe</span>&nbsp;&nbsp; 相当于===，处理简单字面值和变量</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_478367" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">it(</code><code class="javascript string">"toBe相当于==="</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">(){</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">a = 12;</code></div><div class="line number3 index2 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">b = a;</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(a).toBe(b);</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(a).not.toBe(</code><code class="javascript keyword">null</code><code class="javascript plain">);</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(</code><code class="javascript keyword">false</code> <code class="javascript plain">== 0).toBe(</code><code class="javascript keyword">true</code><code class="javascript plain">);</code></div><div class="line number8 index7 alt1"><code class="javascript plain">});</code></div><div class="line number9 index8 alt2"><code class="javascript plain">it(</code><code class="javascript string">"toBe不能当==用"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">(){</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(</code><code class="javascript keyword">false</code><code class="javascript plain">).toBe(0);</code></div><div class="line number11 index10 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321344610.png" alt=""></p>
+<p><span style="color: #00ff00;">toEqual</span>&nbsp;&nbsp; 处理简单字面值和变量，而且可以处理对象，数组</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_251486" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">it(</code><code class="javascript string">"toEqual可以处理字面值，变量和对象"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">(){</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">a = 12;</code></div><div class="line number3 index2 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(a).toEqual(12);</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">foo = {key : </code><code class="javascript string">"key"</code><code class="javascript plain">};</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">bar = {key : </code><code class="javascript string">"key"</code><code class="javascript plain">};</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo).toEqual(bar);</code></div><div class="line number8 index7 alt1">&nbsp;</div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">arr1 = [];</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">arr1[</code><code class="javascript string">"p1"</code><code class="javascript plain">] = </code><code class="javascript string">"string1"</code><code class="javascript plain">;</code></div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">arr2 = [];</code></div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">arr2[</code><code class="javascript string">"p1"</code><code class="javascript plain">] = </code><code class="javascript string">"string1"</code><code class="javascript plain">;</code></div><div class="line number13 index12 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">obj = {};</code></div><div class="line number14 index13 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">obj[</code><code class="javascript string">"p1"</code><code class="javascript plain">] = </code><code class="javascript string">"string1"</code><code class="javascript plain">;</code></div><div class="line number15 index14 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(arr1).toEqual(arr2);</code></div><div class="line number16 index15 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(arr1).toEqual(obj);</code></div><div class="line number17 index16 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><span style="color: #00ff00;">toMatch</span> &nbsp;&nbsp;按正则式检索。</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_830764" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">it(</code><code class="javascript string">"toMatch匹配正则式"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">(){</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">message = </code><code class="javascript string">"foo bar baz"</code><code class="javascript plain">;</code></div><div class="line number3 index2 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(message).toMatch(/bar/);</code></div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(message).toMatch(</code><code class="javascript string">"bar"</code><code class="javascript plain">);</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(message).not.toMatch(/quux/);</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(message).toMatch(/^f/);</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(message).not.toMatch(/f$/);</code></div><div class="line number8 index7 alt1"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><span style="color: #00ff00;">toBeDefined</span>&nbsp;&nbsp; 是否已声明且赋值</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_605960" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">it(</code><code class="javascript string">"toBeDefined检测变量非undefined"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">(){</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">a = { key : </code><code class="javascript string">"key"</code><code class="javascript plain">};</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(a.key).toBeDefined();</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(a.foo).not.toBeDefined();</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript comments">//expect(c).not.toBeDefined();&nbsp; //未声明出错</code></div><div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">b;</code></div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(b).not.toBeDefined();</code></div><div class="line number10 index9 alt1"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;对象.未声明属性.not.toBeDefined();&nbsp;&nbsp; 通过</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 未声明变量.not.toBeDefined();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 报错</p>
+<p><span style="color: #00ff00;">toBeUndefined&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp; 是否undefined</p>
+<p><span style="color: #00ff00;">toBeNull</span>&nbsp;&nbsp; 是否null</p>
+<p><span style="color: #00ff00;">toBeTruthy</span> &nbsp;&nbsp;如果转换为布尔值，是否为true</p>
+<p><span style="color: #00ff00;">toBeFalsy&nbsp;</span> &nbsp;&nbsp;如果转换为布尔值，是否为false</p>
+<p><span style="color: #00ff00;">toContain</span> &nbsp;&nbsp;数组中是否包含元素（值）。只能用于数组，不能用于对象</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_896573" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">it(</code><code class="javascript string">"toContain检验数组中是否包含元素(值)"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">(){</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">a = [</code><code class="javascript string">"foo"</code><code class="javascript plain">, </code><code class="javascript string">"bar"</code><code class="javascript plain">, </code><code class="javascript string">"baz"</code><code class="javascript plain">];</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(a).toContain(</code><code class="javascript string">"bar"</code><code class="javascript plain">);</code></div><div class="line number5 index4 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><span style="color: #00ff00;">toBeLessThan</span> &nbsp;&nbsp;数值比较，小于</p>
+<p><span style="color: #00ff00;">toBeGreaterThan&nbsp;</span> &nbsp;数值比较，大于</p>
+<p><span style="color: #00ff00;">toBeCloseTo</span>&nbsp; &nbsp;数值比较时定义精度，先四舍五入后再比较</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_435614" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">it(</code><code class="javascript string">"toBeCloseTo数值比较，指定精度，先四舍五入再比较"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">pi = 3.1415926, e = 2.78;</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(pi).toBeCloseTo(e, 0);</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(pi).not.toBeCloseTo(e, 0.1);</code></div><div class="line number6 index5 alt1"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>&nbsp;</p>
+<p><span style="color: #00ff00;">toThrow&nbsp;</span>&nbsp;&nbsp; 检验一个函数是否会抛出一个错误</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_166276" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">it(</code><code class="javascript string">"toThrow检验一个函数是否会抛出一个错误"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">foo = </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number3 index2 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">return</code> <code class="javascript plain">1 + 2;</code></div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">};</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">bar = </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">return</code> <code class="javascript plain">a + 1;</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">};</code></div><div class="line number8 index7 alt1">&nbsp;</div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo).not.toThrow();</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(bar).toThrow();</code></div><div class="line number11 index10 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>&nbsp;</p>
+<p>注：describe可嵌套</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xdescribe 和 xit：路过不执行，结果不显示。像display:none。点控制栏中skipped显示</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>Spy&nbsp;&nbsp; 存储函数的被调用情况和参数（函数监视器，记录被调用情况，但函数并不真执行）</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_977050" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">describe(</code><code class="javascript string">"对spy函数的测试"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">foo, bar = </code><code class="javascript keyword">null</code><code class="javascript plain">;</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">beforeEach(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">foo = {</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">setBar: </code><code class="javascript keyword">function</code><code class="javascript plain">(value) {</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">bar = value;</code></div><div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}</code></div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">};</code></div><div class="line number10 index9 alt1">&nbsp;</div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">spyOn(foo, </code><code class="javascript string">'setBar'</code><code class="javascript plain">);&nbsp; </code><code class="javascript comments">//foo为spy函数</code></div><div class="line number12 index11 alt1">&nbsp;</div><div class="line number13 index12 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">foo.setBar(123);</code></div><div class="line number14 index13 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">foo.setBar(456, </code><code class="javascript string">'another param'</code><code class="javascript plain">);</code></div><div class="line number15 index14 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number16 index15 alt1">&nbsp;</div><div class="line number17 index16 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"测试foo函数是否被调用过"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number18 index17 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo.setBar).toHaveBeenCalled();</code></div><div class="line number19 index18 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number20 index19 alt1">&nbsp;</div><div class="line number21 index20 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"测试foo函数被调用的次数"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number22 index21 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo.setBar.calls.length).toEqual(2);</code></div><div class="line number23 index22 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number24 index23 alt1">&nbsp;</div><div class="line number25 index24 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"测试foo函数被调用时传入的参数"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number26 index25 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo.setBar).toHaveBeenCalledWith(123);</code></div><div class="line number27 index26 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo.setBar).toHaveBeenCalledWith(456, </code><code class="javascript string">'another param'</code><code class="javascript plain">);</code></div><div class="line number28 index27 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number29 index28 alt2">&nbsp;</div><div class="line number30 index29 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"上一次被调用的参数"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number31 index30 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo.setBar.mostRecentCall.args[0]).toEqual(456);</code></div><div class="line number32 index31 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number33 index32 alt2">&nbsp;</div><div class="line number34 index33 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"所有被调用的情况存在一个数组里"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number35 index34 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo.setBar.calls[0].args[0]).toEqual(123);</code></div><div class="line number36 index35 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number37 index36 alt2">&nbsp;</div><div class="line number38 index37 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"函数并未真的执行"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {&nbsp; </code></div><div class="line number39 index38 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(bar).toBeNull();&nbsp; </code></div><div class="line number40 index39 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number41 index40 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>Spy addCallThrough&nbsp; 函数监视器，但函数真的执行</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_527099" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">describe(</code><code class="javascript string">"对spy函数的测试，函数真的执行"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">foo, bar, fetchedBar;</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">beforeEach(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">foo = {</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">setBar: </code><code class="javascript keyword">function</code><code class="javascript plain">(value) {</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">bar = value;</code></div><div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">},</code></div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">getBar: </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">return</code> <code class="javascript plain">bar;</code></div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}</code></div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">};</code></div><div class="line number13 index12 alt2">&nbsp;</div><div class="line number14 index13 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript comments">//spyOn(foo, "setBar");&nbsp;&nbsp;&nbsp; //如果加上这句，setBar不真的执行，后两个spec不通过</code></div><div class="line number15 index14 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">spyOn(foo, </code><code class="javascript string">'getBar'</code><code class="javascript plain">).andCallThrough();</code></div><div class="line number16 index15 alt1">&nbsp;</div><div class="line number17 index16 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">foo.setBar(123);</code></div><div class="line number18 index17 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">fetchedBar = foo.getBar();</code></div><div class="line number19 index18 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number20 index19 alt1">&nbsp;</div><div class="line number21 index20 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"测试foo中getBar函数是否被调用过"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number22 index21 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo.getBar).toHaveBeenCalled();</code></div><div class="line number23 index22 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number24 index23 alt1">&nbsp;</div><div class="line number25 index24 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"foo中setBar函数真的执行了"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number26 index25 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(bar).toEqual(123);</code></div><div class="line number27 index26 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number28 index27 alt1">&nbsp;</div><div class="line number29 index28 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"foo中getBar函数真的执行了"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number30 index29 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(fetchedBar).toEqual(123);</code></div><div class="line number31 index30 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number32 index31 alt1"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>Spy andReturn&nbsp; 函数监视器，函数不真的执行。指定监视的函数的返回值</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_208917" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">describe(</code><code class="javascript string">"A spy, when faking a return value"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">foo, bar, fetchedBar;</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">beforeEach(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">foo = {</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">setBar: </code><code class="javascript keyword">function</code><code class="javascript plain">(value) {</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">bar = value;</code></div><div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">},</code></div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">getBar: </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">return</code> <code class="javascript plain">bar;</code></div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}</code></div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">};</code></div><div class="line number13 index12 alt2">&nbsp;</div><div class="line number14 index13 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">spyOn(foo, </code><code class="javascript string">'getBar'</code><code class="javascript plain">).andReturn(745);&nbsp; </code><code class="javascript comments">//指定getBar函数返回745</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">foo.setBar(123);</code></div><div class="line number17 index16 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">fetchedBar = foo.getBar();</code></div><div class="line number18 index17 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number19 index18 alt2">&nbsp;</div><div class="line number20 index19 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"测试foo中getBar函数是否被调用过"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number21 index20 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo.getBar).toHaveBeenCalled();</code></div><div class="line number22 index21 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number23 index22 alt2">&nbsp;</div><div class="line number24 index23 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"不影响未被监视的其它函数"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number25 index24 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(bar).toEqual(123);</code></div><div class="line number26 index25 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number27 index26 alt2">&nbsp;</div><div class="line number28 index27 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"指定的返回值745"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number29 index28 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(fetchedBar).toEqual(745);</code></div><div class="line number30 index29 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number31 index30 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>Spy addCallFake&nbsp; 替代被监视的函数，原函数不执行</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_757556" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">describe(</code><code class="javascript string">"替代被监视的函数，原函数不执行"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">foo, bar, fetchedBar;</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">beforeEach(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">foo = {</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">setBar: </code><code class="javascript keyword">function</code><code class="javascript plain">(value) {</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">bar = value;</code></div><div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">},</code></div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">getBar: </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">alert(</code><code class="javascript string">"frostbelt"</code><code class="javascript plain">);</code></div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">return</code> <code class="javascript plain">bar;</code></div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}</code></div><div class="line number13 index12 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">};</code></div><div class="line number14 index13 alt1">&nbsp;</div><div class="line number15 index14 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">spyOn(foo, </code><code class="javascript string">'getBar'</code><code class="javascript plain">).andCallFake(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number16 index15 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">return</code> <code class="javascript plain">1001;</code></div><div class="line number17 index16 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number18 index17 alt1">&nbsp;</div><div class="line number19 index18 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">foo.setBar(123);</code></div><div class="line number20 index19 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">fetchedBar = foo.getBar();</code></div><div class="line number21 index20 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number22 index21 alt1">&nbsp;</div><div class="line number23 index22 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"测试foo中getBar函数是否被调用过"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number24 index23 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo.getBar).toHaveBeenCalled();</code></div><div class="line number25 index24 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number26 index25 alt1">&nbsp;</div><div class="line number27 index26 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"不影响未被监视的其它函数"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number28 index27 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(bar).toEqual(123);</code></div><div class="line number29 index28 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number30 index29 alt1">&nbsp;</div><div class="line number31 index30 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"getBar被addCallFake指定的匿名函数代替，getBar不执行"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number32 index31 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(fetchedBar).toEqual(1001);</code></div><div class="line number33 index32 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number34 index33 alt1"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>如果你没有什么可监视的又实在想监视一下，该咋办？自己create一个被监视函数。。</p>
+<p>jasmine.createSpy(functionId)</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_6344" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">describe(</code><code class="javascript string">"自己造一个被监视函数。啊，我凌乱了。。"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">whatAmI;</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">beforeEach(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">whatAmI = jasmine.createSpy(</code><code class="javascript string">'whatAmI'</code><code class="javascript plain">);</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">whatAmI(</code><code class="javascript string">"I"</code><code class="javascript plain">, </code><code class="javascript string">"am"</code><code class="javascript plain">, </code><code class="javascript string">"a"</code><code class="javascript plain">, </code><code class="javascript string">"spy"</code><code class="javascript plain">);</code></div><div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number9 index8 alt2">&nbsp;</div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"有个id，是createSpy的传入函数，用于报错"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(whatAmI.identity).toEqual(</code><code class="javascript string">'whatAmI'</code><code class="javascript plain">)</code></div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number13 index12 alt2">&nbsp;</div><div class="line number14 index13 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"是否被调用"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number15 index14 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(whatAmI).toHaveBeenCalled();</code></div><div class="line number16 index15 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number17 index16 alt2">&nbsp;</div><div class="line number18 index17 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"被调用的次数"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number19 index18 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(whatAmI.calls.length).toEqual(1);</code></div><div class="line number20 index19 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number21 index20 alt2">&nbsp;</div><div class="line number22 index21 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"被调用的参数"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number23 index22 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(whatAmI).toHaveBeenCalledWith(</code><code class="javascript string">"I"</code><code class="javascript plain">, </code><code class="javascript string">"am"</code><code class="javascript plain">, </code><code class="javascript string">"a"</code><code class="javascript plain">, </code><code class="javascript string">"spy"</code><code class="javascript plain">);</code></div><div class="line number24 index23 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number25 index24 alt2">&nbsp;</div><div class="line number26 index25 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"最近一次被调用"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number27 index26 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(whatAmI.mostRecentCall.args[0]).toEqual(</code><code class="javascript string">"I"</code><code class="javascript plain">);</code></div><div class="line number28 index27 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number29 index28 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>有时需要监视一个对象的很多方法，用createSpyObj添加方法数组</p>
+<p>jasmine.createSpyObj(obj, methodArray)</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_853459" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">describe(</code><code class="javascript string">"有时需要监视一个对象的很多个方法，用createSpyObj添加数组"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">tape;</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">beforeEach(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">tape = jasmine.createSpyObj(</code><code class="javascript string">'tape'</code><code class="javascript plain">, [</code><code class="javascript string">'play'</code><code class="javascript plain">, </code><code class="javascript string">'pause'</code><code class="javascript plain">, </code><code class="javascript string">'stop'</code><code class="javascript plain">, </code><code class="javascript string">'rewind'</code><code class="javascript plain">]);</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">tape.play();</code></div><div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">tape.pause();</code></div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">tape.rewind(0);</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number11 index10 alt2">&nbsp;</div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"tape对象的这四个方法已被定义"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number13 index12 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(tape.play).toBeDefined();</code></div><div class="line number14 index13 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(tape.pause).toBeDefined();</code></div><div class="line number15 index14 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(tape.stop).toBeDefined();</code></div><div class="line number16 index15 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(tape.rewind).toBeDefined();</code></div><div class="line number17 index16 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number18 index17 alt1">&nbsp;</div><div class="line number19 index18 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"四个方法是否被调用"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number20 index19 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(tape.play).toHaveBeenCalled();</code></div><div class="line number21 index20 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(tape.pause).toHaveBeenCalled();</code></div><div class="line number22 index21 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(tape.rewind).toHaveBeenCalled();</code></div><div class="line number23 index22 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(tape.stop).not.toHaveBeenCalled();</code></div><div class="line number24 index23 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number25 index24 alt2">&nbsp;</div><div class="line number26 index25 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"被调用时传入的参数"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number27 index26 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(tape.rewind).toHaveBeenCalledWith(0);</code></div><div class="line number28 index27 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number29 index28 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>&nbsp;</p>
+<p><span style="color: #00ff00;">jasmine.any&nbsp;</span>&nbsp; 类型判断。instanceof</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_730458" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">describe(</code><code class="javascript string">"类型匹配"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"相当于instanceof"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number3 index2 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect({}).toEqual(jasmine.any(Object));</code></div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(12).toEqual(jasmine.any(Number));</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"也可以用于spy"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">foo = jasmine.createSpy(</code><code class="javascript string">'foo'</code><code class="javascript plain">);</code></div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">foo(12, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">return</code> <code class="javascript keyword">true</code></div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number12 index11 alt1">&nbsp;</div><div class="line number13 index12 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(foo).toHaveBeenCalledWith(jasmine.any(Number), jasmine.any(Function));</code></div><div class="line number14 index13 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript comments">//foo被调用时的参数 类型判断</code></div><div class="line number15 index14 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number16 index15 alt1"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p><span style="color: #00ff00;">jasmine.Clock.useMock()&nbsp;</span>&nbsp; jasmine自己控制时间，实现异步调试，减少等待</p>
+<p><span style="color: #00ff00;">jasmine.Clock.tick(n:uint)</span> &nbsp;&nbsp;向前n毫秒</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_617553" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">describe(</code><code class="javascript string">"jasmine自己控制时间，实现异步调试，减少等待"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">timerCallback; </code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">beforeEach(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">timerCallback = jasmine.createSpy(</code><code class="javascript string">'timerCallback'</code><code class="javascript plain">);</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">jasmine.Clock.useMock();</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}); </code></div><div class="line number8 index7 alt1">&nbsp;</div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"setTimeout"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">setTimeout(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">timerCallback();</code></div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}, 100);</code></div><div class="line number13 index12 alt2">&nbsp;</div><div class="line number14 index13 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(timerCallback).not.toHaveBeenCalled();</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">jasmine.Clock.tick(101);</code></div><div class="line number17 index16 alt2">&nbsp;</div><div class="line number18 index17 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(timerCallback).toHaveBeenCalled();</code></div><div class="line number19 index18 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number20 index19 alt1">&nbsp;</div><div class="line number21 index20 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"setInterval"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number22 index21 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">setInterval(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number23 index22 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">timerCallback();</code></div><div class="line number24 index23 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}, 100);</code></div><div class="line number25 index24 alt2">&nbsp;</div><div class="line number26 index25 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(timerCallback).not.toHaveBeenCalled();</code></div><div class="line number27 index26 alt2">&nbsp;</div><div class="line number28 index27 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">jasmine.Clock.tick(101);</code></div><div class="line number29 index28 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(timerCallback.callCount).toEqual(1);</code></div><div class="line number30 index29 alt1">&nbsp;</div><div class="line number31 index30 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">jasmine.Clock.tick(50);</code></div><div class="line number32 index31 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(timerCallback.callCount).toEqual(1);</code></div><div class="line number33 index32 alt2">&nbsp;</div><div class="line number34 index33 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">jasmine.Clock.tick(50);</code></div><div class="line number35 index34 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(timerCallback.callCount).toEqual(2);</code></div><div class="line number36 index35 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number37 index36 alt2"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>注：在这种环境下setTimeout和setInterval的callback为同步的，系统时间不再影响执行</p>
+<p>&nbsp;</p>
+<p>runs(function)&nbsp; waitsFor(function, message, millisec)&nbsp;&nbsp; Jasmine异步调试&nbsp; 按自己的理解写个例子</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_774736" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">describe(</code><code class="javascript string">"jasmine异步调试，对ajax结果的断言"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">(){</code></div><div class="line number2 index1 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">data, flag = </code><code class="javascript keyword">false</code><code class="javascript plain">;</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">it(</code><code class="javascript string">"ajax是否按时返回了正确结果"</code><code class="javascript plain">, </code><code class="javascript keyword">function</code><code class="javascript plain">(){</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">runs(</code><code class="javascript keyword">function</code><code class="javascript plain">(){</code></div><div class="line number6 index5 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">$.post(</code></div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">url,</code></div><div class="line number8 index7 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">{},</code></div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">function</code><code class="javascript plain">(data){</code></div><div class="line number10 index9 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">flag = </code><code class="javascript keyword">true</code><code class="javascript plain">;</code></div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">data = data.someAttr;</code></div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}</code></div><div class="line number13 index12 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">);</code></div><div class="line number14 index13 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number15 index14 alt2">&nbsp;</div><div class="line number16 index15 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">waitsFor(</code><code class="javascript keyword">function</code><code class="javascript plain">(){&nbsp; </code><code class="javascript comments">//flag为true或到2秒时执行&nbsp; 2秒内返回true则执行最后一个runs，到时未返回则本spec出错，返回第二个参数错误信息</code></div><div class="line number17 index16 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">return</code> <code class="javascript plain">flag;</code></div><div class="line number18 index17 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}, </code><code class="javascript string">"ajax在指定时间2秒内未返回"</code><code class="javascript plain">, 2000);</code></div><div class="line number19 index18 alt2">&nbsp;</div><div class="line number20 index19 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">runs(</code><code class="javascript keyword">function</code><code class="javascript plain">(){&nbsp; </code><code class="javascript comments">//直到waitsFor返回true时执行</code></div><div class="line number21 index20 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">expect(data).toEqual(</code><code class="javascript string">"someThing"</code><code class="javascript plain">);</code></div><div class="line number22 index21 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">})</code></div><div class="line number23 index22 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">});</code></div><div class="line number24 index23 alt1"><code class="javascript plain">});</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>注：it是一个spec，包含</p>
+<p>runs(function)</p>
+<p>waitsFor(function, message, millsec)</p>
+<p>runs(function)</p>
+<p>第一个runs里有一些异步的代码</p>
+<p>waitsFor中的funciton如果在millsec内返回true，执行最后一个runs</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如果在millsec内不能返回true，spec不通过，显示错误信息message</p>
+<p>原文代码：</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321430338.png" alt=""></p>
+<p>&nbsp;</p>
+<h3>e)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 使用</h3>
+<p>在测试的页面里加入以下代码：</p>
+<div class="cnblogs_Highlighter">
+<div><div id="highlighter_960697" class="syntaxhighlighter nogutter  javascript"><div class="toolbar"><span><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="javascript plain">&lt;script type=</code><code class="javascript string">"text/javascript"</code><code class="javascript plain">&gt;</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript plain">(</code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number4 index3 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">jasmineEnv = jasmine.getEnv();</code></div><div class="line number5 index4 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">jasmineEnv.updateInterval = 1000;</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">trivialReporter = </code><code class="javascript keyword">new</code> <code class="javascript plain">jasmine.TrivialReporter();</code></div><div class="line number8 index7 alt1">&nbsp;</div><div class="line number9 index8 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">jasmineEnv.addReporter(trivialReporter);</code></div><div class="line number10 index9 alt1">&nbsp;</div><div class="line number11 index10 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">jasmineEnv.specFilter = </code><code class="javascript keyword">function</code><code class="javascript plain">(spec) {</code></div><div class="line number12 index11 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">return</code> <code class="javascript plain">trivialReporter.specFilter(spec);</code></div><div class="line number13 index12 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">};</code></div><div class="line number14 index13 alt1">&nbsp;</div><div class="line number15 index14 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">var</code> <code class="javascript plain">currentWindowOnload = window.onload;</code></div><div class="line number16 index15 alt1">&nbsp;</div><div class="line number17 index16 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">window.onload = </code><code class="javascript keyword">function</code><code class="javascript plain">() {</code></div><div class="line number18 index17 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">if</code> <code class="javascript plain">(currentWindowOnload) {</code></div><div class="line number19 index18 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">currentWindowOnload();</code></div><div class="line number20 index19 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}</code></div><div class="line number21 index20 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">execJasmine();</code></div><div class="line number22 index21 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">};</code></div><div class="line number23 index22 alt2">&nbsp;</div><div class="line number24 index23 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript keyword">function</code> <code class="javascript plain">execJasmine() {</code></div><div class="line number25 index24 alt2"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">jasmineEnv.execute();</code></div><div class="line number26 index25 alt1"><code class="javascript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="javascript plain">}</code></div><div class="line number27 index26 alt2">&nbsp;</div><div class="line number28 index27 alt1"><code class="javascript spaces">&nbsp;&nbsp;</code><code class="javascript plain">})();</code></div><div class="line number29 index28 alt2"><code class="javascript plain">&lt;/script&gt;</code></div></div></td></tr></tbody></table></div></div>
+</div>
+<p>导入jasmine.css&nbsp; jasmine.js&nbsp; jasmine-html.js&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; src.js(源代码)&nbsp; test.js(存放describes)</p>
+<p>&nbsp;</p>
+<p>参考：<a href="http://www.weakweb.com/articles/255.html">http://www.weakweb.com/articles/255.html</a></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://pivotal.github.com/jasmine/">http://pivotal.github.com/jasmine/</a></p>
+<p>下载：<a href="https://github.com/pivotal/jasmine/downloads">https://github.com/pivotal/jasmine/downloads</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>l&nbsp; JsTestDriver</h2>
+<p><strong>a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>简介</strong></p>
+<p>JsTestDriver是一个JavaScript单元测试工具，易于与持续构建系统相集成并能够在多个浏览器上运行测试轻松实现TDD风格的开发。当在项目中配置好JsTestDriver以后，如同junit测试java文件一般，JsTestDriver可以直接通过运行js文件来进行单元测试。JsTestDriver框架本身就是JAVA的jar包，需要在本地运行并监听一个端口。</p>
+<p><strong>b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>优点</strong></p>
+<p>可以一次测试多个浏览器，使用方法是在启动服务时可以将多个浏览器的路径作为参数传进去。可以在多台机器上的浏览器中运行，包括移动设备。</p>
+<p>测试运行得很快，因为不需要将结果添加到DOM中呈现出来，它们能够同时在任意多的浏览器中运行，未修改的文件浏览器会从缓存提取。</p>
+<p>不需要HTML配件文件，仅仅只需提供一个或多个脚本和测试脚本，测试运行器运行时会创建一个空文件。</p>
+<p>能很方便的和Ant、Maven等进行集成进行自动化测试，也可以方便和Jekins等持续集成工具进行集成，可以生成测试结果的XML文档。</p>
+<p>有Eclipse和IntelliJ插件，可以很方便的在这两个IDE中进行测试，和JUnit很像。</p>
+<p>支持其它测试框架，可以测试其它测试框架写的测试代码，比如有对应的插件可以将QUnit和Jasmine测试代码转换成JsTestDriver的测试代码。</p>
+<p><strong>c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>不足</strong></p>
+<p>不能在浏览器中测试，只能通过自动化工具或控制台运行。生成的结果不够直观。</p>
+<p>安装使用稍微有点麻烦，依赖于JAVA环境。</p>
+<p><strong>d)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>API</strong></p>
+<p align="left">assert(msg, value)&nbsp;</p>
+<p align="left">assertTrue(msg, value)&nbsp;</p>
+<p align="left">assertFalse(msg, value)&nbsp;</p>
+<p align="left">assertEquals(msg, expected, actual)&nbsp;</p>
+<p align="left">assertNotEquals(msg, expected, actual)&nbsp;</p>
+<p align="left">assertSame(msg, expected, actual)&nbsp;</p>
+<p align="left">assertNotSame(msg, expected, actual)&nbsp;</p>
+<p align="left">assertNull(msg, value)&nbsp;</p>
+<p align="left">assertNotNull(msg, value)&nbsp;</p>
+<p align="left">assertUndefined(msg, value)&nbsp;</p>
+<p align="left">assertNotUndefined(msg, value)&nbsp;</p>
+<p align="left">assertNaN(msg, number)&nbsp;</p>
+<p align="left">assertNotNaN(msg, number)&nbsp;</p>
+<p align="left">assertException(msg, callback, type)&nbsp;</p>
+<p align="left">assertNoException(msg, callback)&nbsp;</p>
+<p align="left">assertArray(msg, arrayLike)&nbsp;</p>
+<p align="left">assertTypeOf(msg, type, object)&nbsp;</p>
+<p align="left">assertBoolean(msg, value)&nbsp;</p>
+<p align="left">assertFunction(msg, value)&nbsp;</p>
+<p align="left">assertNumber(msg, value)&nbsp;</p>
+<p align="left">assertObject(msg, value)&nbsp;</p>
+<p align="left">assertString(msg, value)&nbsp;</p>
+<p align="left">assertMatch(msg, pattern, string)&nbsp;</p>
+<p align="left">assertNoMatch(msg, pattern, string)&nbsp;</p>
+<p align="left">assertTagName(msg, tagName, element)&nbsp;</p>
+<p align="left">assertClassName(msg, className, element)&nbsp;</p>
+<p align="left">assertElementId(msg, id, element)&nbsp;</p>
+<p align="left">assertInstanceOf(msg, constructor, object)&nbsp;</p>
+<p align="left">assertNotInstanceOf(msg, constructor, object)</p>
+<p>API按字面意思理解即可，不一一标注</p>
+<p><strong>e)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>使用</strong></p>
+<p>前提：</p>
+<p>安装java环境</p>
+<p>下载JsTestDriver.jar</p>
+<p>&nbsp;</p>
+<p>目录：</p>
+<p>JsTestDriver.jar</p>
+<p>jsTestDriver.conf &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//配置文件，默认名称，如果用其它名称，需要指定config参数</p>
+<p>src</p>
+<p>----src.js</p>
+<p>test</p>
+<p>----test.js</p>
+<p>&nbsp;</p>
+<p>jsTestDriver.conf：</p>
+<p>&nbsp;</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321462212.png" alt=""></p>
+<p>src.js：</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321464039.png" alt=""></p>
+<p>test.js：</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321465577.png" alt=""></p>
+<p>像java的JUnit一样，测试方法名要以”test”开头，如：”testXXXX”</p>
+<p>测试步骤：</p>
+<ol>
+<li>cmd 进入目录</li>
+<li>运行命令”java –jar JsTestDriver.jar –port 9876”</li>
+<li>打开页面<a href="http://localhost:9876/">http://localhost:9876</a>，点击“捕获浏览器”。</li>
+<li>新打开一个终端，运行命令”java –jar JsTestDriver.jar –tests all”，运行所有测试用例</li>
+<li>也可以单独运行某一个用例，如运行命令” java –jar JsTestDriver.jar –tests addTest.testA”</li>
+</ol>
+<p>&nbsp;</p>
+<p>安装：<a href="http://code.google.com/p/js-test-driver/wiki/UsingTheEclipsePlugin">http://code.google.com/p/js-test-driver/wiki/UsingTheEclipsePlugin</a></p>
+<p>下载：<a href="http://code.google.com/p/js-test-driver/">http://code.google.com/p/js-test-driver/</a></p>
+<p>参考：《测试驱动的JavaScript开发》</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<h2>l&nbsp; FireUnit</h2>
+<p><strong>a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>简介</strong></p>
+<p>FireUnit是一个基于Firebug的Javascript的单元测试框架。简单说来，FireUnit给Firebug增加了一个标签面板，并提供了一些简单的JavaScript API来记录和查看测试。</p>
+<p><strong>b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>优点</strong></p>
+<p>简单易用</p>
+<p><strong>c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>不足</strong></p>
+<p>功能不多，测试代码常常写在源码里，虽然可以实时地看到效果，但耦合太强，不易清理</p>
+<p>只运行在Firefox下</p>
+<p><strong>d)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>API</strong></p>
+<p>常用：</p>
+<p>fireunit.ok(condition, message)&nbsp;&nbsp; true/false</p>
+<p>fireunit.compare(actual, expect, message)&nbsp;&nbsp; 是否相等</p>
+<p>fireunit.reCompare(regexp, string, message)&nbsp;&nbsp; 字符串是否与正则式匹配</p>
+<p>fireunit.testDone();&nbsp;&nbsp; 执行以上的测试，在Firebug的新标签test中显示结果</p>
+<p>其它：</p>
+<p>fireunit.runTests(“test2.html”, “test3.html”)&nbsp; &nbsp;一起运行多个页面的测试(每个文件都含有一些独立的测试)</p>
+<p>fireunit.log(message)&nbsp;&nbsp; 打印log，但似乎不管用</p>
+<p>fireunit.id(id)&nbsp;&nbsp; 相当与document.getElementById</p>
+<p>fireunit.click(element)&nbsp;&nbsp; 模拟触发element的click事件</p>
+<p>fireunit.focus(element)&nbsp;&nbsp; 模拟触发element的focus事件</p>
+<p>fireunit.mouseDown(element)&nbsp;&nbsp; 模拟触发element的mouseDown事件</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 但看代码明明是click事件</p>
+<p><img src="./javascript单元测试 - 溤淋 - 博客园_files/2012080321472154.png" alt=""></p>
+<p>&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;在FF下，只是执行了node.click();不会触发onmousedown，只会触发onclick。已验证</p>
+<p>fireunit.value(element)&nbsp;&nbsp; 修改element的value</p>
+<p>fireunit.key(element, key)&nbsp;&nbsp; 模拟触发element的key事件</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 例：</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var input = document.getElementsByTagName(“input”)[0];</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fireunit.key(input, “a”);</p>
+<p>没用过：</p>
+<p>fireunit.browser</p>
+<p>fireunit.test</p>
+<p align="left">fireunit.forceHTTP</p>
+<p>fireunit.registerPathHandler</p>
+<p>fireunit.panel</p>
+<p>fireunit.privilege</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>e)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong><strong>使用</strong></p>
+<p>在FF下装Firebug和FireUnit</p>
+<p>直接在代码里写测试，就像console.log();</p>
+<p>&nbsp;</p>
+<p>参考：<a href="https://github.com/jeresig/fireunit/wiki/internals">https://github.com/jeresig/fireunit/wiki/internals</a></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://hi.baidu.com/dearhwj/blog/item/1d1e0dbfc380f80219d81f35.html">http://hi.baidu.com/dearhwj/blog/item/1d1e0dbfc380f80219d81f35.html</a></p>
+<p>&nbsp;</p>
+<h1>4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 小结</h1>
+<p>QUnit框架简单方便，测试界面直观详细</p>
+<p>Jasmine功能强大，风格也简单明了，符合前端开发者的编程习惯，推荐</p>
+<p>JsTestDriver可以和QUnit等框架结合，可以同时测多个浏览器。但安装复杂，只能在控制台显示，不友好，不够清晰</p>
+<p>FireUnit小巧灵活，加上Firebug的人气应该很受欢迎</p>
+<p>如果需要进行自动化测试， 多了解一下Jasmine和JsTestDriver，本文未深入。</p>
+<p>&nbsp;</p>
+<h1>5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 附注</h1>
+<p>JavaScript单元测试框架<a href="http://en.wikipedia.org/wiki/List_of_unit_testing_frameworks#JavaScript">详细列表</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="blog_post_info"><div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/frostbelt/category/361625.html">JS</a>, <a href="http://www.cnblogs.com/frostbelt/category/361630.html">前端咨询</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/frostbelt/tag/js/">js</a>, <a href="http://www.cnblogs.com/frostbelt/tag/javascript/">javascript</a>, <a href="http://www.cnblogs.com/frostbelt/tag/%E6%B5%8B%E8%AF%95/">测试</a>, <a href="http://www.cnblogs.com/frostbelt/tag/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">单元测试</a>, <a href="http://www.cnblogs.com/frostbelt/tag/QUnit/">QUnit</a>, <a href="http://www.cnblogs.com/frostbelt/tag/Jasmine/">Jasmine</a>, <a href="http://www.cnblogs.com/frostbelt/tag/JsTestDriver/">JsTestDriver</a>, <a href="http://www.cnblogs.com/frostbelt/tag/Fireunit/">Fireunit</a></div>
+<div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(cb_entryId,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/%e6%ba%a4%e6%b7%8b" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./javascript单元测试 - 溤淋 - 博客园_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="digg_block">
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/frostbelt/" target="_blank"><img src="./javascript单元测试 - 溤淋 - 博客园_files/u135584.jpg" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/frostbelt/">溤淋</a><br>
+<a href="http://home.cnblogs.com/u/frostbelt/followees">关注 - 2</a><br>
+<a href="http://home.cnblogs.com/u/frostbelt/followers">粉丝 - 15</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+<a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+	<div class="diggit" onclick="votePost(cb_entryId,&#39;Digg&#39;)"> 
+		<span class="diggnum" id="digg_count">3</span>
+	</div>
+	<div class="buryit" onclick="votePost(cb_entryId,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/02/2620605.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/02/2620605.html" title="发布于2012-08-02 20:11">javascript日期格式化</a><br><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/10/2631210.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/10/2631210.html" title="发布于2012-08-10 08:49">css background-position</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2012-08-03 21:46</span> <a href="http://www.cnblogs.com/frostbelt/">溤淋</a> 阅读(<span id="post_view_count">2755</span>) 评论(<span id="post_comment_count">9</span>)  <a href="http://www.cnblogs.com/frostbelt/admin/EditPosts.aspx?postid=2622302" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" onclick="AddToWz(2622302);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=72272,cb_entryId=2622302,cb_blogApp=currentBlogApp,cb_blogUserGuid='9fd2a7ec-fb67-df11-ba8f-001cf0cd104b',cb_entryCreatedDate='2012/8/3 21:46:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+<a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<!--done-->
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2441319" class="layer">#1楼</a><a name="2441319" id="comment_anchor_2441319"></a>  <span class="comment_date">2012-08-03 23:11</span> <a id="a_comment_author_2441319" href="http://www.cnblogs.com/techborther/" target="_blank">技术弟弟</a> <a href="http://space.cnblogs.com/msg/send/%e6%8a%80%e6%9c%af%e5%bc%9f%e5%bc%9f" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2441319" class="blog_comment_body">写的不错。<br>关于Qunit 不适合持续集成的问题，我已经找到了一个解决方案。<br>“Chutzpah- A JavaScript Test Runner” <br>它可以在.net环境下支持commandline 运行。<br>它完美支持qunit 。在Nuget里可以找到它。也与visual studio 2010-2012完美集成。版本目前最新是2.0.1。<br>楼主有空可以试试。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2441319,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2441319,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2441319_avatar" style="display:none;">http://pic.cnitblog.com/face/u352925.jpg?id=22130316</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2441497" class="layer">#2楼</a><a name="2441497" id="comment_anchor_2441497"></a>  <span class="comment_date">2012-08-04 12:20</span> <a id="a_comment_author_2441497" href="http://www.cnblogs.com/skynewbie/" target="_blank">魔哥</a> <a href="http://space.cnblogs.com/msg/send/%e9%ad%94%e5%93%a5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2441497" class="blog_comment_body">好</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2441497,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2441497,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2441497_avatar" style="display:none;">http://pic.cnitblog.com/face/u335675.jpg?id=28021945</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2441687" class="layer">#3楼</a><a name="2441687" id="comment_anchor_2441687"></a>  <span class="comment_date">2012-08-04 19:35</span> <a id="a_comment_author_2441687" href="http://www.cnblogs.com/lsp/" target="_blank">lsp</a> <a href="http://space.cnblogs.com/msg/send/lsp" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2441687" class="blog_comment_body">请问这些框架能测试代码在不同浏览器下的结果嘛？是需要在机器上安装所有浏览器吗？但是我没法在一台机器上安装IE的所有版本。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2441687,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2441687,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2441687_avatar" style="display:none;">http://pic.cnitblog.com/face/u20089.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2442412" class="layer">#4楼</a><a name="2442412" id="comment_anchor_2442412"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2012-08-06 10:49</span> <a id="a_comment_author_2442412" href="http://www.cnblogs.com/frostbelt/" target="_blank">溤淋</a> <a href="http://space.cnblogs.com/msg/send/%e6%ba%a4%e6%b7%8b" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2442412" class="blog_comment_body"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2441319" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2441319);">@</a>技术弟弟<br>多谢，弟弟兄弟可以发个贴，我这里加链接啊。现在我的小PC上已经装了apcha和nginx，一般不用.net，再加个iis就神机了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2442412,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2442412,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2442412_avatar" style="display:none;">http://pic.cnitblog.com/face/u135584.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2442413" class="layer">#5楼</a><a name="2442413" id="comment_anchor_2442413"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2012-08-06 10:50</span> <a id="a_comment_author_2442413" href="http://www.cnblogs.com/frostbelt/" target="_blank">溤淋</a> <a href="http://space.cnblogs.com/msg/send/%e6%ba%a4%e6%b7%8b" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2442413" class="blog_comment_body"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2441497" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2441497);">@</a>魔哥<br>多谢支持，魔哥不要什么都藏着自己用啊，拿出来晒晒吧</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2442413,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2442413,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2442413_avatar" style="display:none;">http://pic.cnitblog.com/face/u135584.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2442417" class="layer">#6楼</a><a name="2442417" id="comment_anchor_2442417"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2012-08-06 10:53</span> <a id="a_comment_author_2442417" href="http://www.cnblogs.com/frostbelt/" target="_blank">溤淋</a> <a href="http://space.cnblogs.com/msg/send/%e6%ba%a4%e6%b7%8b" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2442417" class="blog_comment_body"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2441687" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2441687);">@</a>lsp<br>js单元测试的话，更多的是测试js的逻辑测试，各浏览器分别不大，但如果作为前端的话，还是要装各个浏览器的，IE的不同版本可以用ietester简单模拟一下</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2442417,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2442417,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2442417_avatar" style="display:none;">http://pic.cnitblog.com/face/u135584.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2442418" class="layer">#7楼</a><a name="2442418" id="comment_anchor_2442418"></a>  <span class="comment_date">2012-08-06 10:55</span> <a id="a_comment_author_2442418" href="http://www.cnblogs.com/skynewbie/" target="_blank">魔哥</a> <a href="http://space.cnblogs.com/msg/send/%e9%ad%94%e5%93%a5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2442418" class="blog_comment_body"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2442413" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2442413);">@</a>溤淋<br>大哥，我就是个纯屌丝，大四刚毕业，在外面实习呢，哈哈，没啥可藏的，没入门的屌丝。。。。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2442418,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2442418,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2442418_avatar" style="display:none;">http://pic.cnitblog.com/face/u335675.jpg?id=28021945</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2443791" class="layer">#8楼</a><a name="2443791" id="comment_anchor_2443791"></a>  <span class="comment_date">2012-08-07 18:55</span> <a id="a_comment_author_2443791" href="http://www.cnblogs.com/zzcflying/" target="_blank">东方翔</a> <a href="http://space.cnblogs.com/msg/send/%e4%b8%9c%e6%96%b9%e7%bf%94" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2443791" class="blog_comment_body">好。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2443791,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2443791,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#2673838" class="layer">#9楼</a><a name="2673838" id="comment_anchor_2673838"></a><span id="comment-maxId" style="display:none;">2673838</span><span id="comment-maxDate" style="display:none;">2013/5/6 15:48:46</span>  <span class="comment_date">2013-05-06 15:48</span> <a id="a_comment_author_2673838" href="http://www.cnblogs.com/wangtuda/" target="_blank">妙人</a> <a href="http://space.cnblogs.com/msg/send/%e5%a6%99%e4%ba%ba" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2673838" class="blog_comment_body">啊，我凌乱了。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2673838,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2673838,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03/2622302.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.cnblogs.com/" target="_blank" title="程序员的网上家园">博客园首页</a><a href="http://q.cnblogs.com/" target="_blank" title="程序员问答社区">博问</a><a href="http://news.cnblogs.com/" target="_blank" title="IT新闻">新闻</a><a href="http://home.cnblogs.com/ing/" target="_blank">闪存</a><a href="http://job.cnblogs.com/" target="_blank">程序员招聘</a><a href="http://kb.cnblogs.com/" target="_blank">知识库</a></div>
+<div id="ad_under_post_holder">
+
+<div id="google_ad_c1" class="c_ad_block">
+    <!-- cnblogs_blogpost_C1_sitehome -->
+    <div id="div-gpt-ad-1346480159711-0" style="width:300px; height:250px;">
+    
+    <div id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom;"></iframe></div><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" width="0" height="0" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom; visibility: hidden; display: none;"></iframe></div>
+</div>
+<div id="blog_news_kb"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/193275/" target="_blank">Google Chrome 31悄悄修复了价值5万美元的漏洞</a><br> ·  <a href="http://news.cnblogs.com/n/193274/" target="_blank">史玉柱退休后首次露面 不谈工作谈人生</a><br> ·  <a href="http://news.cnblogs.com/n/193273/" target="_blank">安全专家利用IE11漏洞攻破Win8.1</a><br> ·  <a href="http://news.cnblogs.com/n/193271/" target="_blank">KPCB CEO课程（二）：如何玩好创意经济管理学这门高级艺术？</a><br> ·  <a href="http://news.cnblogs.com/n/193270/" target="_blank">KPCB CEO课程（一）：到底该如何履行管理者的角色？</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/191626/" target="_blank">可以从CSS框架中借鉴到什么</a><br> ·  <a href="http://kb.cnblogs.com/page/192993/" target="_blank">云计算环境下的应用架构设计</a><br> ·  <a href="http://kb.cnblogs.com/page/192251/" target="_blank">一个IT人士的个人经历，给迷失方向的朋友</a><br> ·  <a href="http://kb.cnblogs.com/page/192017/" target="_blank">程序员最头疼的事：命名</a><br> ·  <a href="http://kb.cnblogs.com/page/192208/" target="_blank">工程师文化</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div></div>
+<script type="text/javascript">
+var enableGoogleAd = true;
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+fixPostBodyFormat();
+loadAdUnderPost();
+</script>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+loadBlogSignature();
+LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+</script>
+<script type="text/javascript">
+    $.ajax({ url: 'http://counter.cnblogs.com/blog/post/' + cb_entryId, type: 'get', dataType: 'script', cache: true });
+</script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/frostbelt/">溤淋</a><br>园龄：<a href="http://home.cnblogs.com/u/frostbelt/" title="入园时间：2010-05-25">3年5个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/frostbelt/followers/">15</a><br>关注：<a href="http://home.cnblogs.com/u/frostbelt/followees/">2</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;9fd2a7ec-fb67-df11-ba8f-001cf0cd104b&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="calendar"><div id="blog-calendar" style="displya:none"><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="日历">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2012/07/01&#39;);return false;">&lt;</a></td><td align="center">2012年8月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2012/09/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/02.html"><u>2</u></a></td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/03.html"><u>3</u></a></td><td class="CalWeekendDay" align="center">4</td></tr><tr><td class="CalWeekendDay" align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td align="center">9</td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/10.html"><u>10</u></a></td><td class="CalWeekendDay" align="center">11</td></tr><tr><td class="CalWeekendDay" align="center">12</td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/13.html"><u>13</u></a></td><td align="center">14</td><td align="center">15</td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/16.html"><u>16</u></a></td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/17.html"><u>17</u></a></td><td class="CalWeekendDay" align="center">18</td></tr><tr><td class="CalWeekendDay" align="center">19</td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/20.html"><u>20</u></a></td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/21.html"><u>21</u></a></td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/22.html"><u>22</u></a></td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/23.html"><u>23</u></a></td><td align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/24.html"><u>24</u></a></td><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/25.html"><u>25</u></a></td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/26.html"><u>26</u></a></td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td></tr><tr><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+
+<div class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+
+</div>
+
+
+<div class="catListPostCategory">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/frostbelt/category/361623.html">CSS(39)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/frostbelt/category/361624.html">JAVA(2)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/frostbelt/category/361625.html">JS(70)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/frostbelt/category/408482.html">Linux(2)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/frostbelt/category/361626.html">MySQL(2)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/frostbelt/category/384601.html">photoshop(1)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/frostbelt/category/361627.html">PHP(16)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/frostbelt/category/361628.html">常识(30)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/frostbelt/category/361629.html">目录</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/frostbelt/category/361630.html">前端咨询(10)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/frostbelt/category/471420.html">求大神解(2)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/frostbelt/category/361631.html">收藏</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/frostbelt/category/361632.html">欣赏(3)</a> </li>
+
+<li><a id="ctl01_CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/frostbelt/category/381477.html">朕待定</a> </li>
+
+</ul>
+
+</div>
+
+<div class="catList">
+<h3 class="catListTitle">公</h3>
+
+<ul>
+
+</ul>
+
+</div>
+
+<div class="catList">
+<h3 class="catListTitle">私</h3>
+
+<ul>
+
+<li><a id="ctl01_CatList_LinkList_2_Link_0" rel="nofollow" href="http://blog.163.com/sparkle_tiangz/">MyOnion</a> </li>
+
+</ul>
+
+</div>
+
+
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	53326
+	</li>
+	<li class="liRank">
+		排名 -	2575
+	</li>
+</ul>
+</div>
+
+
+
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/frostbelt/archive/2010/08/13/1798771.html">1. Flex_As问题大全(11)</a></li><li><a href="./javascript单元测试 - 溤淋 - 博客园_files/javascript单元测试 - 溤淋 - 博客园.htm">2. javascript单元测试(9)</a></li><li><a href="http://www.cnblogs.com/frostbelt/archive/2010/08/12/1798050.html">3. 我的第一个Flex Project(7)</a></li><li><a href="http://www.cnblogs.com/frostbelt/archive/2010/08/09/1795918.html">4. JAVA删除临时文件(4)</a></li><li><a href="http://www.cnblogs.com/frostbelt/archive/2012/08/10/2631210.html">5. css background-position(4)</a></li></ul></div>
+</div>
+</div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2013 溤淋
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+<script type="text/javascript" src="./javascript单元测试 - 溤淋 - 博客园_files/google-analytics.js"></script>
+
+
+<iframe id="google_osd_static_frame_6003183284774" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body></html>

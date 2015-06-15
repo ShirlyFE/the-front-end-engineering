@@ -1,0 +1,47 @@
+jasmine文档
+关于jasmine的异步加载：https://github.com/pivotal/jasmine/wiki/Asynchronous-specs#waitsforfunction-optional-message-optional-timeout
+
+jasmine api：http://pivotal.github.io/jasmine/?spec=Asynchronous%20specs%20should%20support%20async%20execution%20of%20test%20preparation%20and%20expectations.
+
+
+Jasmine支持测试异步操作，通过调用runs定义的一组blocks写入specs，bolcks通常结束于异步调用。waitsFor block需要一个锁方法，一个失败消息，和一个超时时间。锁方法一直轮询直到返回true或者超时。如果超时，spec输出失败信息。一旦异步状况出现，另一个runs block定义最终的测试行为，它期望值通常基于异步调用返回的状态。如下图，起初flag为false，waitsFor一直轮询，直到500 milliseconds后触发setTimeout的function，将flag赋为true后waitsFor在超时时间未到之前结束，waitsFor下面那个runs就是测试行为，笔者看了下value的值为30+。
+describe("Asynchronous specs", function() {
+  var value, flag;
+
+  it("should support async execution of test preparation and exepectations", function() {
+
+    runs(function() {
+      flag = false;
+      value = 0;
+
+      setTimeout(function() {
+        flag = true;
+      }, 500);
+    });
+
+    waitsFor(function() {
+      value++;
+      return flag;
+    }, "The Value should be incremented", 750);
+    
+    runs(function() {
+      expect(value).toBeGreaterThan(0);
+    });
+  });
+});
+
+
+
+mocha的优势可以看出测试花费的时间
+最大的灵活性：需要选择断言库，需要辅助异步测试工具sinonjs
+
+Qunit vs Jasmine vs Mocha
+QUnit is very easy to get started with, as you only need to include two files(qunit.css and qunit.js) and a little bit of markup, then you can start writing tests. QUnit is TDD style tests.
+
+Jasmine is easier to get started – it’s all-in-one package will generally get you and a team up and testing much faster, and you’ll be in good hands with it. Jasmine is BDD style tests.
+
+Mocha is significantly more flexible, but you have to piece it together yourself. There is no spy framework built in to Mocha, so most people use sinon.js. There’s no assertion framework built in to Mocha either, so you’ll have to pick one. Chai is the popular one, but there are many, many others available. You can also configure Mocha for BDD (jasmine style) or TDD (QUnit style) easily. But you have to pick and choose how you want Mocha to work. This flexibility is great because you can build the test environment that you really want. But it means you have more work to do, more individual pieces to maintain /  keep up to date, etc.
+The BDD ui is pretty much similar to Jasmine, but what makes me prefer mocha is that it works roughly the same to test nodejs and frontend stuff (and as a node developer, this is a huge argument for me in favor to mocha). Plus, as you mentioned, it has some nice features (like the string diff output, test threshold, support for code coverage, etc.) and cool reporters (btw, we use mocha to test the yeoman cli).
+
+
+mocha vs jasmine ： http://zhanghaihua415.blog.163.com/blog/static/10616124720135174939779/

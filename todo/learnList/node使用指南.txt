@@ -1,0 +1,5 @@
+node使用指南：
+npm search 可以查找npm包中有哪些自己想要的包，比如找yeoman-generator中有哪些模板，可以npm search yeoman-generator命令会将所有generatorp-*模板查找出来，根据自己需要你可以安装相应的模板
+
+
+
