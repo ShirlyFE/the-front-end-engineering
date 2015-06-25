@@ -42,6 +42,8 @@
 
 [CentOS note](./CentOS.md)
 
+[react](./react.md)
+
 ### 工具
 [roots：a fast, simple, and customizable static site compiler.](http://roots.cx/articles/getting-started)
 
@@ -54,3 +56,12 @@
 [can I use /](http://caniuse.com/)
 
 [code challege](http://www.codewars.com/)
+
+## 资料
+[A Baseline for Front-End [JS] Developers: 2015](http://rmurphey.com/blog/2015/03/23/a-baseline-for-front-end-developers-2015/)
+
+[代码审查工具](http://jscs.info/)
+
+[The pluggable linting utility for JavaScript and JSX](http://eslint.org/)
+
+[simple git hooks](https://www.npmjs.com/package/ghooks)

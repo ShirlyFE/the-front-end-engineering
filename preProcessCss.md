@@ -50,6 +50,16 @@ LESS在服务器端的使用主要是借助于LESS的编译器，将LESS源文�
     stylus one.styl two.styl /*同时编译多个文件*/
 ```
 
+sass在命令行编译的时候会报下面的错
+
+![sass compile error](./images/sassCompileError.png)
+
+**解决方案**
+
+```css
+  > sass source.scss target.css --default-encoding=utf-8
+```
+
 ## 语法
 
 三种编译器的语法有其共通和相似性，也有其特别性，下面分别分别对不同编译器语法进行说明
