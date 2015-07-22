@@ -65,3 +65,5 @@
 [The pluggable linting utility for JavaScript and JSX](http://eslint.org/)
 
 [simple git hooks](https://www.npmjs.com/package/ghooks)
+
+[分布式服务框架Dubbo简介](http://xfhnever.com/blog/2015/03/08/dubbo-introduction/)

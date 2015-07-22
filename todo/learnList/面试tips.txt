@@ -1,0 +1,258 @@
+什么叫优雅降级和渐进增强？
+优雅降级：Web站点在所有新式浏览器中都能正常工作，如果用户使用的是老式浏览器，则代码会检查以确认它们是否能正常工作。由于IE独特的盒模型布局问题，针对不同版本的IE的hack实践过优雅降级了,为那些无法支持功能的浏览器增加候选方案，使之在旧式浏览器上以某种形式降级体验却不至于完全失效.
+
+渐进增强：从被所有浏览器支持的基本功能开始，逐步地添加那些只有新式浏览器才支持的功能,向页面增加无害于基础浏览器的额外样式和功能的。当浏览器支持时，它们会自动地呈现出来并发挥作用。
+
+一个页面从输入 URL 到页面加载显示完成，这个过程中都发生了什么？
+分为4个步骤：
+（1），当发送一个URL请求时，不管这个URL是Web页面的URL还是Web页面上每个资源的URL，浏览器都会开启一个线程来处理这个请求，同时在远程DNS服务器上启动一个DNS查询。这能使浏览器获得请求对应的IP地址。
+（2）， 浏览器与远程Web服务器通过TCP三次握手协商来建立一个TCP/IP连接。该握手包括一个同步报文，一个同步-应答报文和一个应答报文，这三个报文在 浏览器和服务器之间传递。该握手首先由客户端尝试建立起通信，而后服务器应答并接受客户端的请求，最后由客户端发出该请求已经被接受的报文。
+（3），一旦TCP/IP连接建立，浏览器会通过该连接向远程服务器发送HTTP的GET请求。远程服务器找到资源并使用HTTP响应返回该资源，值为200的HTTP响应状态表示一个正确的响应。
+（4），此时，Web服务器提供资源服务，客户端开始下载资源。
+
+异步加载和延迟加载:
+1.异步加载的方案： 动态插入script标签
+2.通过ajax去获取js代码，然后通过eval执行
+3.script标签上添加defer或者async属性
+4.创建并插入iframe，让它异步执行js
+5.延迟加载：有些 js 代码并不是页面初始化的时候就立刻需要的，而稍后的某些情况才需要的。
+
+ie各版本和chrome可以并行下载多少个资源?
+
+IE6 两个并发，iE7升级之后的6个并发，之后版本也是6个
+Firefox，chrome也是6个
+
+解释一下 JavaScript 的同源策略:
+概念:同源策略是客户端脚本（尤其是Javascript）的重要的安全度量标准。它最早出自Netscape Navigator2.0，其目的是防止某个文档或脚本从多个不同源装载。
+
+这里的同源策略指的是：协议，域名，端口相同，同源策略是一种安全协议。 指一段脚本只能读取来自同一来源的窗口和文档的属性。
+
+为什么要有同源限制？
+
+我们举例说明：比如一个黑客程序，他利用Iframe把真正的银行登录页面嵌到他的页面上，当你使用真实的用户名，密码登录时，他的页面就可以通过Javascript读取到你的表单中input中的内容，这样用户名，密码就轻松到手了。
+
+什么是 "use strict"; ? 使用它的好处和坏处分别是什么？
+ECMAscript 5添加了第二种运行模式："严格模式"（strict mode）。顾名思义，这种模式使得Javascript在更严格的条件下运行。
+
+设立"严格模式"的目的，主要有以下几个：
+
+- 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为;
+- 消除代码运行的一些不安全之处，保证代码运行的安全；
+- 提高编译器效率，增加运行速度；
+- 为未来新版本的Javascript做好铺垫。
+缺点： 现在网站的JS 都会进行压缩，一些文件用了严格模式，而另一些没有。这时这些本来是严格模式的文件，被 merge 后，这个串就到了文件的中间，不仅没有指示严格模式，反而在压缩后浪费了字节。
+
+
+哪些地方会出现css阻塞，哪些地方会出现js阻塞？
+
+js的阻塞特性：所有浏览器在下载JS的时候，会阻止一切其他活动，比如其他资源的下载，内容的呈现等等。直到JS下载、解析、执行完毕后才开始继续并行下载其他资源并呈现内容。为了提高用户体验，新一代浏览器都支持并行下载JS，但是JS下载仍然会阻塞其它资源的下载（例如.图片，css文件等）。
+
+由于浏览器为了防止出现JS修改DOM树，需要重新构建DOM树的情况，所以就会阻塞其他的下载和呈现。
+
+嵌入JS会阻塞所有内容的呈现，而外部JS只会阻塞其后内容的显示，2种方式都会阻塞其后资源的下载。也就是说外部样式不会阻塞外部脚本的加载，但会阻塞外部脚本的执行。
+
+CSS怎么会阻塞加载了？CSS本来是可以并行下载的，在什么情况下会出现阻塞加载了(在测试观察中，IE6下CSS都是阻塞加载）
+
+当CSS后面跟着嵌入的JS的时候，该CSS就会出现阻塞后面资源下载的情况。而当把嵌入JS放到CSS前面，就不会出现阻塞的情况了。
+
+根本原因：因为浏览器会维持html中css和js的顺序，样式表必须在嵌入的JS执行前先加载、解析完。而嵌入的JS会阻塞后面的资源加载，所以就会出现上面CSS阻塞下载的情况。
+
+嵌入JS应该放在什么位置？
+
+   1、放在底部，虽然放在底部照样会阻塞所有呈现，但不会阻塞资源下载。
+
+   2、如果嵌入JS放在head中，请把嵌入JS放在CSS头部。
+
+   3、使用defer（只支持IE）
+
+   4、不要在嵌入的JS中调用运行时间较长的函数，如果一定要用，可以用`setTimeout`来调用
+
+写一个通用的事件侦听器函数?
+// event(事件)工具集，来源：github.com/markyun
+markyun.Event = {
+    // 页面加载完成后
+    readyEvent : function(fn) {
+        if (fn==null) {
+            fn=document;
+        }
+        var oldonload = window.onload;
+        if (typeof window.onload != 'function') {
+            window.onload = fn;
+        } else {
+            window.onload = function() {
+                oldonload();
+                fn();
+            };
+        }
+    },
+    // 视能力分别使用dom0||dom2||IE方式 来绑定事件
+    // 参数： 操作的元素,事件名称 ,事件处理程序
+    addEvent : function(element, type, handler) {
+        if (element.addEventListener) {
+            //事件类型、需要执行的函数、是否捕捉
+            element.addEventListener(type, handler, false);
+        } else if (element.attachEvent) {
+            element.attachEvent('on' + type, function() {
+                handler.call(element);
+            });
+        } else {
+            element['on' + type] = handler;
+        }
+    },
+    // 移除事件
+    removeEvent : function(element, type, handler) {
+        if (element.removeEnentListener) {
+            element.removeEnentListener(type, handler, false);
+        } else if (element.datachEvent) {
+            element.detachEvent('on' + type, handler);
+        } else {
+            element['on' + type] = null;
+        }
+    }, 
+    // 阻止事件 (主要是事件冒泡，因为IE不支持事件捕获)
+    stopPropagation : function(ev) {
+        if (ev.stopPropagation) {
+            ev.stopPropagation();
+        } else {
+            ev.cancelBubble = true;
+        }
+    },
+    // 取消事件的默认行为
+    preventDefault : function(event) {
+        if (event.preventDefault) {
+            event.preventDefault();
+        } else {
+            event.returnValue = false;
+        }
+    },
+    // 获取事件目标
+    getTarget : function(event) {
+        return event.target || event.srcElement;
+    },
+    // 获取event对象的引用，取到事件的所有信息，确保随时能使用event；
+    getEvent : function(e) {
+        var ev = e || window.event;
+        if (!ev) {
+            var c = this.getEvent.caller;
+            while (c) {
+                ev = c.arguments[0];
+                if (ev && Event == ev.constructor) {
+                    break;
+                }
+                c = c.caller;
+            }
+        }
+        return ev;
+    }
+}; 
+
+
+WEB应用从服务器主动推送Data到客户端有那些方式？
+
+
+
+网站重构的理解？
+网站重构：在不改变外部行为的前提下，简化结构、添加可读性，而在网站前端保持一致的行为。也就是说是在不改变UI的情况下，对网站进行优化，在扩展的同时保持一致的UI。
+
+对于传统的网站来说重构通常是：
+
+表格(table)布局改为DIV+CSS
+使网站前端兼容于现代浏览器(针对于不合规范的CSS、如对IE6有效的)
+对于移动平台的优化
+针对于SEO进行优化
+深层次的网站重构应该考虑的方面
+
+减少代码间的耦合
+让代码保持弹性
+严格按规范编写代码
+设计可扩展的API
+代替旧有的框架、语言(如VB)
+增强用户体验
+通常来说对于速度的优化也包含在重构中
+
+压缩JS、CSS、image等前端资源(通常是由服务器来解决)
+程序的性能优化(如数据读写)
+采用CDN来加速资源加载
+对于JS DOM的优化
+HTTP服务器的文件缓存
+
+详解JavaScript模块化开发:
+目前，通行的js模块规范主要有两种：CommonJS、 AMD 和 CMD。
+AMD 是 RequireJS 在推广过程中对模块定义的规范化的产出。
+CommonJS是服务器端模块的规范，Node.js采用了这个规范。Node.JS首先采用了js模块化的概念。
+SeaJS与RequireJS最大的区别:
+SeaJS对模块的态度是懒执行, 而RequireJS对模块的态度是预执行
+
+为什么要用requireJS
+
+试想一下，如果一个网页有很多的js文件，那么浏览器在下载该页面的时候会先加载js文件，从而停止了网页的渲染，如果文件越多，浏览器可能失去响应。其次，要保证js文件的依赖性，依赖性最大的模块（文件）要放在最后加载，当依赖关系很复杂的时候，代码的编写和维护都会变得困难。
+
+RequireJS就是为了解决这两个问题而诞生的：
+
+（1）实现js文件的异步加载，避免网页失去响应；
+（2）管理模块之间的依赖性，便于代码的编写和维护。
+CMD（Common Module Definition） 通用模块定义。该规范明确了模块的基本书写格式和基本交互规则。该规范是在国内发展出来的。AMD是依赖关系前置，CMD是按需加载。
+
+在 CMD 规范中，一个模块就是一个文件。代码的书写格式如下：
+
+define(factory);
+factory 为函数时，表示是模块的构造方法。执行该构造方法，可以得到模块向外提供的接口。factory 方法在执行时，默认会传入三个参数：require、exports 和 module：
+
+define(function(require, exports, module) {
+
+  // 模块代码
+
+});
+CMD 推崇依赖就近，AMD 推崇依赖前置。看如下代码：
+
+// CMD
+define(function(require, exports, module) {
+var a = require('./a')
+a.doSomething()
+// 此处略去 100 行
+var b = require('./b') // 依赖可以就近书写
+b.doSomething()
+// ... 
+})
+
+// AMD 默认推荐的是
+define(['./a', './b'], function(a, b) { // 依赖必须一开始就写好
+a.doSomething()
+// 此处略去 100 行
+b.doSomething()
+...
+}) 
+另外一个区别是：
+
+AMD:API根据使用范围有区别，但使用同一个api接口
+CMD:每个API的职责单一
+AMD的优点是：异步并行加载，在AMD的规范下，同时异步加载是不会产生错误的。
+CMD的机制则不同，这种加载方式会产生错误，如果能规范化模块内容形式，也可以
+
+使用闭包的好处：
+1.希望一个变量长期驻扎在内存中
+2.避免全局变量的污染
+3.私有成员的存在s
+
+
+什么是 FOUC（无样式内容闪烁）？你如何来避免 FOUC？
+
+答案：
+什么是FOUC(文档样式短暂失效)?
+如果使用import方法对CSS进行导入,会导致某些页面在Windows 下的Internet Explorer出现一些奇怪的现象:以无样式显示页面内容的瞬间闪烁,这种现象称之为文档样式短暂失效(Flash of Unstyled Content),简称为FOUC。
+
+原因大致为：
+1，使用import方法导入样式表。
+2，将样式表放在页面底部
+3，有几个样式表，放在html结构的不同位置。
+
+其实原理很清楚：当样式表晚于结构性html加载，当加载到此样式表时，页面将停止之前的渲染。此样式表被下载和解析后，将重新渲染页面，也就出现了短暂的花屏现象。
+
+解决方法：
+使用LINK标签将样式表放在文档HEAD中。
+
+
+
+前端性能测试工具：
+移动端性能测试工具在线：http://gtmetrix.com/
+页面性能测试在线： http://www.webpagetest.org/
