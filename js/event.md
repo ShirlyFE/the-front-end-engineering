@@ -414,4 +414,91 @@ https://github.com/toolkitchen/PointerEvents
 
 
 
+
+IE10 事件监听
+MSPointerDown
+
+类似mousedown，兼容触屏和鼠标操作
+
+ 
+
+MSGestureTap
+
+类似onclick，与MSPointerDown区别在于是否有鼠标和手指释放的一下，否则不会触发
+
+ 
+
+MSGestureHold
+
+用于监听鼠标或手指按住对象2s
+
+ 
+
+MSGestureChange
+
+监听鼠标或手指拖动对象，这个事件在拖动期间会被不断触发
+
+ 
+
+MSGestureEnd
+
+类似mouseup，兼容触屏和鼠标操作
+
+
+
+MSPointerCancel
+
+与MSGestureEnd的区别在于，这个事件必须要被一些系统性的事件阻断才会触发。例如在拖动对象时，有ALERT框弹出。
+
+
+
+如何判断是鼠标还是触屏？
+
+在事件返回的handle中，可以根据pointerType属性判断操作类型
+
+
+
+有mouse、pen、touch 3种，假如没有需要区分操作类型的需求。理论上，IE10可以完美兼容鼠标和触屏交互操作。
+
+
+
+如何实现一些缩放、旋转、拖动交互？
+
+这些操作都需要依赖MSGestureChange来实现，关键点是如何获取鼠标或手指在对象上操作时的一些参数，例如手指拖动的方向、位移、加速度，甚至是双指或多指同时操作时的参数。
+
+同样是在事件handle上可以获得：
+
+translationX    基于X轴的位移
+
+translationY    基于Y轴的位移
+
+rotate   旋转的度数
+
+scale     缩放的倍数
+
+通过不断的获得这些参数，相应的修改对象的CSS3 transform，便可以实现一些常见的效果。
+
+ 
+
+是否有更简单的使用办法？
+
+在IE10下，实现图片放大缩小和图片幻灯片这两种常见交互，通过CSS就可以简单实现。
+
+-ms-content-zooming : zoom;
+
+
+-ms-content-zoom-limit-min: 100%;        //最小缩放倍数
+
+-ms-content-zoom-limit-max: 500%;        //最大缩放倍数
+
+
+
+
+-ms-scroll-snap-type: mandatory;            //允许snap
+
+-ms-scroll-snap-points-x: snapInterval(0%, 100%);        //每次snap的距离
+
+
+
 [js事件兼容性解决方案](http://developer.51cto.com/art/201503/467914_all.htm)
+
