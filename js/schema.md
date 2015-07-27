@@ -2,7 +2,7 @@
 
 ## 什么是scheme
 
-Scheme是一个协议，用来进行页面之间的跳转,比如说浏览器中一个网站内部的各种跳转:http://www.cocoachina.com/
+Scheme是一个协议，用来进行页面之间的跳转,比如说浏览器中一个网站内部的各种跳转:https://github.com/shirlyLoveU
 
 iOS Scheme是用来完成iOS中各个UIViewController之间的跳转，通过一个类似于浏览器的网址
 
