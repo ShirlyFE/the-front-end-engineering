@@ -118,26 +118,26 @@ SQL和NoSQL这两者都有各自的优缺点，选择正确的架构取决于你
 字符型数据可以使用定长或变长的字符串来实现，不同点在于固定长度的字符串使用空格向右填充，以保证同样的字节数；变长字符串不需要向右填充，并且使用字节数可变，定义字符列时，必须指定该列能存放字符串的最大长度，例如：
 
 ```php
-    char(20) //可设置最大长度为255个字节
-    varchar(20) //最多可以存储65535个字节(64KB)，如需存储比如电子邮件、XML文档等更长的字符串，则需要使用文档类型(mediumtext和longtext)
+char(20) //可设置最大长度为255个字节
+varchar(20) //最多可以存储65535个字节(64KB)，如需存储比如电子邮件、XML文档等更长的字符串，则需要使用文档类型(mediumtext和longtext)
 ```
 
 查看服务器所支持的字符集：
 
 ```php
-    mysql> show character set; // 如果展示字符集列表的第四列Maxlen大于1，那么该字符集为多字符集
+mysql> show character set; // 如果展示字符集列表的第四列Maxlen大于1，那么该字符集为多字符集
 ```
 
 为数据列指定非默认的字符集只需在类型定义后加上系统支持的字符集名称：
 
 ```php
-    varchar(20) character set utf8
+varchar(20) character set utf8
 ```
 
 改变整个数据库的默认字符集：
 
 ```php
-    create database foreign_sales character set utf8;
+create database foreign_sales character set utf8;
 ```
 
 #### 文本数据
@@ -210,63 +210,63 @@ select version(),current_date; 显示当前mysql版本和当前日期     
 
 方法一：
 ```javascript
-    shell> mysql -h localhost -u root -p //登录 
-    mysql> use mysql;  // 进入mysql数据库，user表中存放着所有的MYSQL用户信息
-    mysql> update user set password=password("xueok654123") where user='root';   
-    mysql> FLUSH PRIVILEGES; //新设置用户或更改密码后需要用flush privileges刷新MySQL的系统权限相关表，否则会出现拒绝访问，或者也可以重新启动mysql来使新设置生效
-    mysql> describe user; //显示表mysql数据库中user表的列信息);  
-    mysql> SELECT USER(); //显示当前user
+shell> mysql -h localhost -u root -p //登录 
+mysql> use mysql;  // 进入mysql数据库，user表中存放着所有的MYSQL用户信息
+mysql> update user set password=password("xueok654123") where user='root';   
+mysql> FLUSH PRIVILEGES; //新设置用户或更改密码后需要用flush privileges刷新MySQL的系统权限相关表，否则会出现拒绝访问，或者也可以重新启动mysql来使新设置生效
+mysql> describe user; //显示表mysql数据库中user表的列信息);  
+mysql> SELECT USER(); //显示当前user
 ```
 
 方法二：
 ```javascript
-    shell> mysqladmin -u root -p oldPass password newPass
+shell> mysqladmin -u root -p oldPass password newPass
 ```
 
 方法三：
 ```javascript
-    shell> mysql -u root
+shell> mysql -u root
 
-　　mysql> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('newpass');
+mysql> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('newpass');
 ```
 
 丢失root密码的时候，可以这样
 
 ```javascript
-    shell> mysqld_safe --skip-grant-tables&
+shell> mysqld_safe --skip-grant-tables&
 
-　　shell> mysql -u root mysql
+shell> mysql -u root mysql
 
-　　mysql> UPDATE user SET password=PASSWORD("new password") WHERE user='root';
+mysql> UPDATE user SET password=PASSWORD("new password") WHERE user='root';
 
-　　mysql> FLUSH PRIVILEGES;
+mysql> FLUSH PRIVILEGES;
 ```
 
 增加新用户并授予一定权限（格式：grant select on 数据库.* to 用户名@登陆主机 identified by '密码'）：
 
 ```php
-    // 增加一个用户shirly密码为shirly，让她可以再任何主机上登陆，并对所有数据库有查询、插入、修改、删除的权限(前提是用root用户连入MYSQL)
-    grant select, insert, update, delete on *.* to shirly@"%" identified by 'shirly' 
+// 增加一个用户shirly密码为shirly，让她可以再任何主机上登陆，并对所有数据库有查询、插入、修改、删除的权限(前提是用root用户连入MYSQL)
+grant select, insert, update, delete on *.* to shirly@"%" identified by 'shirly' 
 
-    /** 
-      * 增加一个用户test2密码为abc,让他只可以:
-      * 1. 在localhost上登录;
-      * 2. 可以对数据库mydb进行查询、插入、修改、删除的操作（localhost指本地主机，即MYSQL数据库所在的那台主机）
-      * 目的： 用户即使有test2的密码，他也无法从internet上直接访问数据库，只能通过MYSQL主机来访问
-      **/
-    grant select,insert,update,delete on mydb.* to test2@localhost identified by “abc”; 
+/** 
+  * 增加一个用户test2密码为abc,让他只可以:
+  * 1. 在localhost上登录;
+  * 2. 可以对数据库mydb进行查询、插入、修改、删除的操作（localhost指本地主机，即MYSQL数据库所在的那台主机）
+  * 目的： 用户即使有test2的密码，他也无法从internet上直接访问数据库，只能通过MYSQL主机来访问
+  **/
+grant select,insert,update,delete on mydb.* to test2@localhost identified by “abc”; 
 
-    // 不想test2有密码 
-    grant select,insert,update,delete on mydb.* to test2@localhost identified by “”;  
-    
-    // mysql默认的是本地主机是localhost,对应的IP地址就是127.0.0.1，所以你用你的IP地址登录会出错，如果你想用你的IP地址登录就要先用grant命令进行授权。
-    grant all on *.* to 'someuser'@'somehost' identified by 'password';  
+// 不想test2有密码 
+grant select,insert,update,delete on mydb.* to test2@localhost identified by “”;  
 
-    // 如果需要收回对特定用户的权限，可以通过revoke来实现，revoke和grant的使用相似，只是将to改为from，将grant改为revoke
-    revoke all (privileges) on *.* from username@'somehost';
+// mysql默认的是本地主机是localhost,对应的IP地址就是127.0.0.1，所以你用你的IP地址登录会出错，如果你想用你的IP地址登录就要先用grant命令进行授权。
+grant all on *.* to 'someuser'@'somehost' identified by 'password';  
 
-    // 不论是revoke还是grant，执行完操作后都需要flush privileges;才可以立即生效；
-    // 如果发现revoke all privileges后还是显示如下：
+// 如果需要收回对特定用户的权限，可以通过revoke来实现，revoke和grant的使用相似，只是将to改为from，将grant改为revoke
+revoke all (privileges) on *.* from username@'somehost';
+
+// 不论是revoke还是grant，执行完操作后都需要flush privileges;才可以立即生效；
+// 如果发现revoke all privileges后还是显示如下：
 
 mysql> show grants for shirly@'xxx.xxx.xxx.xxx';
 +--------------------------------------------------------------------------------------------------------------------+
@@ -283,19 +283,19 @@ mysql> drop user shirly@'xxx.xxx.xxx.xxx';
 调用命令行工具，同时指定用户名和要使用的数据库:
 
 ```
-    shell> mysql -u username -p databasename
+shell> mysql -u username -p databasename
 ```
 
 查看当前日期和时间:
 
 ```
-    mysql> select now();
+mysql> select now();
 ```
 
 退出mysql命令行可以使用quit或exit
 
 ```
-    mysql> exit;
+mysql> exit;
 ```
 
 show databases; 显示数据库   
@@ -309,14 +309,14 @@ drop database name; 直接删除数据库，不提醒   
 mysqldump 备份数据库:
 
 ```javascript
-    shell> mysqldump -h host -u root -p dbname >dbname_backup.sql 
+shell> mysqldump -h host -u root -p dbname >dbname_backup.sql 
 ```
 
 恢复数据库:
 
 ```javascript
-    shell> mysqladmin -h myhost -u root -p create dbname 
-    shell> mysqldump -h host -u root -p dbname < dbname_backup.sql  
+shell> mysqladmin -h myhost -u root -p create dbname 
+shell> mysqldump -h host -u root -p dbname < dbname_backup.sql  
 ```
 
 mysqladmin -u root -p drop databasename; 删除数据库前，有提示
@@ -328,14 +328,14 @@ describe tablename; 显示具体的表结构  
 创建表：
 
 ```php
-    CREATE TABLE person
-        (person_id SMALLINT UNSIGNED,
-         fname VARCHAR(20),
-         lname VARCHAR(20),
-         gender CHAR(1) NOT NULL, // 也可以是ENUM('M', 'F')意味着该列只可以填M或者F,这就是SQL中所说的检查约束(check)
-         birth_date DATE,
-         CONSTRAINT pk_person PRIMARY KEY(person_id)
-        );
+CREATE TABLE person
+    (person_id SMALLINT UNSIGNED,
+     fname VARCHAR(20),
+     lname VARCHAR(20),
+     gender CHAR(1) NOT NULL, // 也可以是ENUM('M', 'F')意味着该列只可以填M或者F,这就是SQL中所说的检查约束(check)
+     birth_date DATE,
+     CONSTRAINT pk_person PRIMARY KEY(person_id)
+    );
 ```
 
 上例中约束(constraint)为主键约束，被创建在person_id列上并被命名为pk_person
@@ -345,37 +345,37 @@ describe tablename; 显示具体的表结构  
 控制台下实例：
 
 ```php
-    root@host# mysql -u root -p
-    Enter password:*******
-    mysql> use TUTORIALS;
-    Database changed
-    mysql> CREATE TABLE tutorials_tbl(
-       -> tutorial_id INT NOT NULL AUTO_INCREMENT,
-       -> tutorial_title VARCHAR(100) NOT NULL,
-       -> tutorial_author VARCHAR(40) NOT NULL,
-       -> submission_date DATE,
-       -> PRIMARY KEY ( tutorial_id )
-       -> );
-    Query OK, 0 rows affected (0.16 sec)
-    mysql>
+root@host# mysql -u root -p
+Enter password:*******
+mysql> use TUTORIALS;
+Database changed
+mysql> CREATE TABLE tutorials_tbl(
+   -> tutorial_id INT NOT NULL AUTO_INCREMENT,
+   -> tutorial_title VARCHAR(100) NOT NULL,
+   -> tutorial_author VARCHAR(40) NOT NULL,
+   -> submission_date DATE,
+   -> PRIMARY KEY ( tutorial_id )
+   -> );
+Query OK, 0 rows affected (0.16 sec)
+mysql>
 ```
 
 数据库中表的约束有以下几种：
 * 主键约束：两种方式直接在字段名后定义或者在最后定义
 * 外键约束：比如有数据表tb_dept其主键是id，那么定义数据表tb_emp,让它的deptId作为外键关联到tb_dept的主键，SQL语句为：
 ```php
-   CREATE TABLE tb_emp
-        (id INT(11) PRIMARY KEY,
-         name VARCHAR(20),
-         deptId INT(11),
-         salary FLOAT,
-         CONSTRAINT fk_emp_dept FOREIGN KEY(deptId) REFERENCES tb_dept(id)
-        ); 
+CREATE TABLE tb_emp
+    (id INT(11) PRIMARY KEY,
+     name VARCHAR(20),
+     deptId INT(11),
+     salary FLOAT,
+     CONSTRAINT fk_emp_dept FOREIGN KEY(deptId) REFERENCES tb_dept(id)
+    ); 
 ```
 * 非空约束：NOT NULL
 * 唯一性约束：UNIQUE，直接定义在字段之后，或者定义在所创建表的最后，格式为
 ```php
-    CONSTRAINT sth UNIQUE(name)
+CONSTRAINT sth UNIQUE(name)
 ```
 * 默认约束： 直接定义在字段名后，DEFAULT [value]
 * 表的自增：AUTO_INCREMENT
@@ -383,22 +383,22 @@ describe tablename; 显示具体的表结构  
 当我们需要修改数据表名或者修改数据表字段时，需要使用alter命令
 
 ```php
-    mysql> alter table t1 rename t2;// 重命名表:
-    mysql> alter table t1 drop i; // 删除表t1的i字段
-    mysql> alter table t1 add i int; // 向表t1中添加i字段并定义数据类型
-    mysql> alter table t1 add i int after c; // after c表明i字段会添加到c字段之后
-    mysql> alter table t1 change i j bigint; // 将字段i改为字段j并指定新的数据类型
-    mysql> alter table t1 change j j int; // 将字段j的数据类型改为int      
-    mysql> alter table t1 modify c char(10);// 将字段c的数据类型设为char(10)
-    mysql> ALTER TABLE testalter_tbl ALTER i SET DEFAULT 1000; //修改字段默认值
-    mysql> ALTER TABLE testalter_tbl ALTER i DROP DEFAULT;// 删除字段默认值
-    mysql> 
+mysql> alter table t1 rename t2;// 重命名表:
+mysql> alter table t1 drop i; // 删除表t1的i字段
+mysql> alter table t1 add i int; // 向表t1中添加i字段并定义数据类型
+mysql> alter table t1 add i int after c; // after c表明i字段会添加到c字段之后
+mysql> alter table t1 change i j bigint; // 将字段i改为字段j并指定新的数据类型
+mysql> alter table t1 change j j int; // 将字段j的数据类型改为int      
+mysql> alter table t1 modify c char(10);// 将字段c的数据类型设为char(10)
+mysql> ALTER TABLE testalter_tbl ALTER i SET DEFAULT 1000; //修改字段默认值
+mysql> ALTER TABLE testalter_tbl ALTER i DROP DEFAULT;// 删除字段默认值
+mysql> 
 ```
 
 MySQL可以方便的从查询结果中生成XML，只需要在调用mysql工具时使用--xml选项
 
 ```php
-    shell> mysql -u root -p --xml tablename
+shell> mysql -u root -p --xml tablename
 ```
 
 ### node mysql遇到的坑
