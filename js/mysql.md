@@ -244,7 +244,7 @@ select version(),current_date; 显示当前mysql版本和当前日期     
 
 增加新用户并授予一定权限（格式：grant select on 数据库.* to 用户名@登陆主机 identified by '密码'）：
 
-```javascript
+```mysql
     grant select, insert, update, delete on *.* to shirly@"%" identified by 'shirly' // 增加一个用户shirly密码为shirly，让她可以再任何主机上登陆，并对所有数据库有查询、插入、修改、删除的权限(前提是用root用户连入MYSQL)
 
     grant select,insert,update,delete on mydb.* to test2@localhost identified by “abc”; //增加一个用户test2密码为abc,让他只可以在localhost上登录，并可以对数据库mydb进行查询、插入、修改、删除的操作（localhost指本地主机，即MYSQL数据库所在的那台主机），这样用户即使有test2的密码，他也无法从internet上直接访问数据库，只能通过MYSQL主机上的web页来访问了。
@@ -252,6 +252,22 @@ select version(),current_date; 显示当前mysql版本和当前日期     
     grant select,insert,update,delete on mydb.* to test2@localhost identified by “”; //不想test2有密码  
     
     grant all on *.* to 'someuser'@'somehost' identified by 'password';  //mysql默认的是本地主机是localhost,对应的IP地址就是127.0.0.1，所以你用你的IP地址登录会出错，如果你想用你的IP地址登录就要先用grant命令进行授权。
+
+    // 如果需要收回对特定用户的权限，可以通过revoke来实现，revoke和grant的使用相似，只是将to改为from，将grant改为revoke
+    revoke all (privileges) on *.* from username@'somehost';
+
+    // 不论是revoke还是grant，执行完操作后都需要flush privileges;才可以立即生效；
+    // 如果发现revoke all privileges后还是显示如下：
+
+mysql> show grants for shirly@'xxx.xxx.xxx.xxx';
++--------------------------------------------------------------------------------------------------------------------+
+| Grants for shirly@xxx.xxx.xxx.xxx                                                                                  |
++--------------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'shirly'@'xxx.xxx.xxx.xxx' IDENTIFIED BY PASSWORD '*C645E9AEEE301E788D5FB061F5AEDD737B48357F'|
++--------------------------------------------------------------------------------------------------------------------+
+
+// 那么可以执行以下操作将用户权限彻底消除
+mysql> drop user shirly@'xxx.xxx.xxx.xxx';
 
 ```
 
