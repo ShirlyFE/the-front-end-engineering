@@ -14,7 +14,7 @@ ssi_silent_errors on; //默认值是off，开启后在处理SSI文件出错时�
 ssi_types text/shtml; //默认是ssi_types text/html，所以如果需要htm和html支持，则不需要设置这句，如果需要shtml支持，则需要设置：ssi_types text/shtml
 ```
 
-![ssi demo](./images/ssi.png)
+![ssi demo](../images/ssi.png)
 
 ## SSI语法
 

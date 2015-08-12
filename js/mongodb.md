@@ -59,11 +59,11 @@
 ```
 
 效果图如下：
-![mongod console下的find写法](./images/findInConsole.png)
+![mongod console下的find写法](../images/findInConsole.png)
 
 monk的写法如下：
 
-![查询同样信息的monk写法](./images/monkFind.png)
+![查询同样信息的monk写法](../images/monkFind.png)
 
 
 ### mongodb 参考资料

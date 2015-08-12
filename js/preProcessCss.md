@@ -52,7 +52,7 @@ LESS在服务器端的使用主要是借助于LESS的编译器，将LESS源文�
 
 sass在命令行编译的时候会报下面的错
 
-![sass compile error](./images/sassCompileError.png)
+![sass compile error](../images/sassCompileError.png)
 
 **解决方案**
 

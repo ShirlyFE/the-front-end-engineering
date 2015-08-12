@@ -75,29 +75,29 @@ reading/writing.
 ```
 结果是：
 
-![node cluster](./images/cluster1.png)
+![node cluster](../images/cluster1.png)
 
 因为我的测试机是4核CPU所以会fork四个进程，每个进程都会执行app.js
 
 kill掉master，看看worker是否依然存在
 
-![kill cluster master](./images/cluster2.png)
+![kill cluster master](../images/cluster2.png)
 
 可见worker依然在监听端口提供服务，我们请求下服务验证下
 
-![worker still work after master be killed](./images/cluster3.png)
+![worker still work after master be killed](../images/cluster3.png)
 
 **注：** 这里的关键是在app.js中remove掉worker的disconnect事件回调，确保在master disconnect掉之后cluster不会disconnect掉worker,具体可看源码
 
 由上面的test我们得出node的多进程机制的过程如下：
 
-![node cluster的抢占式工作机制](./images/cluster4.png)
+![node cluster的抢占式工作机制](../images/cluster4.png)
 
 在node-0.12.0中新增round-robin轮询机制，其请求过程如下
 
-![cluster round-robin](./images/cluster5.png)
+![cluster round-robin](../images/cluster5.png)
 
-![cluster round-robin process](./images/cluster6.png)
+![cluster round-robin process](../images/cluster6.png)
 
 
 Buffer.concat(list, [totalLength])的第二个参数 totalLength 是list中所存储的所有buffer.length的最大小，而不是list的长度

@@ -246,7 +246,7 @@ visibilitychange: 可视状态改变会触发的事件.
 Pointer和Gestures事件
 用过Window8的童鞋都知道，Metro界面提供了全新的一流的触摸用户体验。在IE10和Metro App中，开发者可以使用一种更通用的输入形式，我们叫作“Pointer”。Pointer可以表示任何一个在屏幕中的点，这个点可以是一个鼠标指针，手写笔，一支手指或者多个手指。这个模型让我们在写网页和App的时候更加爽，无需考虑用户在使用PC，Pad还是手机。
 
-![集合touch、mouse、pen的pointer事件](./images/pointer.png)
+![集合touch、mouse、pen的pointer事件](../images/pointer.png)
 
 Pointer事件
 和鼠标事件类似，pointer事件会在点击，移动，释放，移进，移出的时候触发：
