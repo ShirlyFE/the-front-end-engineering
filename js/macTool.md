@@ -4,14 +4,14 @@
 
 * [rar官网](http://www.rarlab.com/download.htm)下载mac下rar的tar包
 * 下载解压后进到**rar**文件所在的目录执行以下两个命令，分别安装 rar 和 unrar：
-```shell
-	~$: sudo install -c -o $Username rar /bin
-	~$: sudo install -c -o $Username unrar /bin
+```php
+~$: sudo install -c -o $Username rar /bin
+~$: sudo install -c -o $Username unrar /bin
 
-	//注意： 把 Username 替换成你自己的用户名
+//注意： 把 Username 替换成你自己的用户名
 
-	//解压命令
-	~$: unrar x compressed_file_name.rar
+//解压命令
+~$: unrar x compressed_file_name.rar
 ```
 
 ### tar压缩与解压命令详解
@@ -33,7 +33,7 @@ tar [-cxtzjvfpPN] 文件与目录
 * -N：仅存储时间较新的文件（--after-date DATE,--newer DATE）
 
 用法说明：
-```shell
+```php
 // 将整个/etc 目录下的文件全部打包成为 /tmp/etc.tar
 
 tar -cvf /tmp/etc.tar /etc   // 仅打包，不压缩
