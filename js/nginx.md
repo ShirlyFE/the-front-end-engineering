@@ -817,3 +817,7 @@ data> 参考手册中文版
 [Understanding Nginx HTTP Proxying, Load Balancing, Buffering, and Caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
 
 [Nginx学习笔记五Nginx的Rewrite规则](http://blog.sina.com.cn/s/blog_664553710100zkqf.html)
+
+## 待查看和删除
+[剖析Nginx 高级用法](http://yuan00.blog.51cto.com/5126136/960628)
+[Nginx content cache Nginx内容缓存](http://itindex.net/detail/51663-nginx-content-cache)

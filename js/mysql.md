@@ -423,6 +423,8 @@ mysql中文数据乱码时的解决方式，设置为[utf8](http://stackoverflow
 
 * [讲述mysql索引和优化的故事](http://database.51cto.com/art/201107/278040.htm)
 
+* [ mysql 双机异地热备份----快速理解mysql主从，主主备份原理及实践](http://www.cnblogs.com/shuidao/p/3551238.html)
+
 **mysql读书列表**：
 
 * [《SQL学习指南》](../pdf/SQL学习指南.pdf)
@@ -432,3 +434,4 @@ mysql中文数据乱码时的解决方式，设置为[utf8](http://stackoverflow
 * [《大话存储-网络存储系统原理精解与最佳实践](../pdf/大话存储-网络存储系统原理精解与最佳实践.pdf)
 * [《深入理解MYSQL核心技术》](../pdf/深入理解MySQL核心技术.pdf)
 * [《高性能MYSQL》](../pdf/高性能MySQL第三版.pdf)
+* [MYSQL数据丢失讨论: 数据rebuild](http://blog.sae.sina.com.cn/archives/4091)
