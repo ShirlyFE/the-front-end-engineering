@@ -180,7 +180,7 @@ http
     gzip_types text/plain application/x-javascript text/css application/xml;
     #压缩类型，默认就已经包含text/html，所以下面就不用再写了，写上去也不会有问题，但是会有一个warn。
     gzip_vary on;
-    #limit_zone crawler $binary_remote_addr 10m; #开启限制IP连接数的时候需要使用
+    limit_zone crawler $binary_remote_addr 10m; #开启限制IP连接数的时候需要使用
 
     upstream blog.ha97.com {
         #upstream的负载均衡，weight是权重，可以根据机器配置定义权重。weight参数表示权值，权值越高被分配到的几率越大。
@@ -786,6 +786,8 @@ data> 参考手册中文版
 
 **tasklist /fi "imagename eq nginx.exe"**: windows查看nginx进程 
 
+**nginx**: 开启nginx 
+
 **nginx -s stop**: 强制关闭 
 
 **nginx -s quit**: 安全关闭 
@@ -793,6 +795,163 @@ data> 参考手册中文版
 **nginx -s reload**: 改变配置文件的时候，重启nginx工作进程，来时配置文件生效 
 
 **nginx -s reopen**: 打开日志文件
+
+## nginx cache对静态资源进行缓存
+
+proxy cache的原理就是把静态资源按照一定的规则存在本地硬盘，并且会在内存中缓存常用的资源，从而加快静态资源的响应
+
+配置片段为：
+
+```php
+proxy_temp_path   /usr/local/nginx/proxy_temp_dir 1 2;
+
+#keys_zone=cache1:100m 表示这个zone名称为cache1，分配的内存大小为100MB
+#/usr/local/nginx/proxy_cache_dir/cache1 表示cache1这个zone的文件要存放的目录
+#levels=1:2 表示缓存目录的第一级目录是1个字符，第二级目录是2个字符，即/usr/local/nginx/proxy_cache_dir/cache1/a/1b这种形式
+#inactive=1d 表示这个zone中的缓存文件如果在1天内都没有被访问，那么文件会被cache manager进程删除掉
+#max_size=10g 表示这个zone的硬盘容量为10GB
+
+proxy_cache_path  /usr/local/nginx/proxy_cache_dir/cache1  levels=1:2 keys_zone=cache1:100m inactive=1d max_size=10g;
+
+server {
+    listen 80;
+    server_name *.example.com;
+
+    #在日志格式中加入$upstream_cache_status
+    log_format format1 '$remote_addr - $remote_user [$time_local]  '
+        '"$request" $status $body_bytes_sent '
+        '"$http_referer" "$http_user_agent" $upstream_cache_status';
+
+    access_log log/access.log fomat1;
+
+    #$upstream_cache_status表示资源缓存的状态，有HIT MISS EXPIRED三种状态
+    add_header X-Cache $upstream_cache_status;
+    location ~ .(jpg|png|gif|css|js)$ {
+        proxy_pass http://127.0.0.1:81;
+
+        #设置资源缓存的zone
+        proxy_cache cache1;
+
+        #设置缓存的key
+        proxy_cache_key $host$uri$is_args$args;
+
+        #设置状态码为200和304的响应可以进行缓存，并且缓存时间为10分钟
+        proxy_cache_valid 200 304 10m;
+
+        expires 30d;
+    }
+}
+```
+
+### 清除cache模块缓存purge
+
+```
+$ wget http://labs.frickle.com/files/ngx_cache_purge-1.2.tar.gz
+$ tar -zxvf ngx_cache_purge-1.2.tar.gz
+```
+
+查看编译参数
+
+$ /usr/local/nginx/sbin/nginx -V 
+在原有的编译参数后面加上--add-module=/usr/local/ngx_cache_purge-1.2
+
+$ ./configure --user=www --group=www --prefix=/usr/local/nginx \
+--with-http_stub_status_module --with-http_ssl_module \
+--with-http_realip_module --add-module=/usr/local/ngx_cache_purge-1.2
+$ make && make install
+退出nginx，并重新启动
+
+$ /usr/local/nginx/sbin/nginx -s quit
+$ /usr/local/nginx/sbin/nginx
+
+配置Purge
+以下是nginx中的Purge配置片段
+
+location ~ /purge(/.*) {
+    #允许的IP
+    allow 127.0.0.1;
+    deny all;
+    proxy_cache_purge cache1 $host$1$is_args$args;
+}
+清除缓存
+使用方式：
+
+$ wget http://example.com/purge/uri
+其中uri为静态资源的URI，如果缓存的资源的URL为 http://example.com/js/jquery.js，那么访问 http://example.com/purge/js/jquery.js则会清除缓存。
+
+命中率
+保存如下代码为hit_rate.sh：
+
+#!/bin/bash
+# author: Jeremy Wei <shuimuqingshu@gmail.com>
+# proxy_cache hit rate
+
+if [ $1x != x ] then
+    if [ -e $1 ] then
+        HIT=`cat $1 | grep HIT | wc -l`
+        ALL=`cat $1 | wc -l`
+        Hit_rate=`echo "scale=2;($HIT/$ALL)*100" | bc`
+        echo "Hit rate=$Hit_rate%"
+    else
+        echo "$1 not exsist!"
+    fi
+else
+    echo "usage: ./hit_rate.sh file_path"
+fi
+使用方式
+
+$ ./hit_rate.sh /usr/local/nginx/log/access.log
+
+最近准备用nginx搭建了一个图片服务器，看中的就是nginx超强的静态文件处理能力。
+
+由于图片量比较大，和web服务器（也是nginx）分开运行，虽然web服务器调用图片没用问题，但毕竟是远程调用，肯定没有本地文件系统那么快，因此仍然有优化的空间。
+
+使用前的nginx配置
+location ~* ^.+\.(js|ico|gif|jpg|jpeg|png|html|htm)$ {
+log_not_found off;
+access_log off;
+expires 7d;
+}
+接下来就用到了nginx的proxy_store模块，让nginx 将取得的图片缓存在本地一个目录，下次就直接调用，（这让网页热点图片统计变得非常容易，讨厌日志分析的管理员肯定喜欢）
+location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|js|html|htm|css)$ {
+log_not_found off;
+expires 7d ;
+access_log off;
+proxy_store on;
+proxy_store_access user:rw group:rw all:rw;
+if( !-e $request_filename) {
+proxy_pass  http://img.example.com
+}
+}
+默认的缓存路径位于 /var/cache/nginx/proxy_temp，里面将会保持图片服务器的目录结构
+
+proxy_store 没有缓存过期，相当于镜像功能，这既是优点也是缺点，优点是访问快速，缺点是不知哪一天，硬盘会被撑爆，不过我们可以写个find脚本，定时清理一下缓存就OK了。
+
+nginx还有一种缓存proxy_cache，它在设计上比proxy_store 更先进，采用内存+硬盘方式缓存，可以设置缓存大小和缓存过期。
+http {
+,,,,,
+proxy_cache_path /var/cache/nginx/cachelevels=1:2 keys_zone=imgcache:100m inactive=2h max_size=1g;
+server {
+........
+location ~* ^.+\.(js|ico|gif|jpg|jpeg|png|html|htm)$ {
+log_not_found off;
+access_log off;
+expires 7d;
+proxy_pass http://img.example.com ;
+proxy_cache imgcache;
+proxy_cache_valid 200 302 1d;
+proxy_cache_valid 404 1h;
+proxy_cache_valid any 10m;
+proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 http_503 http_504;
+}
+}
+}
+上面的代码将会创建一个100M的内存缓存，每个文件在2小时内若不活跃则淘汰进入硬盘缓存，硬盘缓存最大1G，满了则自动清除缓存。
+
+这种缓存方式为了更快的索引，采用hash分级来存储图片，图片目录结构和名称都变得面目全非，因此网页热点图片，必须通过其他途径统计，比如日志。
+
+后一种方式更像一种正儿八经的缓存系统，应用相对更广，在性能上也更好。
+
 
 ## 资源
 
