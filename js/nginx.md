@@ -961,6 +961,8 @@ proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 ht
 
 [nginx配置详解](http://my.oschina.net/duxuefeng/blog/34880)
 
+[Nginx配置文件nginx.conf中文详解](http://www.ha97.com/5194.html)
+
 [Web服务器之Nginx详解](http://freeloda.blog.51cto.com/2033581/1285332)
 
 [借助Nginx搭建反向代理服务器](http://www.cnblogs.com/edisonchou/p/4126742.html)
