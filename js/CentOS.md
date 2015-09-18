@@ -1,14 +1,116 @@
 # CentOs
 
+Centos是redhat系列的操作系统,是RedHat Linux的社区发行版本
+
 ## 查看系统信息
 
 CentOs可以使用 **cat /etc/redhat-release** 命令查看系统版本，比如我的是：CentOS release 6.4 (Final)
+
+查看rpm包版本： rpm -q centos-release
 
 uname -r 可以查看linux系统的版本，下面命令得到的结果表明我的系统是64位的，也可以使用uname -a了解更加详细的信息
 ```
 $ uname -r
 2.6.32-358.el6.x86_64
 ``` 
+
+## Linux下安装gcc 、g++ 、gfortran编译器
+
+### ubuntu下安装
+```
+$ sudo apt-get install build-essential
+$ g++ -v #查看g++是否安装成功
+$ gcc -v #查看gcc是都安装成功
+$ sudo apt-get install gfortran
+$ gfortran -v #查看gfortran是否安装成功
+$ dpkg -L 软件名  #查看通过apt-get install安装的软件的源码以及安装完以后的文件
+``` 
+ubuntu缺省情况下没有提供C/C++的编译环境，需要手动安装，单独安装gcc和c++比较麻烦，build-essential是一整套工具，包含了gcc，g++以及make、dpkg-dev、libc等,可以通过 **apt-cache depends build-essential**查看其包含的内容 
+
+### CentOS下安装
+```
+$ CentOS下yum install gcc gcc-c++
+```
+
+## CentOS 6.4 x86_64 编译安装NodeJs + Express
+
+### 安装准备
+需要安装的组件有gcc,make,gcc-c++,openssl-devel以及wget
+```
+$ yum -y install gcc make gcc-c++ openssl-devel wget compat-gcc-34 compat-gcc-34-c++
+```
+
+### 安装开始
+
+* 1.下载NodeJS v0.10.26源码及解压
+```
+#wget http://nodejs.org/dist/v0.10.26/node-v0.10.26.tar.gz
+#tar -zvxf node-v0.10.26.tar.gz
+```
+
+* 2.进入源码目录，配置编译环境(比如安装到/home/q/node/v0.10.26目录下）
+```
+#./configure --prefix=/home/q/node/v0.10.26
+```
+
+* 3.执行编译及安装
+```
+#sudo make 
+#sudo make install (注意不可以通过make && make install安装，因为编译生成的目录需要sudo权限才可以生成，否则报错，因此必须拆开来并且两个命令都分别加sudo)
+```
+
+* 4.配置环境变量
+比如我的node安装在/home/q/node/v0.10.26目录下，而/home/q/node/v0.10.26/bin这个目录不在环境变量中，所以只能到该目录下才能启动node程序或者node的其他程序(因为上面设置了prefix所以可以在其他地方访问)，如果在其他的目录下执行node命令的话，必须通过绝对路径才可以。
+
+这时我们可以将node所在目录，添加到PATH环境变量里面，或者通过软连接的形式将node和npm链接到系统默认的PATH目录下的一个，当我全局安装的pm2总是提示找不到命令时，经过各种搜索才知道是需要设置环境变量才能使用
+
+方法一：软连接方式
+```
+$ ln -s /home/q/node/v0.10.26/bin/* /usr/sbin/
+```
+
+方式二：环境变量配置
+在node目录下执行pwd获取node所在目录，把此目录添加到/etc/profile文件的PATH环境变量
+![centos 下环境变量设置](../images/CentOSEnviromentPath.png)
+
+然后通过 **source /etc/profile** 命令使得变量设置生效
+
+通过 **echo $PATH** 查看设置后的环境变量
+
+![print enviroment path of linux](../images/viewEnviromentPath.png)
+
+如果发现重新打开个终端运行node相关程序比如pm2提示找不到命令，那么需要重启或注销系统让环境变量完全生效
+
+* 5.验证是否安装配置成功
+```
+#node -v #如果提示node:command not found表示安装配置没有成功
+v0.10.26
+```
+
+* 6.安装Express框架
+```
+$ sudo npm install express -g
+```
+
+* 7.创建开发目录
+```
+$ express app #app为你的开发的程序名称
+```
+
+* 8.安装程序依赖组件
+```
+$ npm install
+```
+
+* 9.安装完成，进入项目目录启动node服务测试整体环境是否成功安装。
+```
+$ node app
+```
+
+## CentOs 6.4 安装git
+```
+$ sudo yum -y install git
+```
 
 ## rpm
 rpm 即RedHat Package Management，是RedHat的发明之一 ，在一个操作系统下，需要安装实现各种功能的软件包。这些软件包一般都有各自的程序，
@@ -94,6 +196,118 @@ RPM管理包管理器支持网络安装和查询
 查看登录用户：who
 
 查看用户登录历史记录：last
+
+## CentOs修改环境变量方法
+
+* 方法一：在/etc/profile文件中添加变量【对所有用户生效（永久的）】
+* 方法二：在用户目录下的.bash_profile文件中增加变量【对单一用户生效（永久的）】
+* 方法三：直接运行export命令定义变量【只对当前shell（BASH）有效（临时的）】
+
+在shell的命令行下直接使用[export变量名=变量值]定义变量，该变量只在当前的shell（BASH）或其子shell（BASH）下是有效的，shell关闭了，变量也就失效了，再打开新shell时就没有这个变量，需要使用的话还需要重新定义。例如
+```
+$ export PATH=/usr/local/webserver/php/bin:$PATH
+```
+
+## CentOs 6.4下安装nginx
+通过yum安装nginx的时候总是报下面的错，又没有办法更新openssl或者libcrypto、libssl，所以只能从源码安装
+```
+Loaded plugins: fastestmirror, security
+Loading mirror speeds from cached hostfile
+Setting up Install Process
+Resolving Dependencies
+--> Running transaction check
+---> Package nginx.x86_64 0:1.8.0-1.el6.ngx will be installed
+--> Processing Dependency: openssl >= 1.0.1 for package: nginx-1.8.0-1.el6.ngx.x
+86_64
+--> Processing Dependency: libssl.so.10(libssl.so.10)(64bit) for package: nginx-
+1.8.0-1.el6.ngx.x86_64
+--> Processing Dependency: libcrypto.so.10(libcrypto.so.10)(64bit) for package:
+nginx-1.8.0-1.el6.ngx.x86_64
+--> Processing Dependency: libcrypto.so.10(OPENSSL_1.0.1_EC)(64bit) for package:
+ nginx-1.8.0-1.el6.ngx.x86_64
+--> Processing Dependency: libcrypto.so.10(OPENSSL_1.0.1)(64bit) for package: ng
+inx-1.8.0-1.el6.ngx.x86_64
+--> Finished Dependency Resolution
+Error: Package: nginx-1.8.0-1.el6.ngx.x86_64 (nginx)
+           Requires: libssl.so.10(libssl.so.10)(64bit)
+Error: Package: nginx-1.8.0-1.el6.ngx.x86_64 (nginx)
+           Requires: libcrypto.so.10(OPENSSL_1.0.1)(64bit)
+Error: Package: nginx-1.8.0-1.el6.ngx.x86_64 (nginx)
+           Requires: libcrypto.so.10(libcrypto.so.10)(64bit)
+Error: Package: nginx-1.8.0-1.el6.ngx.x86_64 (nginx)
+           Requires: openssl >= 1.0.1
+           Installed: openssl-1.0.0-27.el6_4.2.x86_64 (@updates)
+               openssl = 1.0.0-27.el6_4.2
+           Available: openssl-1.0.0-27.el6.i686 (base)
+               openssl = 1.0.0-27.el6
+Error: Package: nginx-1.8.0-1.el6.ngx.x86_64 (nginx)
+           Requires: libcrypto.so.10(OPENSSL_1.0.1_EC)(64bit)
+ You could try using --skip-broken to work around the problem
+ You could try running: rpm -Va --nofiles --nodigest
+```
+
+### 源码安装步骤
+* 1.安装准备
+```
+$ yum install gcc gcc-c++ pcre pcre-devel openssl openssl-devel zlib zlib-devel
+```
+
+* 2.下载源码
+```
+$ curl http://nginx.org/download/nginx-1.6.3.tar.gz | tar -xzf -
+```
+
+* 3.配置configure
+```
+# 进入nginx所在的目录
+$ ./configure --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --pid-path=/var/run/nginx.pid
+```
+
+* 4.install
+```
+$ sudo make
+$ sudo make install
+```
+
+* 5.创建/etc/init.d/nginx设置成系统开机服务
+```
+$ sudo vi /etc/init.d/nginx
+$ chmod a+x /etc/init.d/nginx
+# 将[http://wiki.nginx.org/RedHatNginxInitScript](http://wiki.nginx.org/RedHatNginxInitScript)中的脚本内容拷贝到/etc/init.d/nginx文件中保存退出
+```
+
+* 6.启动nginx
+```
+$ service nginx start
+```
+
+### 注意事项
+如果在配置configure时设置了user和group而/etc/group文件中并没有相关用户和组，那么在启动nginx时就会报：
+nginx: [emerg] getpwnam(“xxx”) failed
+如果你又没有权限建立用户，那么直接进入/etc/nginx/nginx.conf将user nobody的注释删除即可
+
+在有权限的情况下可以通过useradd、groupadd命令添加用户和用户组即可
+
+nginx启动后在浏览器输入Ip即可看到Welcome to nginx！的界面，至此安装完成
+
+当编辑了/etc/nginx/nginx.conf后需要执行server nginx reload让更改生效
+
+### 补充说明
+nginx源码编译之前的configure配置文件选项列表：
+
+**configure 支持下面的选项：**
+
+* --prefix=<path> - Nginx安装路径。如果没有指定，默认为 /usr/local/nginx。 
+* --sbin-path=<path> - Nginx可执行文件安装路径。只能安装时指定，如果没有指定，默认为<prefix>/sbin/nginx。 
+* --conf-path=<path> - 在没有给定-c选项下默认的nginx.conf的路径。如果没有指定，默认为<prefix>/conf/nginx.conf。 
+* --pid-path=<path> - 在nginx.conf中没有指定pid指令的情况下，默认的nginx.pid的路径。如果没有指定，默认为 <prefix>/logs/nginx.pid。 
+* --lock-path=<path> - nginx.lock文件的路径。 
+* --error-log-path=<path> - 在nginx.conf中没有指定error_log指令的情况下，默认的错误日志的路径。如果没有指定，默认为 <prefix>/logs/error.log。 
+* --http-log-path=<path> - 在nginx.conf中没有指定access_log指令的情况下，默认的访问日志的路径。如果没有指定，默认为 <prefix>/logs/access.log。 
+* --user=<user> - 在nginx.conf中没有指定user指令的情况下，默认的nginx使用的用户。如果没有指定，默认为 nobody。 
+* --group=<group> - 在nginx.conf中没有指定user指令的情况下，默认的nginx使用的组。如果没有指定，默认为 nobody。 
+* --builddir=DIR - 指定编译的目录 
+* --with-rtsig_module - 启用 rtsig 模块 
 
 ## linux超级守护进程xinetd
 守护进程，也就是通常说的Daemon进程，是Linux中的后台服务进程。它是一个生存期较长的进程，通常独立于控制终端并且周期性地执行某种任务或等待处理某些发生的事件。守护进程常常在系统引导装入时启动，在系统关闭时终止
@@ -494,5 +708,8 @@ $ sudo /root/rsync.sh &
 ### rsync相关资源
 [Linux下同步工具inotify+rsync使用详解](http://segmentfault.com/a/1190000002427568)
 
+
+## 资源
+[Build NGINX from source on RedHat/CentOS 6](https://blog.ianspence.com/2014/03/30/build-nginx-from-source-on-redhatcentos/)
 
 
