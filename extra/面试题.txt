@@ -1,0 +1,373 @@
+
+（1）js如何实现深拷贝
+
+（2）jquery如何实现domReady和onload判断的
+
+（3）js如何实现一个阶乘，如何使用递归
+function A(n){
+        if(n>1){
+            return n*A(n-1);
+        };
+        return 1;
+    };
+    alert(A(3));
+A(3)就变成3*A(2)，然后A(2)就变成2*A(1)
+
+（4）iframe如何自适应高度
+
+
+（5）如何统计一个字符串中哪个字母出现的次数最多
+
+（6）如何实现一个跑马灯效果，要求可以循环
+
+（7）有么研究过zepto的源码
+
+（8）如何实现单页面应用，要注意什么
+
+（9）如何实现iscroll的局部滑动效果
+
+（10）使用到html5哪些技术
+
+（11）postMessage的作用
+
+（12）allow access allow orgin
+
+（13）如何实现自定义事件，提供给别人用，要给什么接口
+
+（14）如何设计一个js框架，比如是一个表单判断的框架，要怎么设计，
+别人new一个就可以解决这个表单的所有问题，判断为空／判断合法／正则/提示的message等
+
+（15）看得东西太少，开源得东西做的太少，新东西跟进得少，设计模式不懂
+
+（16）for..in是可以便利到原型里头得属性得
+function A(){
+        this.m=10;
+    }
+    A.prototype.n=20;
+    var aa=new A();
+    for(i in aa){
+        console.log(i);
+    }
+如果只要实例属性不要原型得属性，则可以用hasOwnProperty过滤，
+function A(){
+        this.m=10;
+    }
+    A.prototype.n=20;
+    var aa=new A();
+    for(i in aa){
+        if(aa.hasOwnProperty(i)){
+            console.log(i);
+        }
+    }
+
+（17）手写原生ajax
+
+（18）实现自定义类型事件
+
+（19）自己实现事件代理
+
+（20）研究seajs和requirejs，按需加载，模块化开发
+用requirejs进行模块化开发设计
+
+（21）cmd和amd区别
+seajs遵循cmd，好像念起来更顺口一点
+requirejs遵循amd规范
+
+（22）有没写过自己得框架
+
+（23）了解得移动方面得框架有哪些？
+
+（24）tap穿透bug
+
+（25）manifest
+
+（26）viewport为什么用640.。
+
+（27）如何实现异步编程，promise,then
+
+（28）localstorage和sessionstorage区别
+
+（29）css/js预编译工具
+
+（30）grunt前端自动化
+
+（31）git/svn/maven
+
+（32）模块化requirejs /  自动化 grunt / mvc backbone / git发布
+
+（33）defer和async得区别
+
+（34）断点调试／浏览器解析全部过程
+
+（35）做过哪些复杂的项目？碰到什么问题，怎么解决的？
+
+（36）兼容性问题有哪些？js方面的和css方面的。
+
+（37）觉得自己有哪些需要提升的地方。
+
+（38）怎么做一个框架和接口设计
+
+（39）如何拷贝一个全新得数组，不影响已有得。
+
+（40）css怎么设计处理。。借鉴alice css或者杭州网易开源css
+
+（41）怎么hack ie9或者10
+
+（42）了解过promise吗
+
+（43）提升css性能，如less/sass
+
+（44）svg 在响应式设计的应用
+
+（45） requestAnimationFrame原理。
+
+（46）tap穿透bug
+
+（47）移动端性能优化有哪些方面
+
+（48）device-width根据什么定义的
+
+（49）fixed在移动端的bug
+
+（50）怎么查看一个动画的关键帧渲染（fps,profile）
+
+（51）怎么监控资源加载情况
+
+（52）fps是什么，。。。怎么在chrome里查看
+
+（53）scroll在移动端不支持怎么办，用iscroll实现有什么问题
+
+（54）xss原理是什么
+
+（55）es5和es6得东西了解多少
+
+（56）ajax的5个状态是什么？
+
+（57）http底层怎么了解
+
+（58）拔掉网线http是多少状态
+
+（59）浏览器的缓存策略具体是什么，
+expire/entity/
+
+（60）iframe跨域具体是什么
+
+（61）实现拖拽元素功能
+
+（62）xss和csrf区别
+
+（63）如何优化性能，有哪些工具
+
+（64）具体做过什么分享
+
+（65）如何学习前端知识
+
+（66）https...
+
+（67）
+my name is imweba ... => my6 name7 is8 imweba9...
+
+（68）
+页面内实现右键菜单组件功能。
+
+（69）
+没发请求，是什么状态吗
+400和500什么区别
+
+（70）
+grunt uglify遇到什么问题
+
+（71）
+ajax怎么分段接收数据
+
+（72）
+jsonp会遇到什么问题
+onerror / 超时 ／ refeerr / 乱码
+
+（73）
+ ie6要半透明图片
+
+（74）
+post和get方式区别，哪个更快
+post发送的数据具体在哪里
+get是协议请求头/post是实体数据里
+
+（75）
+ajax得readyState得5种状态分别是什么
+
+（76）
+css解析方式是如何得
+
+（77）
+stylesheet是个什么东西
+
+（78）
+webfont / svg / css sprite 在移动领域应用
+
+（79）
+canvas 和 svg
+
+（80）
+如何判断localStorage存储满了。
+
+（81）
+如何解决retina屏幕下，图片模糊
+
+（82）
+get/post/delete/put四者区别。
+
+（81）
+能否用jquery2.0替代zepto
+
+（82）
+SPDY协议了解过不
+
+（83）
+iframe处理跨域，如果是发送post请求，
+如何知道post数据成功？
+
+（84）
+promise原理是什么？自己实现一个
+
+（85）
+requirejs的原理是什么？自己实现一个
+
+requirejs和seajs得区别是什么
+
+（86）
+jquery和zepto区别是什么
+
+（87）
+wap得scroll问题。。
+
+（88）
+reflow和repaint原因和避免
+
+（89）
+manifest使用过嘛
+
+（90）
+单页面应用如何实现
+
+（91）
+如何左右，上下居中一个东西
+
+（92）
+如何实现场景切换
+
+（93）
+fiddler如何使用，有什么作用
+
+（94）
+如何实现移动设备上得加载更多，性能如何考虑
+dom结构考虑复用起来
+
+（95）
+文字超出 省略号
+多行文本超出 省略号
+各自如何实现
+
+（96）九宫格
+http://stylechen.com/wp-content/uploads/demo/jiugongge/fengwu.html
+
+（97）
+实现一个树形结构
+
+（98）
+实现一个无限轮播图
+
+（99）
+如何实现iframe自适应
+
+（100）
+bigpipe技术
+
+（101）
+如何实现网页聊天
+websocket/comet/轮询技术
+
+（102）
+http得keep-alive技术
+
+（103）
+模块之间通信怎么来实现？
+
+（104）
+跨域如何post数据？
+
+（105）
+HTML5 Web Worker 实践过没
+
+（106）
+if(a){
+   alert(1);
+}
+让1弹不出来
+
+0 / null / undefined / "" / false / 0 
+
+[]不行，是对象，所以为true。
+{}也不行，记得如果对象除了null以外，其它在if里头都是true。
+
+（107）
+什么是单例模式，举例说明，
+设计模式还有哪些
+
+（108）
+jquery里头，offset和position得区别
+
+（109）
+行内元素和块元素得具体区别
+
+（110）
+现在到年底剩多少天／时／秒
+
+（111）
+去浮动多少方法
+
+（112）
+数组去重
+
+（113）
+getCurrentStyle怎么使用
+和getComputedStyle
+
+（114）
+判断邮箱格式合法
+
+（115）
+box-shadow怎么写
+
+（116）
+纯css实现tab切换
+
+（117）
+纯css实现图片居中
+
+（118）
+行内元素和块元素区别是什么
+块元素兼容性有什么问题
+行内元素空隙如何解决
+
+（119）
+浏览器bug有哪些
+
+（120）
+怎么解决闭包出现的问题
+
+（121）
+浏览器输入url到渲染页面整体过程如何
+
+（122）
+浏览器js引擎解析代码的过程，
+碰到注册事件和setTimeout如何坐的
+http://www.laruence.com/2009/09/23/1089.html
+
+（123）
+性能优化做了哪些工作，具体举例说明
+
+（124）
+localstorage存储满了会怎么样
+怎么控制localstorage的过期
+localstorage与sessionstorage的区别
+http://www.cnblogs.com/jikey/p/4039740.html
