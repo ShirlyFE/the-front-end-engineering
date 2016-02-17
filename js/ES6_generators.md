@@ -277,7 +277,7 @@ y is : b
 */
 ```
 
-```
+```js
 var gen = function * () {
   yield 'a';
   yield 'b';
