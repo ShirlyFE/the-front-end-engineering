@@ -179,7 +179,7 @@ input is : b
 */
 ```
 
-```
+```js
 function* callee() {
   console.log('callee start');
     console.log('callee: ' + (yield));
@@ -213,7 +213,7 @@ callee start
 ```
 callee doesn’t catch the exception, which is why it is propagated into caller, where it is logged before caller finishes
 
-```
+```js
 function* callee() {
     try {
         yield 'b'; // (A)
